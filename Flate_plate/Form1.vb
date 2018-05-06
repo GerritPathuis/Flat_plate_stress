@@ -1,6 +1,7 @@
 ﻿Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
+        'Rectangle simply supported
         Dim a, b, t As Double
         Dim Elas, p, σm, yt As Double
 
@@ -25,7 +26,7 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click, TabPage3.Enter, NumericUpDown8.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown6.ValueChanged
-        'Rectangle clamped
+        'Rectangle clamped edges
         Dim a, b, t As Double
         Dim Elas, p, σm, yt As Double
 
@@ -108,5 +109,9 @@
 
         TextBox10.Text = σm.ToString("0")
         TextBox9.Text = yt.ToString("0.0")
+    End Sub
+
+    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
+
     End Sub
 End Class
