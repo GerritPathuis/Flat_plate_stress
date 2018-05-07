@@ -137,6 +137,9 @@
         b = NumericUpDown16.Value / 1000 '[m]
         t = NumericUpDown15.Value / 1000 '[m]
 
+        TextBox20.Text = a * 2000.ToString("0.0")
+        TextBox21.Text = b * 2000.ToString("0.0")
+
         e1 = NumericUpDown10.Value / 2000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
 
@@ -152,7 +155,8 @@
 
         '============= determine k1, k2 =================
         x = a / b
-        TextBox19.Text = x.ToString("0.00")
+        TextBox22.Text = x.ToString("0.00")
+
         k1 = 0.0067 * x ^ 4 - 0.0584 * x ^ 3 + 0.0519 * x ^ 2 + 0.6132 * x - 0.4358
         k2 = 0.0127 * x ^ 4 - 0.131 * x ^ 3 + 0.3117 * x ^ 2 + 0.6069 * x - 0.219
 
@@ -172,4 +176,5 @@
         ym *= 1000          '[mm]
         TextBox11.Text = ym.ToString("0.0")
     End Sub
+
 End Class

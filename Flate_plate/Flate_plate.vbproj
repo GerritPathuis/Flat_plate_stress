@@ -64,10 +64,11 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E751307B49D143024B18B0AE0A170528D634EC95</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1CD8ABDB65E216FF88464EFC88E362675DA24B73</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Flate_plate_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
