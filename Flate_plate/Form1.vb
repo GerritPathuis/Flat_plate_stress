@@ -76,59 +76,9 @@
         TextBox7.Text = yt.ToString("0.0")
 
     End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown14.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged, NumericUpDown10.ValueChanged
-        'Rectangle simply supported with hole
-        Dim a, b, t, e1, ee As Double
-        Dim Elas, p, σm, ym As Double
-        Dim x, k1, k2 As Double
-
-        p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
-        TextBox4.Text = p.ToString
-        a = NumericUpDown14.Value / 1000 '[m]
-        b = NumericUpDown13.Value / 1000 '[m]
-        t = NumericUpDown12.Value / 1000 '[m]
-        e1 = NumericUpDown10.Value / 2000 '[m]
-        Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
-
-
-        If e1 < 0.5 * t Then
-            ee = Math.Sqrt(1.6 * e1 ^ 2 + t ^ 2)
-            ee -= 0.675 * t
-        Else
-            ee = e1
-        End If
-
-        TextBox18.Text = ee.ToString("0.000")
-
-        '============= determine k1, k2 =================
-        x = a / b
-        TextBox19.Text = x.ToString("0.00")
-        k1 = -0.00003 * x ^ 6 + 0.001 * x ^ 5 - 0.0122 * x ^ 4 + 0.0756 * x ^ 3 - 0.2549 * x ^ 2 + 0.4418 * x - 0.1238
-        k2 = 0.0023 * x ^ 5 - 0.0511 * x ^ 4 + 0.4403 * x ^ 3 - 1.8174 * x ^ 2 + 3.5846 * x - 1.7042
-
-        'If x > 4 Then k1 = 0.185
-        'If x > 3 Then k2 = 1.0
-
-        TextBox14.Text = k1.ToString("0.000")
-        TextBox15.Text = k2.ToString("0.000")
-
-        'MessageBox.Show("a= " & a.ToString & " b= " & b.ToString & " t=" & t.ToString & " e=" & ee.ToString)
-        σm = 1.5 * p / (Math.PI * t ^ 2)
-        σm *= (1.3 * Math.Log(2 * b / (Math.PI * ee)) + k2)
-
-        σm /= 10 ^ 6        '[N/mm2]
-        TextBox10.Text = σm.ToString("0")
-
-        ym = k1 * p * b ^ 2
-        ym /= Elas * t ^ 3
-        ym *= 1000          '[mm]
-        TextBox9.Text = ym.ToString("0.0")
-    End Sub
-
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, TabPage6.Enter, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown15.ValueChanged
         'Round with hole
-        Dim a, b, t, e1, ee As Double
+        Dim a, b, t As Double
         Dim Elas, p, σm, ym As Double
         Dim x, k1, k2 As Double
 
@@ -136,32 +86,20 @@
         a = NumericUpDown17.Value / 1000 '[m]
         b = NumericUpDown16.Value / 1000 '[m]
         t = NumericUpDown15.Value / 1000 '[m]
+        TextBox20.Text = a * 2000.ToString("0")
+        TextBox21.Text = b * 2000.ToString("0")
 
-        TextBox20.Text = a * 2000.ToString("0.0")
-        TextBox21.Text = b * 2000.ToString("0.0")
-
-        e1 = NumericUpDown10.Value / 2000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
-
-
-        If e1 < 0.5 * t Then
-            ee = Math.Sqrt(1.6 * e1 ^ 2 + t ^ 2)
-            ee -= 0.675 * t
-        Else
-            ee = e1
-        End If
-
-        TextBox18.Text = ee.ToString("0.000")
 
         '============= determine k1, k2 =================
         x = a / b
-        TextBox22.Text = x.ToString("0.00")
+        TextBox22.Text = x.ToString("0.0")
 
         k1 = 0.0067 * x ^ 4 - 0.0584 * x ^ 3 + 0.0519 * x ^ 2 + 0.6132 * x - 0.4358
         k2 = 0.0127 * x ^ 4 - 0.131 * x ^ 3 + 0.3117 * x ^ 2 + 0.6069 * x - 0.219
 
-        'If x > 4 Then k1 = 0.185
-        'If x > 3 Then k2 = 1.0
+        If x > 5 Then k1 = 0.815
+        If x > 5 Then k2 = 2.2
 
         TextBox17.Text = k1.ToString("0.000")
         TextBox16.Text = k2.ToString("0.000")
