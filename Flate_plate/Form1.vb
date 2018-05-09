@@ -12,17 +12,27 @@
         t = NumericUpDown4.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
 
+        If a >= b Then
+            Label40.Visible = False
+            σm = 0.75 * p * b ^ 2
+            σm /= t ^ 2 * (1.61 * (b / a) ^ 3 + 1)
+            σm /= 10 ^ 6        '[N/mm2]
 
-        σm = 0.75 * p * b ^ 2
-        σm /= t ^ 2 * (1.61 * (b / a) ^ 3 + 1)
-        σm /= 10 ^ 6        '[N/mm2]
+            yt = 0.142 * p * b ^ 4
+            yt /= Elas * t ^ 3 * (2.21 * (b / a) ^ 3 + 1)
+            yt *= 1000          '[mm]
+        Else
+            σm = 0
+            yt = 0
+            Label40.Visible = True
+        End If
 
-        yt = 0.142 * p * b ^ 4
-        yt /= Elas * t ^ 3 * (2.21 * (b / a) ^ 3 + 1)
-        yt *= 1000          '[mm]
 
         TextBox2.Text = σm.ToString("0")
         TextBox3.Text = yt.ToString("0.0")
+
+        '===== checks ================
+        TextBox2.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click, TabPage3.Enter, NumericUpDown8.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown6.ValueChanged
@@ -37,17 +47,26 @@
         t = NumericUpDown6.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
 
+        If a >= b Then
+            Label39.Visible = False
+            σm = p * b ^ 2
+            σm /= t ^ 2 * (2.63 * (b / a) ^ 6 + 1)
+            σm /= 10 ^ 6        '[N/mm2]
 
-        σm = p * b ^ 2
-        σm /= t ^ 2 * (2.63 * (b / a) ^ 6 + 1)
-        σm /= 10 ^ 6        '[N/mm2]
+            yt = 0.0284 * p * b ^ 4
+            yt /= Elas * t ^ 3 * (1.056 * (b / a) ^ 5 + 1)
+            yt *= 1000          '[mm]
+        Else
+            σm = 0
+            yt = 0
+            Label39.Visible = True
+        End If
 
-        yt = 0.0284 * p * b ^ 4
-        yt /= Elas * t ^ 3 * (1.056 * (b / a) ^ 5 + 1)
-        yt *= 1000          '[mm]
 
         TextBox6.Text = σm.ToString("0")
         TextBox5.Text = yt.ToString("0.0")
+        '===== check ================
+        TextBox6.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown9.ValueChanged, NumericUpDown11.ValueChanged
@@ -62,9 +81,7 @@
         t = NumericUpDown9.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
 
-        v = 0.3
-        TextBox13.Text = v.ToString("0.0")
-
+        v = 0.3 'For steel
         σm = 1.238 * p * r ^ 2 / t ^ 2
         σm /= 10 ^ 6        '[N/mm2]
 
@@ -74,7 +91,8 @@
 
         TextBox8.Text = σm.ToString("0")
         TextBox7.Text = yt.ToString("0.0")
-
+        '===== check ================
+        TextBox8.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, TabPage6.Enter, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown15.ValueChanged
         'Round with hole
@@ -113,6 +131,8 @@
         ym /= Elas * t ^ 3
         ym *= 1000          '[mm]
         TextBox11.Text = ym.ToString("0.0")
+        '===== check ================
+        TextBox12.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
 End Class
