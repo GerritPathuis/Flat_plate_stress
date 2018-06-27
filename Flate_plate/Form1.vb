@@ -1,4 +1,45 @@
-﻿Public Class Form1
+﻿Imports System.Math
+Imports System.IO
+Imports System.Text
+Imports System.Globalization
+Imports System.Threading
+Imports System.Windows.Forms
+
+Public Class Form1
+    Public Shared UNP() As String = {
+     "UNP 40; 6.88; 40",
+     "UNP 50; 9.12; 50",
+     "UNP 65; 14.1; 65",
+     "UNP 80; 19.4; 80",
+     "UNP 100;29.3; 100",
+     "UNP 120;43.2; 120",
+     "UNP 140;62.7; 140",
+     "UNP 160;85.3; 160",
+     "UNP 180;114; 180",
+     "UNP 200;148; 200",
+     "UNP 220;197; 220",
+     "UNP 240;248; 240",
+     "UNP 260;317; 260",
+     "UNP 280;399; 280",
+     "UNP 300;495; 300",
+     "UNP 320;597; 320",
+     "UNP 350;570; 350",
+     "UNP 380;615; 380",
+     "UNP 400;846; 400"
+    }
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim words() As String
+
+        Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+        Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+
+        For hh = 0 To UNP.Length - 1             'Fill combobox1
+            words = UNP(hh).Split(CType(";", Char()))
+            ComboBox1.Items.Add(words(0))
+        Next hh
+        ComboBox1.SelectedIndex = 7
+    End Sub
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
         'Rectangle simply supported
@@ -135,4 +176,44 @@
         TextBox12.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown12.ValueChanged
+        'http://beamguru.com/online/beam-calculator/
+        'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
+        Dim l, Iy, w, Elas As Double
+        Dim flex, mom_max, stress_b As Double
+        Dim p, load_width, area As Double
+        Dim beam_height As Double
+
+        l = NumericUpDown18.Value * 10 ^ 3      '[m->mm]
+        Iy = NumericUpDown14.Value * 10 ^ 4     '[mm4]
+        Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
+
+        'MessageBox.Show(Elas.ToString)
+        '===== Distributed load ============
+        p = NumericUpDown12.Value * 10 ^ 2 * 10 ^ 6     '[mbar->N/mm2]
+        load_width = NumericUpDown19.Value * 10 ^ 3     '[mm]
+        area = load_width                               '[mm2]
+        w = p * area                                    '[N/mm]
+
+        '===== Flex, moment and stress ============
+        mom_max = (w * l ^ 2) / 8
+        flex = 5 * w * l ^ 4 / (384 * Elas * Iy)
+        Double.TryParse(TextBox18.Text, beam_height)
+        stress_b = mom_max * beam_height * 0.5 / Iy
+
+        TextBox15.Text = (w / 10 ^ 12).ToString("0.00")     '[kN/m]
+        TextBox10.Text = (flex / 10 ^ 12).ToString("0.0")   '[mm] flex
+        TextBox13.Text = (mom_max / 10 ^ 18).ToString("0.0") '[Nm]
+        TextBox14.Text = (stress_b / 10 ^ 12).ToString("0")  '[N/mm2]
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Try
+            Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
+            NumericUpDown14.Value = CDec(words(1))  'Inertia Iy
+            TextBox18.Text = CDec(words(2))        'Beam Height
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)  ' Show the exception's message.
+        End Try
+    End Sub
 End Class
