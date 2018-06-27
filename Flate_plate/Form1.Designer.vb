@@ -137,14 +137,18 @@ Partial Class Form1
         Me.Button5 = New System.Windows.Forms.Button()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.TextBox19 = New System.Windows.Forms.TextBox()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.Label81 = New System.Windows.Forms.Label()
         Me.Label79 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label80 = New System.Windows.Forms.Label()
         Me.TextBox18 = New System.Windows.Forms.TextBox()
         Me.Label66 = New System.Windows.Forms.Label()
+        Me.NumericUpDown14 = New System.Windows.Forms.NumericUpDown()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.Label44 = New System.Windows.Forms.Label()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
-        Me.TextBox15 = New System.Windows.Forms.TextBox()
         Me.NumericUpDown19 = New System.Windows.Forms.NumericUpDown()
         Me.Label69 = New System.Windows.Forms.Label()
         Me.Label76 = New System.Windows.Forms.Label()
@@ -155,6 +159,7 @@ Partial Class Form1
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
         Me.TextBox14 = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.Label60 = New System.Windows.Forms.Label()
@@ -169,11 +174,6 @@ Partial Class Form1
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
-        Me.Label44 = New System.Windows.Forms.Label()
-        Me.NumericUpDown14 = New System.Windows.Forms.NumericUpDown()
-        Me.Label45 = New System.Windows.Forms.Label()
-        Me.Label81 = New System.Windows.Forms.Label()
-        Me.TextBox19 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -212,13 +212,13 @@ Partial Class Form1
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
+        CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox12.SuspendLayout()
         CType(Me.NumericUpDown19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox11.SuspendLayout()
         CType(Me.NumericUpDown18, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -1492,6 +1492,15 @@ Partial Class Form1
         Me.TabPage5.Text = "Beam"
         Me.TabPage5.UseVisualStyleBackColor = True
         '
+        'TextBox19
+        '
+        Me.TextBox19.Location = New System.Drawing.Point(8, 370)
+        Me.TextBox19.Name = "TextBox19"
+        Me.TextBox19.Size = New System.Drawing.Size(774, 20)
+        Me.TextBox19.TabIndex = 77
+        Me.TextBox19.Text = "http://www.awc.org/pdf/codes-standards/publications/design-aids/AWC-DA6-BeamFormu" &
+    "las-0710.pdf"
+        '
         'GroupBox13
         '
         Me.GroupBox13.Controls.Add(Me.Label81)
@@ -1509,6 +1518,16 @@ Partial Class Form1
         Me.GroupBox13.TabIndex = 76
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Beam Select"
+        '
+        'Label81
+        '
+        Me.Label81.AutoSize = True
+        Me.Label81.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label81.Location = New System.Drawing.Point(224, 24)
+        Me.Label81.Name = "Label81"
+        Me.Label81.Size = New System.Drawing.Size(20, 16)
+        Me.Label81.TabIndex = 79
+        Me.Label81.Text = "[-]"
         '
         'Label79
         '
@@ -1557,6 +1576,39 @@ Partial Class Form1
         Me.Label66.TabIndex = 74
         Me.Label66.Text = "Beam select"
         '
+        'NumericUpDown14
+        '
+        Me.NumericUpDown14.BackColor = System.Drawing.Color.Yellow
+        Me.NumericUpDown14.Enabled = False
+        Me.NumericUpDown14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NumericUpDown14.Location = New System.Drawing.Point(130, 46)
+        Me.NumericUpDown14.Maximum = New Decimal(New Integer() {40000, 0, 0, 0})
+        Me.NumericUpDown14.Name = "NumericUpDown14"
+        Me.NumericUpDown14.Size = New System.Drawing.Size(76, 22)
+        Me.NumericUpDown14.TabIndex = 22
+        Me.NumericUpDown14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumericUpDown14.Value = New Decimal(New Integer() {85, 0, 0, 0})
+        '
+        'Label45
+        '
+        Me.Label45.AutoSize = True
+        Me.Label45.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label45.Location = New System.Drawing.Point(222, 49)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(41, 16)
+        Me.Label45.TabIndex = 23
+        Me.Label45.Text = "[cm4]"
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.Location = New System.Drawing.Point(10, 46)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(104, 16)
+        Me.Label44.TabIndex = 21
+        Me.Label44.Text = "Beam Inertia (Iy)"
+        '
         'GroupBox12
         '
         Me.GroupBox12.Controls.Add(Me.NumericUpDown19)
@@ -1571,15 +1623,6 @@ Partial Class Form1
         Me.GroupBox12.TabIndex = 75
         Me.GroupBox12.TabStop = False
         Me.GroupBox12.Text = "Pressure load"
-        '
-        'TextBox15
-        '
-        Me.TextBox15.Enabled = False
-        Me.TextBox15.Location = New System.Drawing.Point(132, 54)
-        Me.TextBox15.Name = "TextBox15"
-        Me.TextBox15.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox15.TabIndex = 76
-        Me.TextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'NumericUpDown19
         '
@@ -1701,12 +1744,22 @@ Partial Class Form1
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Beam Selection and load"
         '
+        'TextBox15
+        '
+        Me.TextBox15.Enabled = False
+        Me.TextBox15.Location = New System.Drawing.Point(132, 54)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox15.TabIndex = 76
+        Me.TextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'TextBox14
         '
         Me.TextBox14.Enabled = False
+        Me.TextBox14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox14.Location = New System.Drawing.Point(131, 122)
         Me.TextBox14.Name = "TextBox14"
-        Me.TextBox14.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox14.Size = New System.Drawing.Size(76, 21)
         Me.TextBox14.TabIndex = 73
         Me.TextBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1733,9 +1786,10 @@ Partial Class Form1
         'TextBox10
         '
         Me.TextBox10.Enabled = False
+        Me.TextBox10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox10.Location = New System.Drawing.Point(132, 148)
         Me.TextBox10.Name = "TextBox10"
-        Me.TextBox10.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox10.Size = New System.Drawing.Size(76, 21)
         Me.TextBox10.TabIndex = 67
         Me.TextBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1841,58 +1895,6 @@ Partial Class Form1
         Me.Label43.TabIndex = 20
         Me.Label43.Text = "[kN/m]"
         '
-        'Label44
-        '
-        Me.Label44.AutoSize = True
-        Me.Label44.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label44.Location = New System.Drawing.Point(10, 46)
-        Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(104, 16)
-        Me.Label44.TabIndex = 21
-        Me.Label44.Text = "Beam Inertia (Iy)"
-        '
-        'NumericUpDown14
-        '
-        Me.NumericUpDown14.BackColor = System.Drawing.Color.Yellow
-        Me.NumericUpDown14.Enabled = False
-        Me.NumericUpDown14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown14.Location = New System.Drawing.Point(130, 46)
-        Me.NumericUpDown14.Maximum = New Decimal(New Integer() {2000, 0, 0, 0})
-        Me.NumericUpDown14.Name = "NumericUpDown14"
-        Me.NumericUpDown14.Size = New System.Drawing.Size(76, 22)
-        Me.NumericUpDown14.TabIndex = 22
-        Me.NumericUpDown14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown14.Value = New Decimal(New Integer() {85, 0, 0, 0})
-        '
-        'Label45
-        '
-        Me.Label45.AutoSize = True
-        Me.Label45.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label45.Location = New System.Drawing.Point(222, 49)
-        Me.Label45.Name = "Label45"
-        Me.Label45.Size = New System.Drawing.Size(41, 16)
-        Me.Label45.TabIndex = 23
-        Me.Label45.Text = "[cm4]"
-        '
-        'Label81
-        '
-        Me.Label81.AutoSize = True
-        Me.Label81.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label81.Location = New System.Drawing.Point(224, 24)
-        Me.Label81.Name = "Label81"
-        Me.Label81.Size = New System.Drawing.Size(20, 16)
-        Me.Label81.TabIndex = 79
-        Me.Label81.Text = "[-]"
-        '
-        'TextBox19
-        '
-        Me.TextBox19.Location = New System.Drawing.Point(8, 370)
-        Me.TextBox19.Name = "TextBox19"
-        Me.TextBox19.Size = New System.Drawing.Size(774, 20)
-        Me.TextBox19.TabIndex = 77
-        Me.TextBox19.Text = "http://www.awc.org/pdf/codes-standards/publications/design-aids/AWC-DA6-BeamFormu" &
-    "las-0710.pdf"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1953,6 +1955,7 @@ Partial Class Form1
         Me.TabPage5.PerformLayout()
         Me.GroupBox13.ResumeLayout(False)
         Me.GroupBox13.PerformLayout()
+        CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox12.PerformLayout()
         CType(Me.NumericUpDown19, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1961,7 +1964,6 @@ Partial Class Form1
         Me.GroupBox11.ResumeLayout(False)
         Me.GroupBox11.PerformLayout()
         CType(Me.NumericUpDown18, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
