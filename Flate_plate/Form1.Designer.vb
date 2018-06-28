@@ -358,17 +358,17 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.Label33)
         Me.GroupBox1.Location = New System.Drawing.Point(23, 209)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(291, 71)
+        Me.GroupBox1.Size = New System.Drawing.Size(291, 68)
         Me.GroupBox1.TabIndex = 29
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Check values"
+        Me.GroupBox1.Text = "Check values (max allowed values)"
         '
         'NumericUpDown10
         '
         Me.NumericUpDown10.BackColor = System.Drawing.Color.Yellow
         Me.NumericUpDown10.Enabled = False
         Me.NumericUpDown10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NumericUpDown10.Location = New System.Drawing.Point(135, 19)
+        Me.NumericUpDown10.Location = New System.Drawing.Point(134, 19)
         Me.NumericUpDown10.Maximum = New Decimal(New Integer() {220, 0, 0, 0})
         Me.NumericUpDown10.Minimum = New Decimal(New Integer() {170, 0, 0, 0})
         Me.NumericUpDown10.Name = "NumericUpDown10"
@@ -381,17 +381,17 @@ Partial Class Form1
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.Location = New System.Drawing.Point(8, 22)
+        Me.Label34.Location = New System.Drawing.Point(7, 22)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(110, 16)
+        Me.Label34.Size = New System.Drawing.Size(86, 16)
         Me.Label34.TabIndex = 24
-        Me.Label34.Text = "Max. allowed 304"
+        Me.Label34.Text = "Max. allowed"
         '
         'Label33
         '
         Me.Label33.AutoSize = True
         Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(222, 21)
+        Me.Label33.Location = New System.Drawing.Point(221, 21)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(59, 16)
         Me.Label33.TabIndex = 25
@@ -1627,7 +1627,7 @@ Partial Class Form1
         'NumericUpDown19
         '
         Me.NumericUpDown19.BackColor = System.Drawing.Color.Yellow
-        Me.NumericUpDown19.DecimalPlaces = 1
+        Me.NumericUpDown19.DecimalPlaces = 3
         Me.NumericUpDown19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown19.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown19.InterceptArrowKeys = False
@@ -1757,7 +1757,7 @@ Partial Class Form1
         '
         Me.TextBox14.Enabled = False
         Me.TextBox14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox14.Location = New System.Drawing.Point(131, 122)
+        Me.TextBox14.Location = New System.Drawing.Point(132, 122)
         Me.TextBox14.Name = "TextBox14"
         Me.TextBox14.Size = New System.Drawing.Size(76, 21)
         Me.TextBox14.TabIndex = 73
@@ -1796,7 +1796,7 @@ Partial Class Form1
         'TextBox13
         '
         Me.TextBox13.Enabled = False
-        Me.TextBox13.Location = New System.Drawing.Point(131, 96)
+        Me.TextBox13.Location = New System.Drawing.Point(132, 96)
         Me.TextBox13.Name = "TextBox13"
         Me.TextBox13.Size = New System.Drawing.Size(76, 20)
         Me.TextBox13.TabIndex = 70
@@ -1815,7 +1815,7 @@ Partial Class Form1
         'NumericUpDown18
         '
         Me.NumericUpDown18.BackColor = System.Drawing.Color.Yellow
-        Me.NumericUpDown18.DecimalPlaces = 1
+        Me.NumericUpDown18.DecimalPlaces = 3
         Me.NumericUpDown18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown18.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown18.Location = New System.Drawing.Point(132, 22)

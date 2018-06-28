@@ -217,6 +217,9 @@ Public Class Form1
         TextBox10.Text = (flex / 10 ^ 12).ToString("0.0")   '[mm] flex
         TextBox13.Text = (mom_max / 10 ^ 18).ToString("0.0") '[Nm]
         TextBox14.Text = (stress_b / 10 ^ 12).ToString("0")  '[N/mm2]
+
+        '===== check ================
+        TextBox14.BackColor = IIf(stress_b / 10 ^ 12 > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
