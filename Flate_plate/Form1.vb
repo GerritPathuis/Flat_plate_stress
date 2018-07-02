@@ -55,7 +55,7 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
         'Rectangle simply supported
-        Dim a, b, t As Double
+        Dim a, b, t, flex As Double
         Dim Elas, p, σm, yt As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
@@ -74,15 +74,18 @@ Public Class Form1
             yt = 0.142 * p * b ^ 4
             yt /= Elas * t ^ 3 * (2.21 * (b / a) ^ 3 + 1)
             yt *= 1000          '[mm]
+            flex = a * 10 ^ 3 / yt
         Else
             σm = 0
             yt = 0
             Label40.Visible = True
+            flex = 0
         End If
 
 
         TextBox2.Text = σm.ToString("0")
         TextBox3.Text = yt.ToString("0.0")
+        TextBox25.Text = flex.ToString("0")
 
         '===== checks ================
         TextBox2.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
@@ -91,7 +94,7 @@ Public Class Form1
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click, TabPage3.Enter, NumericUpDown8.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown6.ValueChanged
         'Rectangle clamped edges
         Dim a, b, t As Double
-        Dim Elas, p, σm, yt As Double
+        Dim Elas, p, σm, yt, flex As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
@@ -109,15 +112,19 @@ Public Class Form1
             yt = 0.0284 * p * b ^ 4
             yt /= Elas * t ^ 3 * (1.056 * (b / a) ^ 5 + 1)
             yt *= 1000          '[mm]
+            flex = a * 10 ^ 3 / yt
         Else
             σm = 0
             yt = 0
             Label39.Visible = True
+            flex = 0
         End If
+
 
 
         TextBox6.Text = σm.ToString("0")
         TextBox5.Text = yt.ToString("0.0")
+        TextBox24.Text = flex.ToString("0")
         '===== check ================
         TextBox6.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
@@ -188,7 +195,7 @@ Public Class Form1
         TextBox12.BackColor = IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown12.ValueChanged
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged
         'http://beamguru.com/online/beam-calculator/
         'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
         Dim l, Iy, w, Elas As Double
@@ -202,7 +209,7 @@ Public Class Form1
 
         'MessageBox.Show(Elas.ToString)
         '===== Distributed load ============
-        p = NumericUpDown12.Value * 10 ^ 2 * 10 ^ 6     '[mbar->N/mm2]
+        p = NumericUpDown1.Value * 10 ^ 2 * 10 ^ 6      '[mbar->N/mm2]
         load_width = NumericUpDown19.Value * 10 ^ 3     '[mm]
         area = load_width                               '[mm2]
         w = p * area                                    '[N/mm]
@@ -216,8 +223,8 @@ Public Class Form1
         TextBox15.Text = (w / 10 ^ 12).ToString("0.00")     '[kN/m]
         TextBox10.Text = (flex / 10 ^ 12).ToString("0.0")   '[mm] flex
         TextBox13.Text = (mom_max / 10 ^ 18).ToString("0.0") '[Nm]
-        TextBox14.Text = (stress_b / 10 ^ 12).ToString("0")  '[N/mm2]
-
+        TextBox14.Text = (stress_b / 10 ^ 12).ToString("0") '[N/mm2]
+        TextBox23.Text = NumericUpDown1.Value.ToString      '[mbar]
         '===== check ================
         TextBox14.BackColor = IIf(stress_b / 10 ^ 12 > NumericUpDown10.Value, Color.Red, Color.LightGreen)
     End Sub
@@ -231,4 +238,6 @@ Public Class Form1
             MessageBox.Show(ex.Message)  ' Show the exception's message.
         End Try
     End Sub
+
+
 End Class
