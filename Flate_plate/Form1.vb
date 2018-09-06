@@ -53,6 +53,9 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
+        Calc()
+    End Sub
+    Private Sub Calc()
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
         'Rectangle simply supported
         Dim a, b, t, flex As Double
@@ -239,5 +242,7 @@ Public Class Form1
         End Try
     End Sub
 
-
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        Calc()
+    End Sub
 End Class
