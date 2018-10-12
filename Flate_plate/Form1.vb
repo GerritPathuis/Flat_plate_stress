@@ -246,26 +246,44 @@ Public Class Form1
         Calc()
     End Sub
 
-    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown20.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown20.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged, RadioButton1.CheckedChanged, NumericUpDown21.ValueChanged
         Dim moi As Double       'Moment of Inertia
         Dim wi, le, th As Double
         Dim max_d As Double     'Max deflection
         Dim ω As Double         'Uniformly distrib load
         Dim Elas As Double
+        Dim p_load As Double     'Point load [N]
 
         Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
-        le = NumericUpDown12.Value   '[mm]
-        wi = NumericUpDown13.Value   '[mm]
-        th = NumericUpDown20.Value   '[mm]
+        le = NumericUpDown12.Value      '[mm]
+        wi = NumericUpDown13.Value      '[mm]
+        th = NumericUpDown20.Value      '[mm]
+        p_load = NumericUpDown21.Value  '[N]
+        moi = wi * th ^ 3 / 12          'Moment of Inertia
 
-        ω = wi * th / 10 ^ 9 * 7800 * 10 '[N/mm]
+        '---------- Select load type -------------
+        If RadioButton1.Checked Then    'Point 
+            PictureBox8.Visible = False 'Distr. load
+            PictureBox9.Visible = True  'Point load
+            GroupBox14.Visible = False
+            GroupBox17.Visible = True
+            max_d = p_load * le ^ 3 / (3 * Elas * moi)
 
-        moi = wi * th ^ 3 / 12      'Moment of Inertia
-        max_d = ω * le ^ 4 / (8 * Elas * moi)
+        Else                            'Distributed load
+            PictureBox8.Visible = True  'Distr. load
+            PictureBox9.Visible = False 'Point load
+            GroupBox14.Visible = True
+            GroupBox17.Visible = False
 
-        TextBox26.Text = moi.ToString("0")
-        TextBox27.Text = max_d.ToString("0") 'Max deflection
-        TextBox28.Text = ω.ToString("0.0")
+            ω = wi * th / 10 ^ 9 * 7800 * 10 '[N/mm]
+            max_d = ω * le ^ 4 / (8 * Elas * moi)
+        End If
+
+        TextBox26.Text = moi.ToString("0")      'Moment of Inertia
+        TextBox27.Text = max_d.ToString("0.00") 'Max deflection
+        TextBox28.Text = ω.ToString("0.00")     'Distrib. Load
     End Sub
+
+
 End Class
