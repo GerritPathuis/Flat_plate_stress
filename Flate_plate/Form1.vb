@@ -245,4 +245,27 @@ Public Class Form1
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
         Calc()
     End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown20.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged
+        Dim moi As Double       'Moment of Inertia
+        Dim wi, le, th As Double
+        Dim max_d As Double     'Max deflection
+        Dim ω As Double         'Uniformly distrib load
+        Dim Elas As Double
+
+        Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
+
+        le = NumericUpDown12.Value   '[mm]
+        wi = NumericUpDown13.Value   '[mm]
+        th = NumericUpDown20.Value   '[mm]
+
+        ω = wi * th / 10 ^ 9 * 7800 * 10 '[N/mm]
+
+        moi = wi * th ^ 3 / 12      'Moment of Inertia
+        max_d = ω * le ^ 4 / (8 * Elas * moi)
+
+        TextBox26.Text = moi.ToString("0")
+        TextBox27.Text = max_d.ToString("0") 'Max deflection
+        TextBox28.Text = ω.ToString("0.0")
+    End Sub
 End Class
