@@ -90,6 +90,8 @@ Public Class Form1
      "HEB 300; 25170; 300;  177;    150"
     }
 
+    Public Shared _ρ_steel As Double = 7850
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim words() As String
 
@@ -115,14 +117,19 @@ Public Class Form1
         'Rectangle simply supported
         Dim a, b, t, flex As Double
         Dim Elas, p, σm, yt As Double
+        Dim weight As Double
 
-        p = NumericUpDown1.Value * 100          '[mbar]->[N/m2]]
-        TextBox4.Text = p.ToString              '[N/m2]
-        TextBox43.Text = (p / 10 ^ 6).ToString  '[N/mm2]
+        p = NumericUpDown1.Value * 100                  '[mbar]->[N/m2]]
+        TextBox4.Text = p.ToString                      '[N/m2]
+        TextBox43.Text = (p / 10 ^ 6).ToString          '[N/mm2]
+        TextBox49.Text = NumericUpDown1.Value.ToString  '[mbar]
+        TextBox50.Text = NumericUpDown1.Value.ToString  '[mbar]
+
         a = NumericUpDown2.Value / 1000 '[m]    'Length
         b = NumericUpDown3.Value / 1000 '[m]    'Width
         t = NumericUpDown4.Value / 1000 '[m]    'Thickness
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        weight = a * b * t * _ρ_steel           '[kg]
 
         If a >= b Then
             Label40.Visible = False
@@ -145,6 +152,7 @@ Public Class Form1
         TextBox2.Text = σm.ToString("0")
         TextBox3.Text = yt.ToString("0.0")
         TextBox25.Text = flex.ToString("0")
+        TextBox51.Text = weight.ToString("0")
 
         '===== checks ================
         TextBox2.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
@@ -154,6 +162,7 @@ Public Class Form1
         'Rectangle clamped edges
         Dim a, b, t As Double
         Dim Elas, p, σm, yt, flex As Double
+        Dim weight As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
@@ -161,6 +170,7 @@ Public Class Form1
         b = NumericUpDown7.Value / 1000 '[m]
         t = NumericUpDown6.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        weight = a * b * t * _ρ_steel           '[kg]
 
         If a >= b Then
             Label39.Visible = False
@@ -179,11 +189,10 @@ Public Class Form1
             flex = 0
         End If
 
-
-
         TextBox6.Text = σm.ToString("0")
         TextBox5.Text = yt.ToString("0.0")
         TextBox24.Text = flex.ToString("0")
+        TextBox52.Text = weight.ToString("0")
         '===== check ================
         TextBox6.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
     End Sub
@@ -311,10 +320,10 @@ Public Class Form1
         Try
             Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
             NumericUpDown14.Value = CDec(words(1))  'Inertia Iy
-            TextBox18.Text = words(2)        'Beam Height
-            TextBox47.Text = words(3)        'Beam weight
-            area = Math.Round(CDbl(words(3)) / 0.00785, 0)
-            TextBox48.Text = area.ToString    'Beam area
+            TextBox18.Text = words(2)               'Beam Height
+            TextBox47.Text = words(3)               'Beam weight
+            area = Math.Round(CDbl(words(3)) * 10 ^ 6 / _ρ_steel, 0)
+            TextBox48.Text = area.ToString          'Beam area
         Catch ex As Exception
             MessageBox.Show(ex.Message)  ' Show the exception's message.
         End Try
@@ -448,5 +457,7 @@ Public Class Form1
         TextBox29.BackColor = CType(IIf(σy < NumericUpDown10.Value, Color.LightGreen, Color.Red), Color)
     End Sub
 
+    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
 
+    End Sub
 End Class
