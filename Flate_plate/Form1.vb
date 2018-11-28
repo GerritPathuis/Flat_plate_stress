@@ -102,9 +102,9 @@ Public Class Form1
             ComboBox2.Items.Add(words(0))
             ComboBox3.Items.Add(words(0))
         Next hh
-        ComboBox1.SelectedIndex = 7
-        ComboBox2.SelectedIndex = 56
-        ComboBox3.SelectedIndex = 56
+        ComboBox1.SelectedIndex = 56    'UNP 140
+        ComboBox2.SelectedIndex = 55
+        ComboBox3.SelectedIndex = 57
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
@@ -116,11 +116,12 @@ Public Class Form1
         Dim a, b, t, flex As Double
         Dim Elas, p, σm, yt As Double
 
-        p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
-        TextBox4.Text = p.ToString
-        a = NumericUpDown2.Value / 1000 '[m]
-        b = NumericUpDown3.Value / 1000 '[m]
-        t = NumericUpDown4.Value / 1000 '[m]
+        p = NumericUpDown1.Value * 100          '[mbar]->[N/m2]]
+        TextBox4.Text = p.ToString              '[N/m2]
+        TextBox43.Text = (p / 10 ^ 6).ToString  '[N/mm2]
+        a = NumericUpDown2.Value / 1000 '[m]    'Length
+        b = NumericUpDown3.Value / 1000 '[m]    'Width
+        t = NumericUpDown4.Value / 1000 '[m]    'Thickness
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
 
         If a >= b Then
@@ -253,13 +254,15 @@ Public Class Form1
         TextBox12.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
         'http://beamguru.com/online/beam-calculator/
         'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
         Dim l, Iy, w, Elas As Double
-        Dim flex, mom_max, stress_b As Double
+        Dim flex, mom_max, σ_bend As Double
         Dim p, load_width, area As Double
-        Dim beam_height As Double
+        Dim beam_height, beam_section_area As Double
+        Dim σ_tension, tension As Double
+        Dim σ_combi As Double
 
         l = NumericUpDown18.Value * 10 ^ 3      '[m->mm]
         Iy = NumericUpDown14.Value * 10 ^ 4     '[mm4]
@@ -276,22 +279,42 @@ Public Class Form1
         mom_max = (w * l ^ 2) / 8
         flex = 5 * w * l ^ 4 / (384 * Elas * Iy)
         Double.TryParse(TextBox18.Text, beam_height)
-        stress_b = mom_max * beam_height * 0.5 / Iy
+        σ_bend = mom_max * beam_height * 0.5 / Iy
+        σ_bend /= 10 ^ 12                             '[N/mm2]
+        ' MessageBox.Show(σ_bend.ToString)
 
+        '===== Tension σ ============================
+        Double.TryParse(TextBox48.Text, beam_section_area)
+        tension = NumericUpDown24.Value * 10 ^ 3     '[N]
+        σ_tension = tension / beam_section_area      '[N/mm2]
+
+        '========= Combines stress =============
+        σ_combi = σ_bend + σ_tension
+
+        '===== Present =
         TextBox15.Text = (w / 10 ^ 12).ToString("0.00")     '[kN/m]
         TextBox10.Text = (flex / 10 ^ 12).ToString("0.0")   '[mm] flex
         TextBox13.Text = (mom_max / 10 ^ 18).ToString("0.0") '[Nm]
-        TextBox14.Text = (stress_b / 10 ^ 12).ToString("0") '[N/mm2]
+        TextBox14.Text = σ_bend.ToString("0") '[N/mm2]
         TextBox23.Text = NumericUpDown1.Value.ToString      '[mbar]
+        TextBox44.Text = σ_bend.ToString("0.0")           '[N/mm2]
+        TextBox45.Text = σ_tension.ToString("0.0")          '[N/mm2]
+        TextBox46.Text = σ_combi.ToString("0.0")            '[N/mm2]
+
         '===== check ================
-        TextBox14.BackColor = CType(IIf(stress_b / 10 ^ 12 > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox14.BackColor = CType(IIf(σ_bend > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox46.BackColor = CType(IIf(σ_combi > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim area As Double
         Try
             Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
             NumericUpDown14.Value = CDec(words(1))  'Inertia Iy
             TextBox18.Text = words(2)        'Beam Height
+            TextBox47.Text = words(3)        'Beam weight
+            area = Math.Round(CDbl(words(3)) / 0.00785, 0)
+            TextBox48.Text = area.ToString    'Beam area
         Catch ex As Exception
             MessageBox.Show(ex.Message)  ' Show the exception's message.
         End Try
@@ -340,7 +363,7 @@ Public Class Form1
         TextBox28.Text = ω.ToString("0.00")     'Distrib. Load
     End Sub
 
-    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown25.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged, TabPage8.Enter
         Calc_grill()
     End Sub
     'Design of Ship Hull Structures ISBN: 978-3-642-10009-3
@@ -362,7 +385,10 @@ Public Class Form1
         Dim words() As String
 
         '---------- get data -------------
-        p = NumericUpDown25.Value / 10 ^ 4  '[mbar]->[N/mm2]
+        'p = NumericUpDown25.Value / 10 ^ 4  '[mbar]->[N/mm2]
+        Double.TryParse(TextBox43.Text, p)  '[N/mm2]
+        TextBox33.Text = p.ToString  '[N/mm2]
+
         m = NumericUpDown29.Value
         n = NumericUpDown28.Value
         a = NumericUpDown22.Value
@@ -409,7 +435,7 @@ Public Class Form1
         '------ present ----------
         TextBox29.Text = σy.ToString("0")       '[N/mm2]
         TextBox31.Text = δ.ToString("0.0")      '[mm]
-        TextBox33.Text = p.ToString("0.0000")   '[N/mm2]
+        ' TextBox33.Text = p.ToString("0.0000")   '[N/mm2]
 
         TextBox36.Text = llx.ToString("0")      '[mm]
         TextBox35.Text = lly.ToString("0")      '[mm]
