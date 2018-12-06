@@ -105,8 +105,8 @@ Public Class Form1
             ComboBox3.Items.Add(words(0))
         Next hh
         ComboBox1.SelectedIndex = 56    'UNP 140
-        ComboBox2.SelectedIndex = 55
-        ComboBox3.SelectedIndex = 56
+        ComboBox2.SelectedIndex = 57    'UNP 160
+        ComboBox3.SelectedIndex = 53    'UNP `80
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
