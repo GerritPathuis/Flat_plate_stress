@@ -375,89 +375,177 @@ Public Class Form1
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged, TabPage8.Enter
         Calc_grill()
     End Sub
+    ''Design of Ship Hull Structures ISBN: 978-3-642-10009-3
+    ''Chapter Grillage Structure Page 254 
+    ''
+    'Private Sub Calc_grill()
+    '    Dim p As Double         'Uniform load
+    '    Dim a, b As Double      'Longer and shorter edge
+    '    Dim Ix, Iy As Double    'Second Moment of inertia
+    '    Dim m, n As Double      'No Girders
+    '    Dim ey As Double        'Distance COG to plate face
+    '    Dim llx, lly As Double  'Girder space
+    '    Dim σy As Double        'Midpoint Stiffener Stress
+    '    Dim δ As Double         'Midpoint (Max) deflection
+    '    Dim Elas As Double      'Young modulus
+    '    Dim weight As Double    'Girder weight
+    '    Dim gir_wht_x As Double
+    '    Dim gir_wht_y As Double
+    '    Dim words() As String
+
+    '    '---------- get data -------------
+    '    'p = NumericUpDown25.Value / 10 ^ 4  '[mbar]->[N/mm2]
+    '    Double.TryParse(TextBox43.Text, p)  '[N/mm2]
+    '    TextBox33.Text = p.ToString  '[N/mm2]
+
+    '    m = NumericUpDown29.Value
+    '    n = NumericUpDown28.Value
+    '    a = NumericUpDown22.Value
+    '    b = NumericUpDown23.Value
+
+    '    Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
+
+    '    If ComboBox2.SelectedIndex > 0 And ComboBox3.SelectedIndex > 0 Then
+    '        '--- girders in X direction
+    '        words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
+    '        Ix = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->mm^4]
+    '        gir_wht_x = CDbl(words(3))          '[kg]
+    '        TextBox38.Text = gir_wht_x.ToString
+    '        TextBox40.Text = (Ix / 10 ^ 4).ToString     '[cm4]
+    '        TextBox32.Text = (Ix / 10 ^ 4).ToString     '[cm4]
+
+    '        '--- girders in Y direction
+    '        words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
+    '        Iy = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->mm^4]
+    '        gir_wht_y = CDbl(words(3))          '[kg]
+    '        TextBox39.Text = gir_wht_y.ToString
+    '        TextBox41.Text = (Iy / 10 ^ 4).ToString     '[cm4]
+    '        TextBox34.Text = (Iy / 10 ^ 4).ToString     '[cm4]
+
+    '        ey = CDbl(words(2)) - CDbl(words(4))
+    '        TextBox42.Text = ey.ToString("0.0") 'distance to plate face [mm]
+    '    End If
+
+
+    '    '--------- calc girder spacing -------------
+    '    llx = b / (m + 1)   'Girder space
+    '    lly = a / (n + 1)   'Girder space
+
+    '    '------ deflection and stress @ midpoint--------
+    '    δ = a * b * p
+    '    δ /= PI ^ 6 * Elas / 16
+    '    δ /= ((Ix * (m + 1) / a ^ 3) + (Iy * (n + 1) / b ^ 3))
+    '    σy = PI ^ 2 * δ * Elas * ey / b ^ 2
+
+    '    '------ Girder weight ---------------------
+    '    weight = n * b / 1000 * gir_wht_y    'Y (vertical girder) [kg]
+    '    weight += m * a / 1000 * gir_wht_x   'X (horizontal girder) [kg]
+
+    '    '------ present ----------
+    '    TextBox29.Text = σy.ToString("0")       '[N/mm2]
+    '    TextBox31.Text = δ.ToString("0.0")      '[mm]
+    '    ' TextBox33.Text = p.ToString("0.0000")   '[N/mm2]
+
+    '    TextBox36.Text = llx.ToString("0")      '[mm]
+    '    TextBox35.Text = lly.ToString("0")      '[mm]
+
+    '    TextBox35.Text = lly.ToString("0")      '[mm]
+    '    TextBox37.Text = weight.ToString("0.0") '[kg]
+
+    '    '------ check -shorter/longer edge---------
+    '    NumericUpDown22.BackColor = CType(IIf(a > b, Color.Yellow, Color.Red), Color)
+    '    TextBox29.BackColor = CType(IIf(σy < NumericUpDown10.Value, Color.LightGreen, Color.Red), Color)
+    'End Sub
+
+
     'Design of Ship Hull Structures ISBN: 978-3-642-10009-3
     'Chapter Grillage Structure Page 254 
     '
     Private Sub Calc_grill()
-        Dim p As Double         'Uniform load
-        Dim a, b As Double      'Longer and shorter edge
-        Dim Ix, Iy As Double    'Second Moment of inertia
-        Dim m, n As Double      'No Girders
-        Dim ey As Double        'Distance COG to plate face
-        Dim llx, lly As Double  'Girder space
-        Dim σy As Double        'Midpoint Stiffener Stress
-        Dim δ As Double         'Midpoint (Max) deflection
-        Dim Elas As Double      'Young modulus
-        Dim weight As Double    'Girder weight
-        Dim gir_wht_x As Double
-        Dim gir_wht_y As Double
+        Dim press As Double             'Uniform load
+        Dim a_hor As Double             'Longer horizontal edge
+        Dim b_vert As Double            'Shorter vertical edge
+        Dim I_vert_beam As Double       'Second Moment of inertia
+        Dim I_hor_girder As Double      'Second Moment of inertia
+        Dim no_hor_girders As Double    'No Girders vertical
+        Dim no_vert_beams As Double     'No Beams horintal
+        Dim ey As Double            'Distance COG to plate face
+        Dim s_beams As Double       'Beams space 
+        Dim l_girder As Double          'Girder space 
+        Dim σy As Double            'Midpoint Stiffener Stress
+        Dim δ As Double             'Midpoint (Max) deflection
+        Dim Elas As Double          'Young modulus
+        Dim weight As Double        'weight
+        Dim gir_vert_wht As Double   'Girder_vert 
+        Dim beam_hor_wht As Double  'Beam vertical
         Dim words() As String
+        Dim l_opti As Double
 
         '---------- get data -------------
-        'p = NumericUpDown25.Value / 10 ^ 4  '[mbar]->[N/mm2]
-        Double.TryParse(TextBox43.Text, p)  '[N/mm2]
-        TextBox33.Text = p.ToString  '[N/mm2]
+        Double.TryParse(TextBox43.Text, press)  '[N/no_gird2]
+        TextBox33.Text = press.ToString  '[N/no_gird2]
 
-        m = NumericUpDown29.Value
-        n = NumericUpDown28.Value
-        a = NumericUpDown22.Value
-        b = NumericUpDown23.Value
+        '--- NOTE GIRDER is vertical , BEAM is horizontal------
+        no_hor_girders = NumericUpDown29.Value      'no Girder
+        no_vert_beams = NumericUpDown28.Value       'no Beams
+        a_hor = NumericUpDown22.Value                   'Longer edge
+        b_vert = NumericUpDown23.Value                   'Shortes edge
 
-        Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
+        Elas = NumericUpDown5.Value * 10 ^ 3        '[N/no_gird2]
 
         If ComboBox2.SelectedIndex > 0 And ComboBox3.SelectedIndex > 0 Then
-            '--- girders in X direction
+            '--- Beams VERTICAL
             words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
-            Ix = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->mm^4]
-            gir_wht_x = CDbl(words(3))          '[kg]
-            TextBox38.Text = gir_wht_x.ToString
-            TextBox40.Text = (Ix / 10 ^ 4).ToString     '[cm4]
-            TextBox32.Text = (Ix / 10 ^ 4).ToString     '[cm4]
+            I_vert_beam = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->no_gird^4]
+            beam_hor_wht = CDbl(words(3))          '[kg]
+            TextBox38.Text = beam_hor_wht.ToString
+            TextBox40.Text = (I_vert_beam / 10 ^ 4).ToString     '[cm4]
+            TextBox32.Text = (I_vert_beam / 10 ^ 4).ToString     '[cm4]
 
-            '--- girders in Y direction
+            '--- Girders Horizontal
             words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
-            Iy = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->mm^4]
-            gir_wht_y = CDbl(words(3))          '[kg]
-            TextBox39.Text = gir_wht_y.ToString
-            TextBox41.Text = (Iy / 10 ^ 4).ToString     '[cm4]
-            TextBox34.Text = (Iy / 10 ^ 4).ToString     '[cm4]
+            I_hor_girder = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->no_gird^4]
+            gir_vert_wht = CDbl(words(3))          '[kg]
+            TextBox39.Text = gir_vert_wht.ToString
+            TextBox41.Text = (I_hor_girder / 10 ^ 4).ToString     '[cm4]
+            TextBox34.Text = (I_hor_girder / 10 ^ 4).ToString     '[cm4]
 
             ey = CDbl(words(2)) - CDbl(words(4))
-            TextBox42.Text = ey.ToString("0.0") 'distance to plate face [mm]
+            TextBox42.Text = ey.ToString("0.0") 'distance to plate face [no_gird]
         End If
 
-
         '--------- calc girder spacing -------------
-        llx = b / (m + 1)   'Girder space
-        lly = a / (n + 1)   'Girder space
+        s_beams = a_hor / (no_hor_girders + 1)    'Beam space
+        l_girder = b_vert / (no_vert_beams + 1)   'Girder space
 
         '------ deflection and stress @ midpoint--------
-        δ = a * b * p
+        '------ formula 6.1.1---------------------------
+        δ = a_hor * b_vert * press
         δ /= PI ^ 6 * Elas / 16
-        δ /= ((Ix * (m + 1) / a ^ 3) + (Iy * (n + 1) / b ^ 3))
-        σy = PI ^ 2 * δ * Elas * ey / b ^ 2
+        δ /= ((I_hor_girder * (no_hor_girders + 1) / a_hor ^ 3) + (I_vert_beam * (no_vert_beams + 1) / b_vert ^ 3))
+        σy = PI ^ 2 * δ * Elas * ey / b_vert ^ 2
 
         '------ Girder weight ---------------------
-        weight = n * b / 1000 * gir_wht_y    'Y (vertical girder) [kg]
-        weight += m * a / 1000 * gir_wht_x   'X (horizontal girder) [kg]
+        weight = no_hor_girders * b_vert / 1000 * gir_vert_wht   'Girder vertical [kg]
+        weight += no_vert_beams * a_hor / 1000 * beam_hor_wht   'Beam horizontal [kg]
+
+        '------ Optimum girder distance (formula 6.2.6)-----------
+        l_opti = 0.63 * s_beams ^ 0.333 * b_vert ^ 0.666
 
         '------ present ----------
-        TextBox29.Text = σy.ToString("0")       '[N/mm2]
-        TextBox31.Text = δ.ToString("0.0")      '[mm]
-        ' TextBox33.Text = p.ToString("0.0000")   '[N/mm2]
+        TextBox29.Text = σy.ToString("0")       '[N/no_gird2]
+        TextBox31.Text = δ.ToString("0.0")      '[no_gird]
 
-        TextBox36.Text = llx.ToString("0")      '[mm]
-        TextBox35.Text = lly.ToString("0")      '[mm]
-
-        TextBox35.Text = lly.ToString("0")      '[mm]
+        TextBox36.Text = l_girder.ToString("0")       'Girder distance
+        TextBox35.Text = s_beams.ToString("0")        'Beam distance
         TextBox37.Text = weight.ToString("0.0") '[kg]
 
+        Label148.Text = "If girders and beam identical Optimum Girder space= " & l_opti.ToString("0") & " [no_gird]"
+
         '------ check -shorter/longer edge---------
-        NumericUpDown22.BackColor = CType(IIf(a > b, Color.Yellow, Color.Red), Color)
+        NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
         TextBox29.BackColor = CType(IIf(σy < NumericUpDown10.Value, Color.LightGreen, Color.Red), Color)
     End Sub
 
-    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
 
-    End Sub
 End Class
