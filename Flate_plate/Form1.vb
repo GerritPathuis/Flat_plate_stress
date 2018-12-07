@@ -6,8 +6,64 @@ Imports System.Threading
 Imports System.Windows.Forms
 
 Public Class Form1
-    '"Name; I (strong axis)[cm4]; Profile height[mm]; kg; Ey[mm]"
+    'https://en.wikipedia.org/wiki/List_of_second_moments_of_area
+    '"Name; I (strong axis)[cm4]; Profile height[mm]; [kg/m]; Ey[mm]"
     Public Shared UNP() As String = {
+     "Angle 60x60x6; 22.8; 60;   5.4;    16.9",
+     "Angle 70x70x8; 47.5; 70;   8.4;    20.1",
+     "Angle 80x80x8; 72.2; 80;   9.6;    22.6",
+     "Angle 80x80x10; 87.5; 80;  11.9;   23.4",
+     "Angle 80x80x12; 102; 80;   14.0;   24.1",
+     "Angle 100x100x8; 145; 100; 12.2;   27.4",
+     "Angle 100x100x10; 177; 100; 15.0;  28.2",
+     "Angle 100x100x12; 207; 100; 17.8;  29",
+     "Angle 100x100x15; 249; 100; 21.9;  30.2",
+     "Angle 120x120x10; 313; 120; 18.2;  33.1",
+     "Angle 120x120x12; 368; 120; 21.6;  34",
+     "Angle 120x120x15; 445; 120; 26.6;  35.1",
+     "Angle 150x150x12; 737; 150; 27.3;  42.1",
+     "Angle 150x150x15; 898; 150; 33.8;  42.5",
+     "Angle 150x150x18; 1050; 150; 40.1; 43.7",
+     "Angle 180x180x15; 1590; 180; 40.9; 49.8",
+     "Angle 180x180x18; 1870; 180; 48.6; 51",
+     "Angle 180x180x20; 2040; 180; 53.7; 51.8",
+     "Angle 200x200x16; 2340; 200; 48.5; 55.2",
+     "Angle 200x200x20; 2850; 200; 59.9; 56.8",
+     "Angle 200x200x24; 3330; 200; 71.1; 58.4",
+     "Bulb flat 160x10; 481; 160;   15.3;   92.6", 'Holland profile
+     "Bulb flat 180x10; 712; 180;   17.6;   106",
+     "Bulb flat 200x12; 1157; 200;  23.3;   117",
+     "Bulb flat 220x12; 1586; 220;  26.2;   130",
+     "Bulb flat 240x12; 2117; 240;  29.3;   144",
+     "Bulb flat 260x12; 2762; 260;  32.4;   158",
+     "Bulb flat 280x12; 3525; 280;  35.7;   172",
+     "Bulb flat 320x12; 5506; 320;  42.6;   201",
+     "Bulb flat 340x14; 7504; 340;  51.5;   211",
+     "Bulb flat 400x14; 12873; 400; 63.9;   255",
+     "HEB 100; 449; 100;   20.4;    50",
+     "HEB 120; 864; 120;   26.7;    60",
+     "HEB 140; 1509; 140;  33.7;    70",
+     "HEB 160; 2492; 160;  42.6;    80",
+     "HEB 180; 3831; 180;  51.2;    90",
+     "HEB 200; 5696; 200;  61.3;    100",
+     "HEB 220; 8091; 220;  71.5;    110",
+     "HEB 240; 11260; 240;  83.2;   120",
+     "HEB 260; 14920; 260;  93;     130",
+     "HEB 280; 19270; 280;  105;    140",
+     "HEB 300; 25170; 300;  119;    150",
+     "HEB 320; 30820; 320;  129;    160",
+     "HEB 340; 36600; 340;  137;    170",
+     "HEB 360; 43190; 360;  145;    180",
+     "HEB 400; 57680; 400;  158;    200",
+     "HEB 450; 79890; 450;  174;    225",
+     "HEB 500; 107200; 500;  190;   250",
+     "HEB 550; 136700; 550;  203;   275",
+     "HEB 600; 171000; 600;  216;   300",
+     "HEB 650; 210600; 650;  229;   325",
+     "HEB 700; 256900; 700;  245;   350",
+     "HEB 800; 359100; 800;  267;   400",
+     "Strip 20x3; 0.13; 20;     0.47;   10",
+     "Strip 40x4; 2.1;  40;     1.2;    20",
      "Strip 60x6; 10.8; 60;     2.8;    30",
      "Strip 60x8; 14.4; 60;     3.7;    30",
      "Strip 60x10; 18.0; 60;    4.7;    30",
@@ -15,17 +71,17 @@ Public Class Form1
      "Strip 80x8; 34.1; 80;     5;      40",
      "Strip 80x10; 42.7; 80;    6.2;    40",
      "Strip 100x6; 50; 100;     4.7;    50",
-     "Strip 100x8; 66.7; 100;  6.2;     50",
-     "Strip 100x10; 83.3; 100; 7.8;     50",
-     "Strip 120x6; 86.4; 120;  5.6;     60",
-     "Strip 120x8; 115.2; 120; 7.5;     60",
-     "Strip 120x10; 144.0; 120;9.4;     60",
-     "Strip 120x12; 172.8; 120;11.2;    60",
-     "Strip 140x6; 137.2; 140;  6.6;    70",
-     "Strip 140x8; 182.9; 140;  8.7;    70",
+     "Strip 100x8; 66.7; 100;   6.2;    50",
+     "Strip 100x10; 83.3; 100;  7.8;    50",
+     "Strip 120x6; 86.4; 120;   5.6;    60",
+     "Strip 120x8; 115.2; 120;  7.5;    60",
+     "Strip 120x10; 144.0; 120; 9.4;    60",
+     "Strip 120x12; 172.8; 120; 11.2;   60",
+     "Strip 140x6; 137.2; 140;   6.6;   70",
+     "Strip 140x8; 182.9; 140;   8.7;   70",
      "Strip 140x10; 228.7; 140; 10.9;   70",
      "Strip 140x12; 274.4; 140; 13.1;   70",
-     "Strip 160x6; 204.8; 160;  7.5;    80",
+     "Strip 160x6; 204.8; 160;   7.5;   80",
      "Strip 160x8; 273.1; 160;  10;     80",
      "Strip 160x10; 341.3; 160;  12.5;  80",
      "Strip 160x12; 409.6; 160; 15;     80",
@@ -37,27 +93,9 @@ Public Class Form1
      "Strip 200x10; 666.7; 200; 15.6;   100",
      "Strip 200x12; 800.0; 200; 18.7;   100",
      "Strip 200x15; 1000; 200;  23.4;   100",
-     "Hoek 60x60x6; 22.8; 60;   5.4;    16.9",
-     "Hoek 70x70x8; 47.5; 70;   8.4;    20.1",
-     "Hoek 80x80x8; 72.2; 80;   9.6;    22.6",
-     "Hoek 80x80x10; 87.5; 80;  11.9;   23.4",
-     "Hoek 80x80x12; 102; 80;   14.0;   24.1",
-     "Hoek 100x100x8; 145; 100; 12.2;   27.4",
-     "Hoek 100x100x10; 177; 100; 15.0;  28.2",
-     "Hoek 100x100x12; 207; 100; 17.8;  29",
-     "Hoek 100x100x15; 249; 100; 21.9;  30.2",
-     "Hoek 120x120x10; 313; 120; 18.2;  33.1",
-     "Hoek 120x120x12; 368; 120; 21.6;  34",
-     "Hoek 120x120x15; 445; 120; 26.6;  35.1",
-     "Hoek 150x150x12; 737; 150; 27.3;  42.1",
-     "Hoek 150x150x15; 898; 150; 33.8;  42.5",
-     "Hoek 150x150x18; 1050; 150; 40.1; 43.7",
-     "Hoek 180x180x15; 1590; 180; 40.9; 49.8",
-     "Hoek 180x180x18; 1870; 180; 48.6; 51",
-     "Hoek 180x180x20; 2040; 180; 53.7; 51.8",
-     "Hoek 200x200x16; 2340; 200; 48.5; 55.2",
-     "Hoek 200x200x20; 2850; 200; 59.9; 56.8",
-     "Hoek 200x200x24; 3330; 200; 71.1; 58.4",
+     "Strip 250x15; 1953; 250;  29.2;   125",
+     "Strip 250x20; 2604; 250;  39.0;   125",
+     "Strip 300x20; 4500; 300;  46.8;   150",
      "UNP 40; 14.1; 40;   4.9;     20",
      "UNP 50; 26.4; 50;   5.6;     25",
      "UNP 65; 57.5; 65;   7.2;     32.5",
@@ -76,19 +114,8 @@ Public Class Form1
      "UNP 320; 10870; 320; 59.5;    160",
      "UNP 350; 12840; 350; 60.6;    175",
      "UNP 380; 15760; 380; 62.6;    190",
-     "UNP 400; 20350; 400; 71.8;    200",
-     "HEB 100; 449; 100;   20.4;    50",
-     "HEB 120; 864; 120;   26.7;    60",
-     "HEB 140; 1509; 140;  33.7;    70",
-     "HEB 160; 2492; 160;  42.6;    80",
-     "HEB 180; 3831; 180;  51.2;    90",
-     "HEB 200; 5696; 200;  61.3;    100",
-     "HEB 220; 8091; 220;  71.5;    110",
-     "HEB 240; 11260; 240;  83.2;   120",
-     "HEB 260; 14920; 260;  93;     130",
-     "HEB 280; 19270; 280;  103;    140",
-     "HEB 300; 25170; 300;  177;    150"
-    }
+     "UNP 400; 20350; 400; 71.8;    200"
+     }
 
     Public Shared _ρ_steel As Double = 7850
 
@@ -104,9 +131,9 @@ Public Class Form1
             ComboBox2.Items.Add(words(0))
             ComboBox3.Items.Add(words(0))
         Next hh
-        ComboBox1.SelectedIndex = 56    'UNP 140
-        ComboBox2.SelectedIndex = 57    'UNP 160
-        ComboBox3.SelectedIndex = 53    'UNP `80
+        ComboBox1.SelectedIndex = 46    'HEB 450
+        ComboBox2.SelectedIndex = 94    'UNP 160
+        ComboBox3.SelectedIndex = 89    'UNP 65
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
@@ -262,7 +289,11 @@ Public Class Form1
         TextBox12.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown14.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
+        Calc_beam()
+
+    End Sub
+    Private Sub Calc_beam()
         'http://beamguru.com/online/beam-calculator/
         'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
         Dim l, Iy, w, Elas As Double
@@ -273,7 +304,8 @@ Public Class Form1
         Dim σ_combi As Double
 
         l = NumericUpDown18.Value * 10 ^ 3      '[m->mm]
-        Iy = NumericUpDown14.Value * 10 ^ 4     '[mm4]
+        Double.TryParse(TextBox41.Text, Iy)
+        Iy *= 10 ^ 4     '[mm4]
         Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
         'MessageBox.Show(Elas.ToString)
@@ -312,20 +344,21 @@ Public Class Form1
         '===== check ================
         TextBox14.BackColor = CType(IIf(σ_bend > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
         TextBox46.BackColor = CType(IIf(σ_combi > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
-    End Sub
 
+    End Sub
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         Dim area As Double
         Try
             Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
-            NumericUpDown14.Value = CDec(words(1))  'Inertia Iy
-            TextBox18.Text = words(2)               'Beam Height
-            TextBox47.Text = words(3)               'Beam weight
+            TextBox41.Text = words(1)               'Inertia Iy [cm4]
+            TextBox18.Text = words(2)               'Beam Height [mm]
+            TextBox47.Text = words(3)               'Beam weight [mm]
             area = Math.Round(CDbl(words(3)) * 10 ^ 6 / _ρ_steel, 0)
             TextBox48.Text = area.ToString          'Beam area
         Catch ex As Exception
             MessageBox.Show(ex.Message)  ' Show the exception's message.
         End Try
+        Calc_beam()
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
@@ -398,10 +431,12 @@ Public Class Form1
         Dim beam_hor_wht As Double      'Beam vertical
         Dim words() As String
         Dim l_opti As Double
+        Dim δ1, δ2 As Double            'Temp value for readability
 
         '---------- get data -------------
-        Double.TryParse(TextBox43.Text, press)  '[N/no_gird2]
-        TextBox33.Text = press.ToString  '[N/no_gird2]
+        Double.TryParse(TextBox43.Text, press)          '[N/mm2]
+        TextBox33.Text = press.ToString                 '[N/mm2]
+        TextBox40.Text = NumericUpDown1.Value.ToString  '[mbar]
 
         '--- NOTE GIRDER is vertical , BEAM is horizontal------
         no_vert_girders = NumericUpDown29.Value    'no Girder
@@ -409,9 +444,9 @@ Public Class Form1
         a_hor = NumericUpDown22.Value              'Longer edge
         b_vert = NumericUpDown23.Value             'Shortes edge
 
-        Elas = NumericUpDown5.Value * 10 ^ 3        '[N/no_gird2]
+        Elas = NumericUpDown5.Value * 10 ^ 3        '[N/mm]
 
-        If ComboBox2.SelectedIndex > 0 And ComboBox3.SelectedIndex > 0 Then
+        If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
             '--- Beams Horizontal
             words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
             I_hor_beam = CDbl(words(1)) * (10 ^ 4)  'Inertia Iy [cm^4->no_gird^4]
@@ -421,43 +456,47 @@ Public Class Form1
 
             '--- Girders VERTICAL
             words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
-            I_vert_girder = CDbl(words(1)) * (10 ^ 4)      'Inertia Iy [cm^4->no_gird^4]
-            gir_vert_wht = CDbl(words(3))          '[kg]
+            I_vert_girder = CDbl(words(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
+            gir_vert_wht = CDbl(words(3))               '[kg]
             TextBox38.Text = gir_vert_wht.ToString
             TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
 
             ey_girder = CDbl(words(2)) - CDbl(words(4))
-            TextBox42.Text = ey_girder.ToString("0.0") 'distance to plate face [no_gird]
+            TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
         End If
 
         '--------- calc girder spacing -------------
-        space_beams = a_hor / (no_hor_beams + 1)    'Beam space
+        space_beams = a_hor / (no_hor_beams + 1)            'Beam space
         space_girders = b_vert / (no_vert_girders + 1)      'Girder space
 
         '------ deflection and stress @ midpoint--------
         '------ formula 6.1.1---------------------------
 
+        δ1 = I_hor_beam * (no_hor_beams + 1) / a_hor ^ 3
+        δ2 = I_vert_girder * (no_vert_girders + 1) / b_vert ^ 3
+
         δ = a_hor * b_vert * press
         δ /= PI ^ 6 * Elas / 16
-        δ /= ((I_hor_beam * (no_hor_beams + 1) / a_hor ^ 3) + (I_vert_girder * (no_vert_girders + 1) / b_vert ^ 3))
+        δ /= (δ1 + δ2)
         σy = PI ^ 2 * δ * Elas * ey_girder / b_vert ^ 2
 
         '------ Girder weight ---------------------
         weight = no_vert_girders * b_vert / 1000 * gir_vert_wht   'Girder vertical [kg]
-        weight += no_hor_beams * a_hor / 1000 * beam_hor_wht   'Beam horizontal [kg]
+        weight += no_hor_beams * a_hor / 1000 * beam_hor_wht    'Beam horizontal [kg]
 
         '------ Optimum girder distance (formula 6.2.6)-----------
-        l_opti = 0.63 * space_beams ^ 0.333 * b_vert ^ 0.666
+        '------ Both ends of the girder is supported--------------
+        l_opti = 0.72 * space_beams ^ (1 / 3) * b_vert ^ (2 / 3)
 
         '------ present ----------
-        TextBox29.Text = σy.ToString("0")       '[N/no_gird2]
-        TextBox31.Text = δ.ToString("0.0")      '[no_gird]
+        TextBox29.Text = σy.ToString("0")       '[N/mm2]
+        TextBox31.Text = δ.ToString("0.0")      '[mm]
 
-        TextBox35.Text = space_girders.ToString("0")       'Girder distance
-        TextBox36.Text = space_beams.ToString("0")        'Beam distance
-        TextBox37.Text = weight.ToString("0.0") '[kg]
+        TextBox35.Text = space_girders.ToString("0")        'Girder distance
+        TextBox36.Text = space_beams.ToString("0")          'Beam distance
+        TextBox37.Text = weight.ToString("0.0")             '[kg]
 
-        Label148.Text = "If girders and beam identical Optimum Girder space= " & l_opti.ToString("0") & " [no_gird]"
+        Label148.Text = "If girders and beam identical Optimum Girder space= " & l_opti.ToString("0") & " [mm]"
 
         '------ check -shorter/longer edge---------
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
