@@ -7,114 +7,114 @@ Imports System.Windows.Forms
 
 Public Class Form1
     'https://en.wikipedia.org/wiki/List_of_second_moments_of_area
-    '"Name; I (strong axis)[cm4]; Profile height[mm]; [kg/m]; Ey[mm]"
+    '"Name; I (strong axis)[cm4]; Profile height[mm]; [kg/m]; Ey[mm]; Zx [mm3]"
     Public Shared UNP() As String = {
-     "Angle 60x60x6; 22.8; 60;   5.4;    16.9",
-     "Angle 70x70x8; 47.5; 70;   8.4;    20.1",
-     "Angle 80x80x8; 72.2; 80;   9.6;    22.6",
-     "Angle 80x80x10; 87.5; 80;  11.9;   23.4",
-     "Angle 80x80x12; 102; 80;   14.0;   24.1",
-     "Angle 100x100x8; 145; 100; 12.2;   27.4",
-     "Angle 100x100x10; 177; 100; 15.0;  28.2",
-     "Angle 100x100x12; 207; 100; 17.8;  29",
-     "Angle 100x100x15; 249; 100; 21.9;  30.2",
-     "Angle 120x120x10; 313; 120; 18.2;  33.1",
-     "Angle 120x120x12; 368; 120; 21.6;  34",
-     "Angle 120x120x15; 445; 120; 26.6;  35.1",
-     "Angle 150x150x12; 737; 150; 27.3;  42.1",
-     "Angle 150x150x15; 898; 150; 33.8;  42.5",
-     "Angle 150x150x18; 1050; 150; 40.1; 43.7",
-     "Angle 180x180x15; 1590; 180; 40.9; 49.8",
-     "Angle 180x180x18; 1870; 180; 48.6; 51",
-     "Angle 180x180x20; 2040; 180; 53.7; 51.8",
-     "Angle 200x200x16; 2340; 200; 48.5; 55.2",
-     "Angle 200x200x20; 2850; 200; 59.9; 56.8",
-     "Angle 200x200x24; 3330; 200; 71.1; 58.4",
-     "Bulb flat 160x10; 481; 160;   15.3;   92.6", 'Holland profile
-     "Bulb flat 180x10; 712; 180;   17.6;   106",
-     "Bulb flat 200x12; 1157; 200;  23.3;   117",
-     "Bulb flat 220x12; 1586; 220;  26.2;   130",
-     "Bulb flat 240x12; 2117; 240;  29.3;   144",
-     "Bulb flat 260x12; 2762; 260;  32.4;   158",
-     "Bulb flat 280x12; 3525; 280;  35.7;   172",
-     "Bulb flat 320x12; 5506; 320;  42.6;   201",
-     "Bulb flat 340x14; 7504; 340;  51.5;   211",
-     "Bulb flat 400x14; 12873; 400; 63.9;   255",
-     "HEB 100; 449; 100;   20.4;    50",
-     "HEB 120; 864; 120;   26.7;    60",
-     "HEB 140; 1509; 140;  33.7;    70",
-     "HEB 160; 2492; 160;  42.6;    80",
-     "HEB 180; 3831; 180;  51.2;    90",
-     "HEB 200; 5696; 200;  61.3;    100",
-     "HEB 220; 8091; 220;  71.5;    110",
-     "HEB 240; 11260; 240;  83.2;   120",
-     "HEB 260; 14920; 260;  93;     130",
-     "HEB 280; 19270; 280;  105;    140",
-     "HEB 300; 25170; 300;  119;    150",
-     "HEB 320; 30820; 320;  129;    160",
-     "HEB 340; 36600; 340;  137;    170",
-     "HEB 360; 43190; 360;  145;    180",
-     "HEB 400; 57680; 400;  158;    200",
-     "HEB 450; 79890; 450;  174;    225",
-     "HEB 500; 107200; 500;  190;   250",
-     "HEB 550; 136700; 550;  203;   275",
-     "HEB 600; 171000; 600;  216;   300",
-     "HEB 650; 210600; 650;  229;   325",
-     "HEB 700; 256900; 700;  245;   350",
-     "HEB 800; 359100; 800;  267;   400",
-     "Strip 20x3; 0.13; 20;     0.47;   10",
-     "Strip 40x4; 2.1;  40;     1.2;    20",
-     "Strip 60x6; 10.8; 60;     2.8;    30",
-     "Strip 60x8; 14.4; 60;     3.7;    30",
-     "Strip 60x10; 18.0; 60;    4.7;    30",
-     "Strip 80x6; 25.6; 80;     3.7;    40",
-     "Strip 80x8; 34.1; 80;     5;      40",
-     "Strip 80x10; 42.7; 80;    6.2;    40",
-     "Strip 100x6; 50; 100;     4.7;    50",
-     "Strip 100x8; 66.7; 100;   6.2;    50",
-     "Strip 100x10; 83.3; 100;  7.8;    50",
-     "Strip 120x6; 86.4; 120;   5.6;    60",
-     "Strip 120x8; 115.2; 120;  7.5;    60",
-     "Strip 120x10; 144.0; 120; 9.4;    60",
-     "Strip 120x12; 172.8; 120; 11.2;   60",
-     "Strip 140x6; 137.2; 140;   6.6;   70",
-     "Strip 140x8; 182.9; 140;   8.7;   70",
-     "Strip 140x10; 228.7; 140; 10.9;   70",
-     "Strip 140x12; 274.4; 140; 13.1;   70",
-     "Strip 160x6; 204.8; 160;   7.5;   80",
-     "Strip 160x8; 273.1; 160;  10;     80",
-     "Strip 160x10; 341.3; 160;  12.5;  80",
-     "Strip 160x12; 409.6; 160; 15;     80",
-     "Strip 180x6; 291.6; 180;  8.4;    90",
-     "Strip 180x8; 388.8; 180;  11.2;   90",
-     "Strip 180x10; 486.0; 180; 14;     90",
-     "Strip 180x12; 583.2; 180; 16.8;   90",
-     "Strip 200x8; 533.3; 200;  12.5;   100",
-     "Strip 200x10; 666.7; 200; 15.6;   100",
-     "Strip 200x12; 800.0; 200; 18.7;   100",
-     "Strip 200x15; 1000; 200;  23.4;   100",
-     "Strip 250x15; 1953; 250;  29.2;   125",
-     "Strip 250x20; 2604; 250;  39.0;   125",
-     "Strip 300x20; 4500; 300;  46.8;   150",
-     "UNP 40; 14.1; 40;   4.9;     20",
-     "UNP 50; 26.4; 50;   5.6;     25",
-     "UNP 65; 57.5; 65;   7.2;     32.5",
-     "UNP 80; 106; 80;    8.6;     40",
-     "UNP 100; 206; 100;  10.6;     50",
-     "UNP 120; 364; 120;  13.4;     60",
-     "UNP 140; 605; 140;  16.0;     70",
-     "UNP 160; 925; 160;  18.8;     80",
-     "UNP 180; 1350; 180; 22.0;     90",
-     "UNP 200; 1910; 200; 25.3;     100",
-     "UNP 220; 2690; 220; 29.4;     110",
-     "UNP 240; 3600; 240; 33.2;     120",
-     "UNP 260; 4820; 260; 37.9;     130",
-     "UNP 280; 6280; 280; 41.8;     140",
-     "UNP 300; 8030; 300; 46.2;     150",
-     "UNP 320; 10870; 320; 59.5;    160",
-     "UNP 350; 12840; 350; 60.6;    175",
-     "UNP 380; 15760; 380; 62.6;    190",
-     "UNP 400; 20350; 400; 71.8;    200"
+     "Angle 60x60x6;    22.8;   60;   5.4;  16.9; 0.0",
+     "Angle 70x70x8;    47.5;   70;   8.4;  20.1; 0.0",
+     "Angle 80x80x8;    72.2;   80;   9.6;  22.6; 0.0",
+     "Angle 80x80x10;   87.5;   80;  11.9;  23.4; 0.0",
+     "Angle 80x80x12;   102;    80;  14.0;  24.1; 0.0",
+     "Angle 100x100x8;  145;    100; 12.2;  27.4; 0.0",
+     "Angle 100x100x10; 177;    100; 15.0;  28.2; 0.0",
+     "Angle 100x100x12; 207;    100; 17.8;  29; 0.0",
+     "Angle 100x100x15; 249;    100; 21.9;  30.2; 0.0",
+     "Angle 120x120x10; 313;    120; 18.2;  33.1; 0.0",
+     "Angle 120x120x12; 368;    120; 21.6;  34; 0.0",
+     "Angle 120x120x15; 445;    120; 26.6;  35.1; 0.0",
+     "Angle 150x150x12; 737;    150; 27.3;  42.1; 0.0",
+     "Angle 150x150x15; 898;    150; 33.8;  42.5; 0.0",
+     "Angle 150x150x18; 1050;   150; 40.1; 43.7; 0.0",
+     "Angle 180x180x15; 1590;   180; 40.9; 49.8; 0.0",
+     "Angle 180x180x18; 1870;   180; 48.6; 51; 0.0",
+     "Angle 180x180x20; 2040;   180; 53.7; 51.8; 0.0",
+     "Angle 200x200x16; 2340;   200; 48.5; 55.2; 0.0",
+     "Angle 200x200x20; 2850;   200; 59.9; 56.8; 0.0",
+     "Angle 200x200x24; 3330;   200; 71.1; 58.4; 0.0",
+     "Bulb flat 160x10; 481; 160;   15.3;   92.6; 0.0", 'Holland profile
+     "Bulb flat 180x10; 712; 180;   17.6;   106; 0.0",
+     "Bulb flat 200x12; 1157; 200;  23.3;   117; 0.0",
+     "Bulb flat 220x12; 1586; 220;  26.2;   130; 0.0",
+     "Bulb flat 240x12; 2117; 240;  29.3;   144; 0.0",
+     "Bulb flat 260x12; 2762; 260;  32.4;   158; 0.0",
+     "Bulb flat 280x12; 3525; 280;  35.7;   172; 0.0",
+     "Bulb flat 320x12; 5506; 320;  42.6;   201; 0.0",
+     "Bulb flat 340x14; 7504; 340;  51.5;   211; 0.0",
+     "Bulb flat 400x14; 12873; 400; 63.9;   255; 0.0",
+     "HEB 100;      449; 100;   20.4;    50; 0.0",
+     "HEB 120;      864; 120;   26.7;    60; 0.0",
+     "HEB 140;      1509; 140;  33.7;    70; 0.0",
+     "HEB 160;      2492; 160;  42.6;    80; 0.0",
+     "HEB 180;      3831; 180;  51.2;    90; 0.0",
+     "HEB 200;      5696; 200;  61.3;    100; 0.0",
+     "HEB 220;      8091; 220;  71.5;    110; 0.0",
+     "HEB 240;      11260; 240;  83.2;   120; 0.0",
+     "HEB 260;      14920; 260;  93;     130; 0.0",
+     "HEB 280;      19270; 280;  105;    140; 0.0",
+     "HEB 300;      25170; 300;  119;    150; 0.0",
+     "HEB 320;      30820; 320;  129;    160; 0.0",
+     "HEB 340;      36600; 340;  137;    170; 0.0",
+     "HEB 360;      43190; 360;  145;    180; 0.0",
+     "HEB 400;      57680; 400;  158;    200; 0.0",
+     "HEB 450;      79890; 450;  174;    225; 0.0",
+     "HEB 500;      107200; 500;  190;   250; 0.0",
+     "HEB 550;      136700; 550;  203;   275; 0.0",
+     "HEB 600;      171000; 600;  216;   300; 0.0",
+     "HEB 650;      210600; 650;  229;   325; 0.0",
+     "HEB 700;      256900; 700;  245;   350; 0.0",
+     "HEB 800;      359100; 800;  267;   400; 0.0",
+     "Strip 20x3;   0.2;    20;  0.47;      10; 300",
+     "Strip 40x4;   2.13;   40;   1.2;      20; 1600",
+     "Strip 60x6;   10.8;   60;   2.8;      30; 5400",
+     "Strip 60x8;   14.4;   60;   3.7;      30; 7200",
+     "Strip 60x10;  18.0;   60;   4.7;      30; 9000",
+     "Strip 80x6;   25.6;   80;   3.7;      40; 9600",
+     "Strip 80x8;   34.1;   80;     5;      40; 12800",
+     "Strip 80x10;  42.7;   80;     6.2;    40; 16000",
+     "Strip 100x6;    50;  100;     4.7;    50; 15000",
+     "Strip 100x8;   66.7; 100;     6.2;    50; 20000",
+     "Strip 100x10;  83.3; 100;     7.8;    50; 25000",
+     "Strip 120x6;   86.4; 120;     5.6;    60; 21600",
+     "Strip 120x8;  115.2; 120;     7.5;    60; 28800",
+     "Strip 120x10; 144.0; 120;     9.4;    60; 36000",
+     "Strip 120x12; 172.8; 120;     11.2;   60; 43200",
+     "Strip 140x6;  137.2; 140;     6.6;    70; 29400",
+     "Strip 140x8;  182.9; 140;      8.7;   70; 39200",
+     "Strip 140x10; 228.7; 140;     10.9;   70; 49000",
+     "Strip 140x12; 274.4; 140;     13.1;   70; 58800",
+     "Strip 160x6;  204.8; 160;      7.5;   80; 38400",
+     "Strip 160x8;  273.1; 160;      10;    80; 51200",
+     "Strip 160x10; 341.3; 160;     12.5;   80; 64000",
+     "Strip 160x12; 409.6; 160;     15;     80; 76800",
+     "Strip 180x6;  291.6; 180;      8.4;   90; 48600",
+     "Strip 180x8;  388.8; 180;      11.2;  90; 64800",
+     "Strip 180x10; 486.0; 180;     14;     90; 81000",
+     "Strip 180x12; 583.2; 180;     16.8;   90; 97200",
+     "Strip 200x8;  533.3; 200;     12.5;   100; 80000",
+     "Strip 200x10; 666.7; 200;     15.6;   100; 100000",
+     "Strip 200x12; 800.0; 200;     18.7;   100; 120000",
+     "Strip 200x15;  1000; 200;     23.4;   100; 150000",
+     "Strip 250x15;  1953; 250;     29.2;   125; 234375",
+     "Strip 250x20;  2604; 250;     39.0;   125; 312500",
+     "Strip 300x20;  4500; 300;     46.8;   150; 450000",
+     "UNP 40; 14.1; 40;   4.9;     20; 0.0",
+     "UNP 50; 26.4; 50;   5.6;     25; 0.0",
+     "UNP 65; 57.5; 65;   7.2;     32.5; 0.0",
+     "UNP 80; 106; 80;    8.6;     40; 0.0",
+     "UNP 100; 206; 100;  10.6;     50; 0.0",
+     "UNP 120; 364; 120;  13.4;     60; 0.0",
+     "UNP 140; 605; 140;  16.0;     70; 0.0",
+     "UNP 160; 925; 160;  18.8;     80; 0.0",
+     "UNP 180; 1350; 180; 22.0;     90; 0.0",
+     "UNP 200; 1910; 200; 25.3;     100; 0.0",
+     "UNP 220; 2690; 220; 29.4;     110; 0.0",
+     "UNP 240; 3600; 240; 33.2;     120; 0.0",
+     "UNP 260; 4820; 260; 37.9;     130; 0.0",
+     "UNP 280; 6280; 280; 41.8;     140; 0.0",
+     "UNP 300; 8030; 300; 46.2;     150; 0.0",
+     "UNP 320; 10870; 320; 59.5;    160; 0.0",
+     "UNP 350; 12840; 350; 60.6;    175; 0.0",
+     "UNP 380; 15760; 380; 62.6;    190; 0.0",
+     "UNP 400; 20350; 400; 71.8;    200; 0.0"
      }
 
     Public Shared _ρ_steel As Double = 7850
@@ -130,10 +130,12 @@ Public Class Form1
             ComboBox1.Items.Add(words(0))
             ComboBox2.Items.Add(words(0))
             ComboBox3.Items.Add(words(0))
+            ComboBox4.Items.Add(words(0))
         Next hh
         ComboBox1.SelectedIndex = 46    'HEB 450
         ComboBox2.SelectedIndex = 94    'UNP 160
         ComboBox3.SelectedIndex = 89    'UNP 65
+        ComboBox4.SelectedIndex = 63    'Strip 100x10
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
@@ -502,6 +504,47 @@ Public Class Form1
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
         TextBox29.BackColor = CType(IIf(σy < NumericUpDown10.Value, Color.LightGreen, Color.Red), Color)
     End Sub
+    'Stress and strain table 8.13 page 260
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click, TabPage10.Enter, NumericUpDown25.ValueChanged, NumericUpDown14.ValueChanged, ComboBox4.SelectedIndexChanged
+        Dim words() As String
+        Dim Mp As Double            'Plastic moment
+        Dim σ As Double             'max allowed stress [n/mm2]
+        Dim l_beam As Double        'Beam length [mm]
+        Dim p_width As Double       'Pressure width [mm]
+        Dim press As Double         '[N/mm2]
+        Dim area_beam, Z_plastic As Double 'Plasic modul [mm3]
+        Dim Wa As Double            'Actual Uniform load [N/mm]
+        Dim Wac As Double           'Collapse Uniform load [N/mm]
 
+        '------------ get data -----------
+        σ = NumericUpDown10.Value           'max allowed stress [n/mm2]
+        l_beam = NumericUpDown25.Value      'beam length [mm]
+        p_width = NumericUpDown14.Value     'pressure width [mm]
 
+        If ComboBox4.SelectedIndex > -1 Then
+            '--- Beams Horizontal
+            words = UNP(ComboBox4.SelectedIndex).Split(CType(";", Char()))
+            TextBox55.Text = words(1)  'Inertia Iy [cm^4]
+            area_beam = Math.Round(CDbl(words(3)) * 10 ^ 6 / _ρ_steel, 0)
+            TextBox56.Text = area_beam.ToString     'Area [cm^2]
+            TextBox57.Text = words(3)               '[kg]
+            TextBox58.Text = words(2)               '[mm]
+            TextBox61.Text = words(5)               '[mm3]
+            Z_plastic = CDbl(words(5))              '[mm3]
+            press = NumericUpDown1.Value / 10 ^ 4   '[mbar]-->[N/mm2]
+        End If
+
+        '-------------- calc -------------
+        Wa = press * p_width                    '[N/mm]
+        Mp = σ * Z_plastic                      '[Nm]
+        Wac = 16 * Mp * l_beam ^ 2 / l_beam ^ 4 '[Nm]
+
+        '-------------- Present ----------
+        TextBox53.Text = press.ToString("0.000")        '[N/mm2]
+        TextBox54.Text = (Mp / 1000).ToString("0.0")    '[kNmm]
+        TextBox62.Text = Wa.ToString("0.0")             '[N/mm] 
+        TextBox63.Text = Wac.ToString("0.0")            '[N/mm]
+        '-------------- Checks --------
+        TextBox62.BackColor = CType(IIf(Wa < Wac, Color.LightGreen, Color.Red), Color)
+    End Sub
 End Class
