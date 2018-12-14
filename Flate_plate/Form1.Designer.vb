@@ -2981,6 +2981,7 @@ Partial Class Form1
         '
         'TextBox40
         '
+        Me.TextBox40.Enabled = False
         Me.TextBox40.Location = New System.Drawing.Point(332, 20)
         Me.TextBox40.Name = "TextBox40"
         Me.TextBox40.Size = New System.Drawing.Size(71, 20)
@@ -3008,6 +3009,7 @@ Partial Class Form1
         '
         'TextBox33
         '
+        Me.TextBox33.Enabled = False
         Me.TextBox33.Location = New System.Drawing.Point(255, 20)
         Me.TextBox33.Name = "TextBox33"
         Me.TextBox33.Size = New System.Drawing.Size(71, 20)
@@ -3060,6 +3062,7 @@ Partial Class Form1
         '
         'TextBox39
         '
+        Me.TextBox39.Enabled = False
         Me.TextBox39.Location = New System.Drawing.Point(6, 160)
         Me.TextBox39.Name = "TextBox39"
         Me.TextBox39.Size = New System.Drawing.Size(51, 20)
@@ -3068,6 +3071,7 @@ Partial Class Form1
         '
         'TextBox34
         '
+        Me.TextBox34.Enabled = False
         Me.TextBox34.Location = New System.Drawing.Point(6, 134)
         Me.TextBox34.Name = "TextBox34"
         Me.TextBox34.Size = New System.Drawing.Size(69, 20)
@@ -3076,6 +3080,7 @@ Partial Class Form1
         '
         'TextBox36
         '
+        Me.TextBox36.Enabled = False
         Me.TextBox36.Location = New System.Drawing.Point(6, 81)
         Me.TextBox36.Name = "TextBox36"
         Me.TextBox36.Size = New System.Drawing.Size(71, 20)
@@ -3148,6 +3153,7 @@ Partial Class Form1
         '
         'TextBox32
         '
+        Me.TextBox32.Enabled = False
         Me.TextBox32.Location = New System.Drawing.Point(6, 134)
         Me.TextBox32.Name = "TextBox32"
         Me.TextBox32.Size = New System.Drawing.Size(71, 20)
@@ -3156,6 +3162,7 @@ Partial Class Form1
         '
         'TextBox42
         '
+        Me.TextBox42.Enabled = False
         Me.TextBox42.Location = New System.Drawing.Point(6, 186)
         Me.TextBox42.Name = "TextBox42"
         Me.TextBox42.Size = New System.Drawing.Size(71, 20)
@@ -3164,6 +3171,7 @@ Partial Class Form1
         '
         'TextBox38
         '
+        Me.TextBox38.Enabled = False
         Me.TextBox38.Location = New System.Drawing.Point(6, 160)
         Me.TextBox38.Name = "TextBox38"
         Me.TextBox38.Size = New System.Drawing.Size(51, 20)
@@ -3172,6 +3180,7 @@ Partial Class Form1
         '
         'TextBox35
         '
+        Me.TextBox35.Enabled = False
         Me.TextBox35.Location = New System.Drawing.Point(6, 80)
         Me.TextBox35.Name = "TextBox35"
         Me.TextBox35.Size = New System.Drawing.Size(69, 20)
@@ -3257,6 +3266,7 @@ Partial Class Form1
         '
         'TextBox37
         '
+        Me.TextBox37.Enabled = False
         Me.TextBox37.Location = New System.Drawing.Point(102, 70)
         Me.TextBox37.Name = "TextBox37"
         Me.TextBox37.Size = New System.Drawing.Size(76, 20)
@@ -3295,6 +3305,7 @@ Partial Class Form1
         '
         'TextBox31
         '
+        Me.TextBox31.Enabled = False
         Me.TextBox31.Location = New System.Drawing.Point(102, 44)
         Me.TextBox31.Name = "TextBox31"
         Me.TextBox31.Size = New System.Drawing.Size(76, 20)
@@ -3323,6 +3334,7 @@ Partial Class Form1
         '
         'TextBox29
         '
+        Me.TextBox29.Enabled = False
         Me.TextBox29.Location = New System.Drawing.Point(102, 19)
         Me.TextBox29.Name = "TextBox29"
         Me.TextBox29.Size = New System.Drawing.Size(76, 20)
