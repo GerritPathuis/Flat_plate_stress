@@ -8,6 +8,7 @@ Imports System.Windows.Forms
 Public Class Form1
     'https://en.wikipedia.org/wiki/List_of_second_moments_of_area
     'https://calcresource.com/cross-section-angle.html
+    'https://www.eurocodeapplied.com/design/en1993/ipe-hea-heb-hem-design-properties
     '"Name; I (strong axis)[cm4]; Profile height[mm]; [kg/m]; Ey[mm]; Zx [mm3]"
     Public Shared UNP() As String = {
      "Angle 60x60x6;    22.8;   60;   5.4;  16.9; 0.0",
