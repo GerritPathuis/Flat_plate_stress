@@ -343,6 +343,20 @@ Partial Class Form1
         Me.NumericUpDown14 = New System.Windows.Forms.NumericUpDown()
         Me.Label164 = New System.Windows.Forms.Label()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
+        Me.TabPage11 = New System.Windows.Forms.TabPage()
+        Me.TextBox59 = New System.Windows.Forms.TextBox()
+        Me.Label108 = New System.Windows.Forms.Label()
+        Me.GroupBox20 = New System.Windows.Forms.GroupBox()
+        Me.TextBox60 = New System.Windows.Forms.TextBox()
+        Me.Label160 = New System.Windows.Forms.Label()
+        Me.TextBox64 = New System.Windows.Forms.TextBox()
+        Me.Label161 = New System.Windows.Forms.Label()
+        Me.TextBox65 = New System.Windows.Forms.TextBox()
+        Me.Label166 = New System.Windows.Forms.Label()
+        Me.TextBox66 = New System.Windows.Forms.TextBox()
+        Me.Label174 = New System.Windows.Forms.Label()
+        Me.TextBox67 = New System.Windows.Forms.TextBox()
+        Me.Label175 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -419,6 +433,8 @@ Partial Class Form1
         CType(Me.NumericUpDown25, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage11.SuspendLayout()
+        Me.GroupBox20.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -433,6 +449,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage8)
         Me.TabControl1.Controls.Add(Me.TabPage9)
         Me.TabControl1.Controls.Add(Me.TabPage10)
+        Me.TabControl1.Controls.Add(Me.TabPage11)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Multiline = True
@@ -3942,6 +3959,140 @@ Partial Class Form1
         Me.PictureBox12.TabIndex = 70
         Me.PictureBox12.TabStop = False
         '
+        'TabPage11
+        '
+        Me.TabPage11.Controls.Add(Me.GroupBox20)
+        Me.TabPage11.Location = New System.Drawing.Point(4, 40)
+        Me.TabPage11.Name = "TabPage11"
+        Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage11.Size = New System.Drawing.Size(866, 419)
+        Me.TabPage11.TabIndex = 11
+        Me.TabPage11.Text = "TabPage11"
+        Me.TabPage11.UseVisualStyleBackColor = True
+        '
+        'TextBox59
+        '
+        Me.TextBox59.Location = New System.Drawing.Point(230, 46)
+        Me.TextBox59.Name = "TextBox59"
+        Me.TextBox59.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox59.TabIndex = 0
+        Me.TextBox59.Text = "https://calcresource.com/cross-section-angle.html"
+        '
+        'Label108
+        '
+        Me.Label108.AutoSize = True
+        Me.Label108.Location = New System.Drawing.Point(10, 49)
+        Me.Label108.Name = "Label108"
+        Me.Label108.Size = New System.Drawing.Size(179, 13)
+        Me.Label108.TabIndex = 1
+        Me.Label108.Text = "Properties of Angle Cross-Section (L)"
+        '
+        'GroupBox20
+        '
+        Me.GroupBox20.Controls.Add(Me.TextBox67)
+        Me.GroupBox20.Controls.Add(Me.Label175)
+        Me.GroupBox20.Controls.Add(Me.TextBox66)
+        Me.GroupBox20.Controls.Add(Me.Label174)
+        Me.GroupBox20.Controls.Add(Me.TextBox65)
+        Me.GroupBox20.Controls.Add(Me.Label166)
+        Me.GroupBox20.Controls.Add(Me.TextBox64)
+        Me.GroupBox20.Controls.Add(Me.Label161)
+        Me.GroupBox20.Controls.Add(Me.TextBox60)
+        Me.GroupBox20.Controls.Add(Me.Label160)
+        Me.GroupBox20.Controls.Add(Me.TextBox59)
+        Me.GroupBox20.Controls.Add(Me.Label108)
+        Me.GroupBox20.Location = New System.Drawing.Point(8, 18)
+        Me.GroupBox20.Name = "GroupBox20"
+        Me.GroupBox20.Size = New System.Drawing.Size(582, 226)
+        Me.GroupBox20.TabIndex = 2
+        Me.GroupBox20.TabStop = False
+        Me.GroupBox20.Text = "Structural steel properties"
+        '
+        'TextBox60
+        '
+        Me.TextBox60.Location = New System.Drawing.Point(230, 72)
+        Me.TextBox60.Name = "TextBox60"
+        Me.TextBox60.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox60.TabIndex = 2
+        Me.TextBox60.Text = "https://calcresource.com/cross-section-doubletee.html"
+        '
+        'Label160
+        '
+        Me.Label160.AutoSize = True
+        Me.Label160.Location = New System.Drawing.Point(10, 75)
+        Me.Label160.Name = "Label160"
+        Me.Label160.Size = New System.Drawing.Size(153, 13)
+        Me.Label160.TabIndex = 3
+        Me.Label160.Text = "Properties of I/H Cross-Section"
+        '
+        'TextBox64
+        '
+        Me.TextBox64.Location = New System.Drawing.Point(230, 98)
+        Me.TextBox64.Name = "TextBox64"
+        Me.TextBox64.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox64.TabIndex = 4
+        Me.TextBox64.Text = "https://calcresource.com/cross-section-channel.html"
+        '
+        'Label161
+        '
+        Me.Label161.AutoSize = True
+        Me.Label161.Location = New System.Drawing.Point(10, 101)
+        Me.Label161.Name = "Label161"
+        Me.Label161.Size = New System.Drawing.Size(193, 13)
+        Me.Label161.TabIndex = 5
+        Me.Label161.Text = "Properties of Channel Cross-Section (U)"
+        '
+        'TextBox65
+        '
+        Me.TextBox65.Location = New System.Drawing.Point(230, 124)
+        Me.TextBox65.Name = "TextBox65"
+        Me.TextBox65.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox65.TabIndex = 6
+        Me.TextBox65.Text = "https://calcresource.com/cross-section-tee.html"
+        '
+        'Label166
+        '
+        Me.Label166.AutoSize = True
+        Me.Label166.Location = New System.Drawing.Point(10, 127)
+        Me.Label166.Name = "Label166"
+        Me.Label166.Size = New System.Drawing.Size(172, 13)
+        Me.Label166.TabIndex = 7
+        Me.Label166.Text = "Properties of Tee (T) Cross-Section"
+        '
+        'TextBox66
+        '
+        Me.TextBox66.Location = New System.Drawing.Point(230, 20)
+        Me.TextBox66.Name = "TextBox66"
+        Me.TextBox66.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox66.TabIndex = 8
+        Me.TextBox66.Text = "https://calcresource.com/cross-section-rect.html"
+        '
+        'Label174
+        '
+        Me.Label174.AutoSize = True
+        Me.Label174.Location = New System.Drawing.Point(10, 23)
+        Me.Label174.Name = "Label174"
+        Me.Label174.Size = New System.Drawing.Size(195, 13)
+        Me.Label174.TabIndex = 9
+        Me.Label174.Text = "Properties of Rectangular Cross-Section"
+        '
+        'TextBox67
+        '
+        Me.TextBox67.Location = New System.Drawing.Point(230, 150)
+        Me.TextBox67.Name = "TextBox67"
+        Me.TextBox67.Size = New System.Drawing.Size(295, 20)
+        Me.TextBox67.TabIndex = 10
+        Me.TextBox67.Text = "https://calcresource.com/cross-section-ctube.html"
+        '
+        'Label175
+        '
+        Me.Label175.AutoSize = True
+        Me.Label175.Location = New System.Drawing.Point(10, 153)
+        Me.Label175.Name = "Label175"
+        Me.Label175.Size = New System.Drawing.Size(207, 13)
+        Me.Label175.TabIndex = 11
+        Me.Label175.Text = "Properties of Circular Hollow Cross-Section"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4058,6 +4209,9 @@ Partial Class Form1
         CType(Me.NumericUpDown25, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage11.ResumeLayout(False)
+        Me.GroupBox20.ResumeLayout(False)
+        Me.GroupBox20.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -4382,4 +4536,18 @@ Partial Class Form1
     Friend WithEvents TextBox63 As TextBox
     Friend WithEvents Label172 As Label
     Friend WithEvents Label173 As Label
+    Friend WithEvents TabPage11 As TabPage
+    Friend WithEvents GroupBox20 As GroupBox
+    Friend WithEvents TextBox67 As TextBox
+    Friend WithEvents Label175 As Label
+    Friend WithEvents TextBox66 As TextBox
+    Friend WithEvents Label174 As Label
+    Friend WithEvents TextBox65 As TextBox
+    Friend WithEvents Label166 As Label
+    Friend WithEvents TextBox64 As TextBox
+    Friend WithEvents Label161 As Label
+    Friend WithEvents TextBox60 As TextBox
+    Friend WithEvents Label160 As Label
+    Friend WithEvents TextBox59 As TextBox
+    Friend WithEvents Label108 As Label
 End Class
