@@ -122,6 +122,8 @@ Public Class Form1
      }
 
     Public Shared _ρ_steel As Double = 7850
+    Public Shared _σ_02 As Double
+    Public Shared _σ_yield As Double
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim words() As String
@@ -140,6 +142,8 @@ Public Class Form1
         ComboBox2.SelectedIndex = 94    'UNP 160
         ComboBox3.SelectedIndex = 89    'UNP 65
         ComboBox4.SelectedIndex = 63    'Strip 100x10
+
+        _σ_02 = NumericUpDown10.Value   '[N/mm2]Yield strength
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
@@ -156,7 +160,6 @@ Public Class Form1
         TextBox4.Text = p.ToString                      '[N/m2]
         TextBox43.Text = (p / 10 ^ 6).ToString          '[N/mm2]
         TextBox49.Text = NumericUpDown1.Value.ToString  '[mbar]
-        TextBox50.Text = NumericUpDown1.Value.ToString  '[mbar]
 
         a = NumericUpDown2.Value / 1000 '[m]    'Length
         b = NumericUpDown3.Value / 1000 '[m]    'Width
@@ -181,13 +184,51 @@ Public Class Form1
             flex = 0
         End If
 
+        '--- Roark's 8 edition, chapter 11.13, ref 43, page 468 ----
+        Dim Wu As Double        'Ultimate load
+        Dim β As Double
+        Dim ratio As Double
+
+        ratio = b / a
+        Select Case True
+            Case (ratio <= 1 And ratio > 0.9)
+                β = 5.48
+            Case (ratio <= 0.9 And ratio > 0.8)
+                β = 5.5
+            Case (ratio <= 0.8 And ratio > 0.7)
+                β = 5.58
+            Case (ratio <= 0.7 And ratio > 0.6)
+                β = 5.64
+            Case (ratio <= 0.6 And ratio > 0.5)
+                β = 5.89
+            Case (ratio <= 0.5 And ratio > 0.4)
+                β = 6.15
+            Case (ratio <= 0.4 And ratio > 0.3)
+                β = 6.7
+            Case (ratio <= 0.3 And ratio > 0.2)
+                β = 7.68
+            Case (ratio <= 0.2)
+                β = 9.69
+        End Select
+
+        Wu = β * _σ_02 * (t * 1000) ^ 2     '[N] Ultimate load
+        Wu /= (a * 1000) * (b * 1000)       '[N/mm2] Ultimate pressure
+        Wu *= 10 ^ 4                        '[N/mm2] --> [mbar]
+
+        'MessageBox.Show(β.ToString & ", " & )
+        '----- Present -----------------
         TextBox2.Text = σm.ToString("0")
         TextBox3.Text = yt.ToString("0.0")
         TextBox25.Text = flex.ToString("0")
         TextBox51.Text = weight.ToString("0")
 
+        TextBox69.Text = β.ToString("0.00")
+        TextBox70.Text = Wu.ToString("0")
+        TextBox71.Text = ratio.ToString("0.00")
+        TextBox72.Text = _σ_02.ToString("0")
         '===== checks ================
-        TextBox2.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox2.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox70.BackColor = CType(IIf(Wu < NumericUpDown1.Value, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click, TabPage3.Enter, NumericUpDown8.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown6.ValueChanged
@@ -224,9 +265,10 @@ Public Class Form1
         TextBox6.Text = σm.ToString("0")
         TextBox5.Text = yt.ToString("0.0")
         TextBox24.Text = flex.ToString("0")
+        TextBox50.Text = NumericUpDown1.Value.ToString  '[mbar]
         TextBox52.Text = weight.ToString("0")
         '===== check ================
-        TextBox6.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox6.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown9.ValueChanged, NumericUpDown11.ValueChanged
@@ -252,7 +294,7 @@ Public Class Form1
         TextBox8.Text = σm.ToString("0")
         TextBox7.Text = yt.ToString("0.0")
         '===== check ================
-        TextBox8.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox8.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, TabPage6.Enter, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown15.ValueChanged
         'Round with hole
@@ -292,7 +334,7 @@ Public Class Form1
         ym *= 1000          '[mm]
         TextBox11.Text = ym.ToString("0.0")
         '===== check ================
-        TextBox12.BackColor = CType(IIf(σm > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox12.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
@@ -348,8 +390,8 @@ Public Class Form1
         TextBox46.Text = σ_combi.ToString("0.0")            '[N/mm2]
 
         '===== check ================
-        TextBox14.BackColor = CType(IIf(σ_bend > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
-        TextBox46.BackColor = CType(IIf(σ_combi > NumericUpDown10.Value, Color.Red, Color.LightGreen), Color)
+        TextBox14.BackColor = CType(IIf(σ_bend > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox46.BackColor = CType(IIf(σ_combi > _σ_02, Color.Red, Color.LightGreen), Color)
 
     End Sub
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -506,7 +548,7 @@ Public Class Form1
 
         '------ check -shorter/longer edge---------
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
-        TextBox29.BackColor = CType(IIf(σy < NumericUpDown10.Value, Color.LightGreen, Color.Red), Color)
+        TextBox29.BackColor = CType(IIf(σy < _σ_02, Color.LightGreen, Color.Red), Color)
     End Sub
     'Stress and strain table 8.13 page 260
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click, TabPage10.Enter, NumericUpDown25.ValueChanged, NumericUpDown14.ValueChanged, ComboBox4.SelectedIndexChanged
@@ -521,7 +563,7 @@ Public Class Form1
         Dim Wac As Double           'Collapse Uniform load [N/mm]
 
         '------------ get data -----------
-        σ = NumericUpDown10.Value           'max allowed stress [n/mm2]
+        σ = _σ_02                           'max allowed stress [N/mm2]
         l_beam = NumericUpDown25.Value      'beam length [mm]
         p_width = NumericUpDown14.Value     'pressure width [mm]
 
@@ -545,6 +587,7 @@ Public Class Form1
 
         '-------------- Present ----------
         TextBox53.Text = press.ToString("0.000")        '[N/mm2]
+        TextBox73.Text = (press * 10 ^ 4).ToString("0") '[mbar]
         TextBox54.Text = (Mp / 1000).ToString("0.0")    '[kNmm]
         TextBox62.Text = Wa.ToString("0.0")             '[N/mm] 
         TextBox63.Text = Wac.ToString("0.0")            '[N/mm]
