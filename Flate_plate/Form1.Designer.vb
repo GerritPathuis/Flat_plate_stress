@@ -25,8 +25,6 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Label104 = New System.Windows.Forms.Label()
-        Me.Label78 = New System.Windows.Forms.Label()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -477,8 +475,6 @@ Partial Class Form1
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.Label104)
-        Me.TabPage1.Controls.Add(Me.Label78)
         Me.TabPage1.Controls.Add(Me.Label77)
         Me.TabPage1.Controls.Add(Me.Label61)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
@@ -493,26 +489,6 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Material and pressure"
         Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'Label104
-        '
-        Me.Label104.AutoSize = True
-        Me.Label104.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label104.Location = New System.Drawing.Point(23, 389)
-        Me.Label104.Name = "Label104"
-        Me.Label104.Size = New System.Drawing.Size(227, 16)
-        Me.Label104.TabIndex = 33
-        Me.Label104.Text = "Dryer ring 400 [mbar] later 800 [mbar]"
-        '
-        'Label78
-        '
-        Me.Label78.AutoSize = True
-        Me.Label78.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label78.Location = New System.Drawing.Point(23, 370)
-        Me.Label78.Name = "Label78"
-        Me.Label78.Size = New System.Drawing.Size(204, 16)
-        Me.Label78.TabIndex = 32
-        Me.Label78.Text = "Filter design pressure 135 [mBar]"
         '
         'Label77
         '
@@ -4551,7 +4527,6 @@ Partial Class Form1
     Friend WithEvents Label81 As Label
     Friend WithEvents TextBox19 As TextBox
     Friend WithEvents TextBox23 As TextBox
-    Friend WithEvents Label78 As Label
     Friend WithEvents Label77 As Label
     Friend WithEvents Label61 As Label
     Friend WithEvents TextBox24 As TextBox
@@ -4673,7 +4648,6 @@ Partial Class Form1
     Friend WithEvents GroupBox23 As GroupBox
     Friend WithEvents GroupBox22 As GroupBox
     Friend WithEvents Label102 As Label
-    Friend WithEvents Label104 As Label
     Friend WithEvents Label106 As Label
     Friend WithEvents TabPage9 As TabPage
     Friend WithEvents PictureBox11 As PictureBox
