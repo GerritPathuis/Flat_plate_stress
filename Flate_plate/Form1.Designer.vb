@@ -26,7 +26,6 @@ Partial Class Form1
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label77 = New System.Windows.Forms.Label()
-        Me.Label61 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label121 = New System.Windows.Forms.Label()
         Me.TextBox43 = New System.Windows.Forms.TextBox()
@@ -371,6 +370,8 @@ Partial Class Form1
         Me.Label160 = New System.Windows.Forms.Label()
         Me.TextBox59 = New System.Windows.Forms.TextBox()
         Me.Label108 = New System.Windows.Forms.Label()
+        Me.Label78 = New System.Windows.Forms.Label()
+        Me.Label61 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -475,6 +476,7 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Label78)
         Me.TabPage1.Controls.Add(Me.Label77)
         Me.TabPage1.Controls.Add(Me.Label61)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
@@ -494,21 +496,11 @@ Partial Class Form1
         '
         Me.Label77.AutoSize = True
         Me.Label77.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label77.Location = New System.Drawing.Point(23, 351)
+        Me.Label77.Location = New System.Drawing.Point(23, 328)
         Me.Label77.Name = "Label77"
-        Me.Label77.Size = New System.Drawing.Size(221, 16)
+        Me.Label77.Size = New System.Drawing.Size(274, 16)
         Me.Label77.TabIndex = 31
-        Me.Label77.Text = "Filter explosion pressure 230 [mBar]"
-        '
-        'Label61
-        '
-        Me.Label61.AutoSize = True
-        Me.Label61.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label61.Location = New System.Drawing.Point(23, 335)
-        Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(93, 16)
-        Me.Label61.TabIndex = 23
-        Me.Label61.Text = "Zeitz P12.1010"
+        Me.Label77.Text = "Filter reduced explosion pressure 200 [mBar]"
         '
         'GroupBox2
         '
@@ -4252,6 +4244,26 @@ Partial Class Form1
         Me.Label108.TabIndex = 1
         Me.Label108.Text = "Properties of Angle Cross-Section (L)"
         '
+        'Label78
+        '
+        Me.Label78.AutoSize = True
+        Me.Label78.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label78.Location = New System.Drawing.Point(23, 345)
+        Me.Label78.Name = "Label78"
+        Me.Label78.Size = New System.Drawing.Size(298, 16)
+        Me.Label78.TabIndex = 32
+        Me.Label78.Text = "Ringduct reduced explosion pressure 400 [mBar]"
+        '
+        'Label61
+        '
+        Me.Label61.AutoSize = True
+        Me.Label61.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label61.Location = New System.Drawing.Point(23, 311)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(68, 16)
+        Me.Label61.TabIndex = 23
+        Me.Label61.Text = "Examples"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4528,7 +4540,6 @@ Partial Class Form1
     Friend WithEvents TextBox19 As TextBox
     Friend WithEvents TextBox23 As TextBox
     Friend WithEvents Label77 As Label
-    Friend WithEvents Label61 As Label
     Friend WithEvents TextBox24 As TextBox
     Friend WithEvents Label82 As Label
     Friend WithEvents Label83 As Label
@@ -4725,4 +4736,6 @@ Partial Class Form1
     Friend WithEvents Label183 As Label
     Friend WithEvents Label184 As Label
     Friend WithEvents TextBox73 As TextBox
+    Friend WithEvents Label78 As Label
+    Friend WithEvents Label61 As Label
 End Class
