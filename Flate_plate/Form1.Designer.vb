@@ -371,8 +371,7 @@ Partial Class Form1
         Me.Label160 = New System.Windows.Forms.Label()
         Me.TextBox59 = New System.Windows.Forms.TextBox()
         Me.Label108 = New System.Windows.Forms.Label()
-        Me.Label78 = New System.Windows.Forms.Label()
-        Me.Label61 = New System.Windows.Forms.Label()
+
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -477,9 +476,7 @@ Partial Class Form1
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.Label78)
         Me.TabPage1.Controls.Add(Me.Label77)
-        Me.TabPage1.Controls.Add(Me.Label61)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.PictureBox5)
@@ -4256,25 +4253,7 @@ Partial Class Form1
         Me.Label108.Text = "Properties of Angle Cross-Section (L)"
         '
         'Label78
-        '
-        Me.Label78.AutoSize = True
-        Me.Label78.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label78.Location = New System.Drawing.Point(23, 345)
-        Me.Label78.Name = "Label78"
-        Me.Label78.Size = New System.Drawing.Size(298, 16)
-        Me.Label78.TabIndex = 32
-        Me.Label78.Text = "Ringduct reduced explosion pressure 400 [mBar]"
-        '
-        'Label61
-        '
-        Me.Label61.AutoSize = True
-        Me.Label61.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label61.Location = New System.Drawing.Point(23, 311)
-        Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(68, 16)
-        Me.Label61.TabIndex = 23
-        Me.Label61.Text = "Examples"
-        '
+
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4747,10 +4726,5 @@ Partial Class Form1
     Friend WithEvents Label183 As Label
     Friend WithEvents Label184 As Label
     Friend WithEvents TextBox73 As TextBox
-<<<<<<< HEAD
     Friend WithEvents Button9 As Button
-=======
-    Friend WithEvents Label78 As Label
-    Friend WithEvents Label61 As Label
->>>>>>> 75d045fc89b949c38ead28491ca20f7ae751d273
 End Class
