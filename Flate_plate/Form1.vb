@@ -461,14 +461,48 @@ Public Class Form1
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged, TabPage8.Enter
-        Calc_grill()
+        'Calculate the Girders and Stiffeners one time
+        If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
+            Calc_grill(ComboBox3.SelectedIndex, ComboBox2.SelectedIndex)
+        End If
     End Sub
 
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        'Auto select the Girders and Stiffeners
+        '--- NOTE GIRDER is vertical
+        Dim weight As Double = 10 ^ 8       'Init value
+        Dim calc_weight As Double
+        Dim best_girder As Integer = 999    'Init value
+        Dim best_stif As Integer = 999      'Init value
+
+        Button9.BackColor = Color.Red
+        Button9.Text = "Auto select WAIT..."
+        Me.Update()
+
+        For vert = 1 To (UNP.Length - 1)
+            For hor = 1 To (UNP.Length - 1)
+                Calc_grill(vert, hor)
+                Double.TryParse(TextBox37.Text, calc_weight)
+
+                If calc_weight < weight And TextBox29.BackColor <> Color.Red Then
+                    weight = calc_weight
+                    best_girder = vert
+                    best_stif = hor
+                End If
+            Next
+        Next
+        Calc_grill(best_girder, best_stif)
+        ComboBox2.SelectedIndex = best_stif
+        ComboBox3.SelectedIndex = best_girder
+
+        Button9.Text = "Auto select"
+        Button9.BackColor = Color.Transparent
+    End Sub
 
     'Design of Ship Hull Structures ISBN: 978-3-642-10009-3
     'Chapter Grillage Structure Page 254 
     '
-    Private Sub Calc_grill()
+    Private Sub Calc_grill(Girder As Integer, Stiffener As Integer)
         Dim press As Double             'Uniform load
         Dim a_hor As Double             'Longer horizontal edge
         Dim b_vert As Double            'Shorter vertical edge
@@ -494,7 +528,7 @@ Public Class Form1
         TextBox33.Text = press.ToString                 '[N/mm2]
         TextBox40.Text = NumericUpDown1.Value.ToString  '[mbar]
 
-        '--- NOTE GIRDER is vertical , BEAM is horizontal------
+        '--- NOTE GIRDER is vertical , Stiff-BEAM is horizontal------
         no_vert_girders = NumericUpDown29.Value    'no Girder
         no_hor_beams = NumericUpDown28.Value       'no Beams
         a_hor = NumericUpDown22.Value              'Longer edge
@@ -502,16 +536,18 @@ Public Class Form1
 
         Elas = NumericUpDown5.Value * 10 ^ 3        '[N/mm]
 
-        If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
-            '--- Beams Horizontal
-            words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
+        'If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
+        '--- Beams Horizontal
+        'words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
+        words = UNP(Girder).Split(CType(";", Char()))
             I_hor_beam = CDbl(words(1)) * (10 ^ 4)  'Inertia Iy [cm^4->no_gird^4]
             beam_hor_wht = CDbl(words(3))           '[kg]
             TextBox39.Text = beam_hor_wht.ToString
             TextBox34.Text = (I_hor_beam / 10 ^ 4).ToString     '[cm4]
 
             '--- Girders VERTICAL
-            words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
+            'words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
+            words = UNP(Stiffener).Split(CType(";", Char()))
             I_vert_girder = CDbl(words(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
             gir_vert_wht = CDbl(words(3))               '[kg]
             TextBox38.Text = gir_vert_wht.ToString
@@ -519,7 +555,7 @@ Public Class Form1
 
             ey_girder = CDbl(words(2)) - CDbl(words(4))
             TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
-        End If
+        'End If
 
         '--------- calc girder spacing -------------
         space_beams = a_hor / (no_hor_beams + 1)            'Beam space
@@ -602,6 +638,5 @@ Public Class Form1
         '-------------- Checks --------
         TextBox62.BackColor = CType(IIf(Wa < Wac, Color.LightGreen, Color.Red), Color)
     End Sub
-
 
 End Class

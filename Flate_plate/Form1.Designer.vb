@@ -261,6 +261,7 @@ Partial Class Form1
         Me.Label98 = New System.Windows.Forms.Label()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.Button9 = New System.Windows.Forms.Button()
         Me.Label100 = New System.Windows.Forms.Label()
         Me.GroupBox24 = New System.Windows.Forms.GroupBox()
         Me.TextBox40 = New System.Windows.Forms.TextBox()
@@ -3072,6 +3073,7 @@ Partial Class Form1
         '
         'TabPage8
         '
+        Me.TabPage8.Controls.Add(Me.Button9)
         Me.TabPage8.Controls.Add(Me.Label100)
         Me.TabPage8.Controls.Add(Me.GroupBox24)
         Me.TabPage8.Controls.Add(Me.GroupBox23)
@@ -3092,6 +3094,15 @@ Partial Class Form1
         Me.TabPage8.TabIndex = 8
         Me.TabPage8.Text = "Grillage Structure"
         Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'Button9
+        '
+        Me.Button9.Location = New System.Drawing.Point(29, 325)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(234, 23)
+        Me.Button9.TabIndex = 119
+        Me.Button9.Text = "Auto select "
+        Me.Button9.UseVisualStyleBackColor = True
         '
         'Label100
         '
@@ -4260,7 +4271,7 @@ Partial Class Form1
         Me.Controls.Add(Me.TabControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
-        Me.Text = "Flat Plate Stress and Deflection (17-12-2018)"
+        Me.Text = "Flat Plate Stress and Deflection (18-01-2019)"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -4725,4 +4736,5 @@ Partial Class Form1
     Friend WithEvents Label183 As Label
     Friend WithEvents Label184 As Label
     Friend WithEvents TextBox73 As TextBox
+    Friend WithEvents Button9 As Button
 End Class
