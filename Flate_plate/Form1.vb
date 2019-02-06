@@ -151,6 +151,11 @@ Public Class Form1
         ComboBox3.SelectedIndex = 89    'UNP 65
         ComboBox4.SelectedIndex = 63    'Strip 100x10
 
+
+        For Each tg As TabPage In TabControl1.TabPages
+            tg.BackColor = Color.Snow
+        Next
+
         _σ_02 = NumericUpDown10.Value   '[N/mm2]Yield strength
     End Sub
 

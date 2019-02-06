@@ -371,7 +371,6 @@ Partial Class Form1
         Me.Label160 = New System.Windows.Forms.Label()
         Me.TextBox59 = New System.Windows.Forms.TextBox()
         Me.Label108 = New System.Windows.Forms.Label()
-
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -476,12 +475,15 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.BackColor = System.Drawing.Color.Transparent
+        Me.TabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.TabPage1.Controls.Add(Me.Label77)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.PictureBox5)
         Me.TabPage1.Controls.Add(Me.Label1)
         Me.TabPage1.Controls.Add(Me.TextBox1)
+        Me.TabPage1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.TabPage1.Location = New System.Drawing.Point(4, 40)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
@@ -613,7 +615,6 @@ Partial Class Form1
         'NumericUpDown10
         '
         Me.NumericUpDown10.BackColor = System.Drawing.Color.Yellow
-        Me.NumericUpDown10.Enabled = False
         Me.NumericUpDown10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown10.Location = New System.Drawing.Point(191, 19)
         Me.NumericUpDown10.Maximum = New Decimal(New Integer() {235, 0, 0, 0})
@@ -622,7 +623,7 @@ Partial Class Form1
         Me.NumericUpDown10.Size = New System.Drawing.Size(76, 22)
         Me.NumericUpDown10.TabIndex = 23
         Me.NumericUpDown10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumericUpDown10.Value = New Decimal(New Integer() {235, 0, 0, 0})
+        Me.NumericUpDown10.Value = New Decimal(New Integer() {215, 0, 0, 0})
         '
         'Label34
         '
@@ -1506,6 +1507,7 @@ Partial Class Form1
         '
         'TabPage4
         '
+        Me.TabPage4.BackColor = System.Drawing.Color.Snow
         Me.TabPage4.Controls.Add(Me.GroupBox8)
         Me.TabPage4.Controls.Add(Me.GroupBox7)
         Me.TabPage4.Controls.Add(Me.Button4)
@@ -1516,7 +1518,6 @@ Partial Class Form1
         Me.TabPage4.Size = New System.Drawing.Size(866, 419)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Round plate"
-        Me.TabPage4.UseVisualStyleBackColor = True
         '
         'GroupBox8
         '
@@ -2087,6 +2088,7 @@ Partial Class Form1
         '
         'TabPage5
         '
+        Me.TabPage5.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.TabPage5.Controls.Add(Me.GroupBox21)
         Me.TabPage5.Controls.Add(Me.TextBox19)
         Me.TabPage5.Controls.Add(Me.GroupBox13)
@@ -2101,7 +2103,6 @@ Partial Class Form1
         Me.TabPage5.Size = New System.Drawing.Size(866, 419)
         Me.TabPage5.TabIndex = 6
         Me.TabPage5.Text = "Beam Bend + Tension"
-        Me.TabPage5.UseVisualStyleBackColor = True
         '
         'GroupBox21
         '
@@ -4252,8 +4253,6 @@ Partial Class Form1
         Me.Label108.TabIndex = 1
         Me.Label108.Text = "Properties of Angle Cross-Section (L)"
         '
-        'Label78
-
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
