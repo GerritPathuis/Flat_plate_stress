@@ -644,4 +644,8 @@ Public Class Form1
         TextBox62.BackColor = CType(IIf(Wa < Wac, Color.LightGreen, Color.Red), Color)
     End Sub
 
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click, NumericUpDown33.ValueChanged, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown30.ValueChanged, NumericUpDown27.ValueChanged, NumericUpDown26.ValueChanged
+        Dim force As Double
+        force = NumericUpDown25.Value      'beam length [mm]
+    End Sub
 End Class
