@@ -648,4 +648,8 @@ Public Class Form1
         Dim force As Double
         force = NumericUpDown25.Value      'beam length [mm]
     End Sub
+
+    Private Sub PictureBox5_Click(sender As Object, e As EventArgs) Handles PictureBox5.Click
+
+    End Sub
 End Class
