@@ -644,12 +644,42 @@ Public Class Form1
         TextBox62.BackColor = CType(IIf(Wa < Wac, Color.LightGreen, Color.Red), Color)
     End Sub
 
-    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click, NumericUpDown33.ValueChanged, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown30.ValueChanged, NumericUpDown27.ValueChanged, NumericUpDown26.ValueChanged
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click, NumericUpDown32.ValueChanged, NumericUpDown31.ValueChanged, NumericUpDown30.ValueChanged, NumericUpDown27.ValueChanged, NumericUpDown26.ValueChanged, TabPage12.Enter
+        'https://nl.wikipedia.org/wiki/Weerstandsmoment
         Dim force As Double
-        force = NumericUpDown25.Value      'beam length [mm]
+        Dim torque_bend As Double
+        Dim plate As Double     'Plate thickness
+        Dim wy As Double        'weerstand moment
+        Dim H, B1, B2 As Double
+        Dim σb As Double        'Bending stress
+        Dim σt As Double        'Tensile stress
+        Dim σc As Double        'Tensile stress
+
+        force = NumericUpDown26.Value * 10 ^ 3  '[N] Force at tip
+        plate = NumericUpDown27.Value           '[mm]
+        H = NumericUpDown30.Value               '[mm]
+        B1 = NumericUpDown31.Value              '[mm]
+        B2 = NumericUpDown32.Value              '[mm]
+
+        '----------- bending stress ----------
+        torque_bend = force * (B1 - B2 / 2)     '[N.mm]
+        wy = plate * B2 ^ 2 / 6                 '[mm3]
+        σb = torque_bend / wy                   '[N/mm2]
+
+        '----------- tensile stress -----------
+        σt = force / (plate * B2)               '[N/mm2]
+
+        '----------- combined stress -----------
+        σc = σt + σb                            '[N/mm2]
+
+        TextBox77.Text = wy.ToString("0")                   '[mm3] 
+        TextBox75.Text = (torque_bend / 1000).ToString("0") '[N.mm] 
+        TextBox76.Text = σc.ToString("0")                   '[N/mm] 
+        TextBox74.Text = (force / 10).ToString("0")         '[kg] 
+
+        '-------------- Checks --------
+        TextBox76.BackColor = CType(IIf(σb < _σ_02, Color.LightGreen, Color.Red), Color)
     End Sub
 
-    Private Sub PictureBox5_Click(sender As Object, e As EventArgs) Handles PictureBox5.Click
 
-    End Sub
 End Class
