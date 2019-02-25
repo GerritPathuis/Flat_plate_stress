@@ -167,7 +167,7 @@ Public Class Form1
         'Rectangle simply supported
         Dim a, b, t, flex As Double
         Dim Elas, p, σm, yt As Double
-        Dim weight As Double
+        Dim weight, cost As Double
 
         p = NumericUpDown1.Value * 100                  '[mbar]->[N/m2]]
         TextBox4.Text = p.ToString                      '[N/m2]
@@ -179,6 +179,7 @@ Public Class Form1
         t = NumericUpDown4.Value / 1000 '[m]    'Thickness
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
         weight = a * b * t * _ρ_steel           '[kg]
+        cost = weight * NumericUpDown33.Value   '[euro]
 
         If a >= b Then
             Label40.Visible = False
@@ -234,8 +235,9 @@ Public Class Form1
         TextBox3.Text = yt.ToString("0.0")
         TextBox25.Text = flex.ToString("0")
         TextBox51.Text = weight.ToString("0")
+        TextBox87.Text = cost.ToString("0")
 
-        TextBox69.Text = β.ToString("0.00")
+        TextBox69.Text = β.ToString("0.0")
         TextBox70.Text = Wu.ToString("0")
         TextBox71.Text = ratio.ToString("0.00")
         TextBox72.Text = _σ_02.ToString("0")
@@ -248,7 +250,7 @@ Public Class Form1
         'Rectangle clamped edges
         Dim a, b, t As Double
         Dim Elas, p, σm, yt, flex As Double
-        Dim weight As Double
+        Dim weight, cost As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
@@ -257,6 +259,7 @@ Public Class Form1
         t = NumericUpDown6.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
         weight = a * b * t * _ρ_steel           '[kg]
+        cost = weight * NumericUpDown33.Value   '[Euro]
 
         If a >= b Then
             Label39.Visible = False
@@ -277,9 +280,10 @@ Public Class Form1
 
         TextBox6.Text = σm.ToString("0")
         TextBox5.Text = yt.ToString("0.0")
-        TextBox24.Text = flex.ToString("0")
+        TextBox24.Text = flex.ToString("0")             '[mm]
         TextBox50.Text = NumericUpDown1.Value.ToString  '[mbar]
-        TextBox52.Text = weight.ToString("0")
+        TextBox52.Text = weight.ToString("0")           '[kg]
+        TextBox86.Text = cost.ToString("0")             '[euro]
         '===== check ================
         TextBox6.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
@@ -288,6 +292,7 @@ Public Class Form1
         'Round plate simply supported
         Dim dia, r, t As Double
         Dim Elas, p, σm, yt, v As Double
+        Dim weight, cost As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
@@ -295,6 +300,8 @@ Public Class Form1
         r = dia / 2 '[m]
         t = NumericUpDown9.Value / 1000 '[m]
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        weight = Math.PI / 4 * dia ^ 2 * t * 7850
+        cost = weight * NumericUpDown33.Value
 
         v = 0.3 'For steel
         σm = 1.238 * p * r ^ 2 / t ^ 2
@@ -306,27 +313,29 @@ Public Class Form1
 
         TextBox8.Text = σm.ToString("0")
         TextBox7.Text = yt.ToString("0.0")
+        TextBox78.Text = weight.ToString("0")
+        TextBox79.Text = cost.ToString("0")
         '===== check ================
         TextBox8.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, TabPage6.Enter, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown15.ValueChanged
         'Round with hole
+        Dim dia, dia_hole As Double
         Dim a, b, t As Double
         Dim Elas, p, σm, ym As Double
         Dim x, k1, k2 As Double
+        Dim wght, cost As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
-        a = NumericUpDown17.Value / 1000 '[m]
-        b = NumericUpDown16.Value / 1000 '[m]
+        dia = NumericUpDown17.Value / 1000 '[m]
+        dia_hole = NumericUpDown16.Value / 1000 '[m]
         t = NumericUpDown15.Value / 1000 '[m]
-        TextBox20.Text = (a * 2000).ToString("0")
-        TextBox21.Text = (b * 2000).ToString("0")
-
         Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        a = dia / 2
+        b = dia_hole / 2
 
         '============= determine k1, k2 =================
         x = a / b
-        TextBox22.Text = x.ToString("0.0")
 
         k1 = 0.0067 * x ^ 4 - 0.0584 * x ^ 3 + 0.0519 * x ^ 2 + 0.6132 * x - 0.4358
         k2 = 0.0127 * x ^ 4 - 0.131 * x ^ 3 + 0.3117 * x ^ 2 + 0.6069 * x - 0.219
@@ -334,42 +343,49 @@ Public Class Form1
         If x > 5 Then k1 = 0.815
         If x > 5 Then k2 = 2.2
 
-        TextBox17.Text = k1.ToString("0.000")
-        TextBox16.Text = k2.ToString("0.000")
-
         'MessageBox.Show("a= " & a.ToString & " b= " & b.ToString & " t=" & t.ToString & " e=" & ee.ToString)
         σm = k2 * p * a ^ 2 / t ^ 2
-        σm /= 10 ^ 6                '[N/mm2]
-        TextBox12.Text = σm.ToString("0")
+        σm /= 10 ^ 6                        '[N/mm2]
 
         ym = k1 * p * a ^ 4
-        ym /= Elas * t ^ 3
-        ym *= 1000          '[mm]
+        ym /= Elas * t ^ 3                 
+        ym *= 1000                          '[mm]
+        wght = PI * dia ^ 2 * t * 7850      '[kg]
+        cost = wght * NumericUpDown33.Value '[Euro]
+
+        TextBox22.Text = x.ToString("0.0")
+        TextBox20.Text = (a * 1000).ToString("0")
+        TextBox21.Text = (b * 1000).ToString("0")
+        TextBox12.Text = σm.ToString("0")
+        TextBox17.Text = k1.ToString("0.000")
+        TextBox16.Text = k2.ToString("0.000")
         TextBox11.Text = ym.ToString("0.0")
+        TextBox80.Text = wght.ToString("0")
+        TextBox85.Text = cost.ToString("0")
         '===== check ================
         TextBox12.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
         Calc_beam()
-
     End Sub
     Private Sub Calc_beam()
         'http://beamguru.com/online/beam-calculator/
         'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
-        Dim l, Iy, w, Elas As Double
+        Dim l As Double             'Beam length
+        Dim Iy, w, Elas As Double
         Dim flex, mom_max, σ_bend As Double
         Dim p, load_width, area As Double
         Dim beam_height, beam_section_area As Double
         Dim σ_tension, tension As Double
         Dim σ_combi As Double
+        Dim weight, cost As Double
 
         l = NumericUpDown18.Value * 10 ^ 3      '[m->mm]
         Double.TryParse(TextBox41.Text, Iy)
         Iy *= 10 ^ 4     '[mm4]
         Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
-        'MessageBox.Show(Elas.ToString)
         '===== Distributed load ============
         p = NumericUpDown1.Value * 10 ^ 2 * 10 ^ 6      '[mbar->N/mm2]
         load_width = NumericUpDown19.Value * 10 ^ 3     '[mm]
@@ -382,7 +398,6 @@ Public Class Form1
         Double.TryParse(TextBox18.Text, beam_height)
         σ_bend = mom_max * beam_height * 0.5 / Iy
         σ_bend /= 10 ^ 12                             '[N/mm2]
-        ' MessageBox.Show(σ_bend.ToString)
 
         '===== Tension σ ============================
         Double.TryParse(TextBox48.Text, beam_section_area)
@@ -392,16 +407,20 @@ Public Class Form1
         '========= Combines stress =============
         σ_combi = σ_bend + σ_tension
 
+        '========= Cost =============
+        Double.TryParse(TextBox48.Text, weight)
+        cost = weight * NumericUpDown33.Value
+
         '===== Present =
         TextBox15.Text = (w / 10 ^ 12).ToString("0.00")     '[kN/m]
         TextBox10.Text = (flex / 10 ^ 12).ToString("0.0")   '[mm] flex
         TextBox13.Text = (mom_max / 10 ^ 18).ToString("0.0") '[Nm]
         TextBox14.Text = σ_bend.ToString("0") '[N/mm2]
         TextBox23.Text = NumericUpDown1.Value.ToString      '[mbar]
-        TextBox44.Text = σ_bend.ToString("0.0")           '[N/mm2]
+        TextBox44.Text = σ_bend.ToString("0.0")             '[N/mm2]
         TextBox45.Text = σ_tension.ToString("0.0")          '[N/mm2]
         TextBox46.Text = σ_combi.ToString("0.0")            '[N/mm2]
-
+        TextBox82.Text = cost.ToString("0")                 '[Euro]
         '===== check ================
         TextBox14.BackColor = CType(IIf(σ_bend > _σ_02, Color.Red, Color.LightGreen), Color)
         TextBox46.BackColor = CType(IIf(σ_combi > _σ_02, Color.Red, Color.LightGreen), Color)
@@ -409,13 +428,22 @@ Public Class Form1
     End Sub
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         Dim area As Double
+        Dim weight_m As Double
+        Dim weight_total As Double
+        Dim Beam_length As Double
+
         Try
+            Beam_length = NumericUpDown19.Value
             Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
             TextBox41.Text = words(1)               'Inertia Iy [cm4]
             TextBox18.Text = words(2)               'Beam Height [mm]
             TextBox47.Text = words(3)               'Beam weight [mm]
-            area = Math.Round(CDbl(words(3)) * 10 ^ 6 / _ρ_steel, 0)
-            TextBox48.Text = area.ToString          'Beam area
+
+            weight_m = CDbl(words(3))
+            area = Math.Round(weight_m * 10 ^ 6 / _ρ_steel, 0)
+            weight_total = weight_m * Beam_length
+            TextBox81.Text = area.ToString              'Beam area
+            TextBox48.Text = weight_total.ToString("0") 'Beam weight
         Catch ex As Exception
             MessageBox.Show(ex.Message)  ' Show the exception's message.
         End Try
@@ -433,12 +461,13 @@ Public Class Form1
         Dim ω As Double         'Uniformly distrib load
         Dim Elas As Double
         Dim p_load As Double     'Point load [N]
+        Dim wght, cost As Double
 
         Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
-        le = NumericUpDown12.Value      '[mm]
-        wi = NumericUpDown13.Value      '[mm]
-        th = NumericUpDown20.Value      '[mm]
+        le = NumericUpDown12.Value      '[mm] length
+        wi = NumericUpDown13.Value      '[mm] width
+        th = NumericUpDown20.Value      '[mm] thchick
         p_load = NumericUpDown21.Value  '[N]
         moi = wi * th ^ 3 / 12          'Moment of Inertia
 
@@ -459,10 +488,14 @@ Public Class Form1
             ω = wi * th / 10 ^ 9 * 7800 * 10 '[N/mm]
             max_d = ω * le ^ 4 / (8 * Elas * moi)
         End If
+        wght = le * wi * th * 7850 / 10 ^ 9     '[kg]
+        cost = wght * NumericUpDown33.Value     '[Euro]
 
         TextBox26.Text = moi.ToString("0")      'Moment of Inertia
         TextBox27.Text = max_d.ToString("0.00") 'Max deflection
         TextBox28.Text = ω.ToString("0.00")     'Distrib. Load
+        TextBox83.Text = wght.ToString("0")     'Weight
+        TextBox88.Text = cost.ToString("0")     'Cost
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged, TabPage8.Enter
@@ -522,6 +555,7 @@ Public Class Form1
         Dim δ As Double                 'Midpoint (Max) deflection
         Dim Elas As Double              'Young modulus
         Dim weight As Double            'Total weight
+        Dim cost As Double            'Total cost
         Dim gir_vert_wht As Double      'Girder_vert 
         Dim beam_hor_wht As Double      'Beam vertical
         Dim words() As String
@@ -578,20 +612,24 @@ Public Class Form1
         σy = PI ^ 2 * δ * Elas * ey_girder / b_vert ^ 2
 
         '------ Girder weight ---------------------
-        weight = no_vert_girders * b_vert / 1000 * gir_vert_wht   'Girder vertical [kg]
-        weight += no_hor_beams * a_hor / 1000 * beam_hor_wht    'Beam horizontal [kg]
+        weight = no_vert_girders * b_vert / 1000 * gir_vert_wht     'Girder vertical [kg]
+        weight += no_hor_beams * a_hor / 1000 * beam_hor_wht        'Beam horizontal [kg]
 
         '------ Optimum girder distance (formula 6.2.6)-----------
         '------ Both ends of the girder is supported--------------
         l_opti = 0.72 * space_beams ^ (1 / 3) * b_vert ^ (2 / 3)
 
+        '------ cost ---------
+        cost = weight * NumericUpDown33.Value
+
         '------ present ----------
         TextBox29.Text = σy.ToString("0")       '[N/mm2]
         TextBox31.Text = δ.ToString("0.0")      '[mm]
 
-        TextBox35.Text = space_girders.ToString("0")        'Girder distance
-        TextBox36.Text = space_beams.ToString("0")          'Beam distance
-        TextBox37.Text = weight.ToString("0.0")             '[kg]
+        TextBox35.Text = space_girders.ToString("0")    'Girder distance
+        TextBox36.Text = space_beams.ToString("0")      'Beam distance
+        TextBox37.Text = weight.ToString("0")           '[kg]
+        TextBox84.Text = cost.ToString("0")             '[Euro]
 
         Label148.Text = "If girders and beam identical Optimum Girder space= " & l_opti.ToString("0") & " [mm]"
 
@@ -680,6 +718,5 @@ Public Class Form1
         '-------------- Checks --------
         TextBox76.BackColor = CType(IIf(σb < _σ_02, Color.LightGreen, Color.Red), Color)
     End Sub
-
 
 End Class
