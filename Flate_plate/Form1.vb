@@ -719,4 +719,120 @@ Public Class Form1
         TextBox76.BackColor = CType(IIf(σb < _σ_02, Color.LightGreen, Color.Red), Color)
     End Sub
 
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click, TabPage13.Enter, NumericUpDown39.ValueChanged, NumericUpDown38.ValueChanged, NumericUpDown37.ValueChanged, NumericUpDown36.ValueChanged, NumericUpDown35.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown40.ValueChanged, NumericUpDown42.ValueChanged, NumericUpDown41.ValueChanged
+        Dim press As Double
+        Dim press_width As Double
+        Dim load As Double
+        Dim plate_t As Double
+        Dim m_vert, m_hor As Double
+        Dim sh_vert, sh_hor As Double   'Shear forces
+        Dim s1, s2, s3, s4 As Double    'width
+        Dim i1, i2, i3, i4 As Double    'area moment of inertia
+        Dim w1, w2, w3, w4 As Double    'Resistance Moment
+        Dim b, h As Double
+        Dim σ1, σ2, σ3, σ4 As Double    'Bending stress
+        Dim τ1, τ2, τ3, τ4 As Double    'Shear stress
+        Dim σt1, σt2, σt3, σt4 As Double 'Combined stress
+
+        'TextBox102.Clear()
+
+        press = NumericUpDown34.Value * 10 ^ 2      '[mbar]->[Pa] 
+        press_width = NumericUpDown40.Value         '[mm] 
+
+        s1 = NumericUpDown35.Value         '[mm] width
+        s2 = NumericUpDown39.Value         '[mm] width
+        s3 = NumericUpDown42.Value         '[mm] width
+        s4 = NumericUpDown41.Value         '[mm] width
+        b = NumericUpDown36.Value          '[mm] width
+        h = NumericUpDown37.Value          '[mm] width
+
+        plate_t = NumericUpDown38.Value    '[mm] plate thicknes
+
+        '-------- evenly distributed load --------
+        load = press * press_width / 1000  '[N/mm] evenly distributed load
+
+        '-------- Moments both ends clamped -----
+        m_hor = load * (h - s2 - s4) ^ 2 / 24       '[Nmm]
+        m_vert = load * (b - s1 - s3) ^ 2 / 24      '[Nmm]
+
+        '-------- Shear forces ------------------
+        sh_vert = load * (b - s1 - s3)         '[N]
+        sh_hor = load * (h - s2 - s4)          '[N]
+
+        '---- https://en.wikipedia.org/wiki/Bending ----
+        '---- https://nl.wikipedia.org/wiki/Vergeet-mij-nietje_(mechanica)
+        '---- https://en.wikipedia.org/wiki/List_of_second_moments_of_area --
+
+        '--- area moment of inertia
+        i1 = plate_t * s1 ^ 3 / 12
+        i2 = plate_t * s2 ^ 3 / 12
+        i3 = plate_t * s3 ^ 3 / 12
+        i4 = plate_t * s4 ^ 3 / 12
+
+        ' TextBox102.AppendText("press=" & press.ToString & vbCrLf)
+        'TextBox102.AppendText("press_width=" & press_width.ToString & vbCrLf)
+        ' TextBox102.AppendText("load=" & load.ToString & vbCrLf)
+
+
+        '---- 'Resistance Moment about the neutral axis ---
+        w1 = i1 / (s1 * 0.5)
+        w2 = i2 / (s2 * 0.5)
+        w3 = i3 / (s3 * 0.5)
+        w4 = i4 / (s4 * 0.5)
+
+        '---- Bending stress -------------
+        σ1 = m_hor / w1
+        σ3 = m_hor / w3
+        σ2 = m_vert / w2
+        σ4 = m_vert / w4
+
+        '---- Shear stress -------------
+        τ1 = sh_hor * 0.5 / (plate_t * s1)
+        τ3 = sh_hor * 0.5 / (plate_t * s3)
+        τ2 = sh_vert * 0.5 / (plate_t * s2)
+        τ4 = sh_vert * 0.5 / (plate_t * s4)
+
+        '---- Combined stress -----------
+        σt1 = σ1 + τ1
+        σt3 = σ3 + τ3
+        σt2 = σ2 + τ2
+        σt4 = σ4 + τ4
+
+        '---------- present -------------
+        TextBox89.Text = load.ToString("0")         '[N/m2]
+
+        TextBox91.Text = (m_vert / 10 ^ 3).ToString("0")       '[N/m] 
+        TextBox92.Text = (m_hor / 10 ^ 3).ToString("0")        '[N/m] 
+        TextBox93.Text = (m_vert / 10 ^ 3).ToString("0")       '[N/m] 
+        TextBox94.Text = (m_hor / 10 ^ 3).ToString("0")        '[N/m] 
+
+        TextBox90.Text = i1.ToString("0")           '[mm4] 
+        TextBox99.Text = i2.ToString("0")           '[mm4] 
+        TextBox100.Text = i3.ToString("0")          '[mm4] 
+        TextBox101.Text = i4.ToString("0")          '[mm4] 
+
+        TextBox95.Text = σ1.ToString("0")           '[N/mm2] 
+        TextBox96.Text = σ2.ToString("0")           '[N/mm2] 
+        TextBox97.Text = σ3.ToString("0")           '[N/mm2] 
+        TextBox98.Text = σ4.ToString("0")           '[N/mm2] 
+
+        TextBox102.Text = sh_hor.ToString("0")      '[N] 
+        TextBox103.Text = sh_vert.ToString("0")     '[N] 
+
+        TextBox107.Text = τ1.ToString("0")          '[N/mm2] 
+        TextBox106.Text = τ2.ToString("0")          '[N/mm2] 
+        TextBox105.Text = τ3.ToString("0")          '[N/mm2] 
+        TextBox104.Text = τ4.ToString("0")          '[N/mm2] 
+
+        TextBox111.Text = σt1.ToString("0")         '[N/mm2] 
+        TextBox110.Text = σt2.ToString("0")         '[N/mm2] 
+        TextBox109.Text = σt3.ToString("0")         '[N/mm2] 
+        TextBox108.Text = σt4.ToString("0")         '[N/mm2] 
+
+        '-------------- Checks --------
+        TextBox111.BackColor = CType(IIf(σt1 < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox110.BackColor = CType(IIf(σt2 < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox109.BackColor = CType(IIf(σt3 < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox108.BackColor = CType(IIf(σt4 < _σ_02, Color.LightGreen, Color.Red), Color)
+    End Sub
 End Class
