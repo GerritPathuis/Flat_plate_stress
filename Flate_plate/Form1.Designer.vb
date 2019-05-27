@@ -499,6 +499,7 @@ Partial Class Form1
         Me.Label218 = New System.Windows.Forms.Label()
         Me.Label219 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.Button12 = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -632,6 +633,7 @@ Partial Class Form1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.Transparent
         Me.TabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.TabPage1.Controls.Add(Me.Button12)
         Me.TabPage1.Controls.Add(Me.GroupBox32)
         Me.TabPage1.Controls.Add(Me.Label77)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
@@ -820,7 +822,7 @@ Partial Class Form1
         Me.NumericUpDown10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown10.Location = New System.Drawing.Point(191, 19)
         Me.NumericUpDown10.Maximum = New Decimal(New Integer() {235, 0, 0, 0})
-        Me.NumericUpDown10.Minimum = New Decimal(New Integer() {50, 0, 0, 0})
+        Me.NumericUpDown10.Minimum = New Decimal(New Integer() {25, 0, 0, 0})
         Me.NumericUpDown10.Name = "NumericUpDown10"
         Me.NumericUpDown10.Size = New System.Drawing.Size(76, 22)
         Me.NumericUpDown10.TabIndex = 23
@@ -5811,6 +5813,16 @@ Partial Class Form1
         Me.PictureBox14.TabIndex = 3
         Me.PictureBox14.TabStop = False
         '
+        'Button12
+        '
+        Me.Button12.Location = New System.Drawing.Point(618, 19)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(75, 23)
+        Me.Button12.TabIndex = 33
+        Me.Button12.Text = "Button12"
+        Me.Button12.UseVisualStyleBackColor = True
+        Me.Button12.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -6443,4 +6455,5 @@ Partial Class Form1
     Friend WithEvents TextBox109 As TextBox
     Friend WithEvents TextBox110 As TextBox
     Friend WithEvents TextBox111 As TextBox
+    Friend WithEvents Button12 As Button
 End Class

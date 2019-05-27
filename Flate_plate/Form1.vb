@@ -173,6 +173,7 @@ Public Class Form1
         TextBox4.Text = p.ToString                      '[N/m2]
         TextBox43.Text = (p / 10 ^ 6).ToString          '[N/mm2]
         TextBox49.Text = NumericUpDown1.Value.ToString  '[mbar]
+        _σ_02 = NumericUpDown10.Value                   '[N/mm2]Yield strength
 
         a = NumericUpDown2.Value / 1000 '[m]    'Length
         b = NumericUpDown3.Value / 1000 '[m]    'Width
@@ -450,7 +451,7 @@ Public Class Form1
         Calc_beam()
     End Sub
 
-    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs)
         Calc()
     End Sub
 
@@ -579,21 +580,21 @@ Public Class Form1
         '--- Beams Horizontal
         'words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
         words = UNP(Girder).Split(CType(";", Char()))
-            I_hor_beam = CDbl(words(1)) * (10 ^ 4)  'Inertia Iy [cm^4->no_gird^4]
-            beam_hor_wht = CDbl(words(3))           '[kg]
-            TextBox39.Text = beam_hor_wht.ToString
-            TextBox34.Text = (I_hor_beam / 10 ^ 4).ToString     '[cm4]
+        I_hor_beam = CDbl(words(1)) * (10 ^ 4)  'Inertia Iy [cm^4->no_gird^4]
+        beam_hor_wht = CDbl(words(3))           '[kg]
+        TextBox39.Text = beam_hor_wht.ToString
+        TextBox34.Text = (I_hor_beam / 10 ^ 4).ToString     '[cm4]
 
-            '--- Girders VERTICAL
-            'words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
-            words = UNP(Stiffener).Split(CType(";", Char()))
-            I_vert_girder = CDbl(words(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
-            gir_vert_wht = CDbl(words(3))               '[kg]
-            TextBox38.Text = gir_vert_wht.ToString
-            TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
+        '--- Girders VERTICAL
+        'words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
+        words = UNP(Stiffener).Split(CType(";", Char()))
+        I_vert_girder = CDbl(words(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
+        gir_vert_wht = CDbl(words(3))               '[kg]
+        TextBox38.Text = gir_vert_wht.ToString
+        TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
 
-            ey_girder = CDbl(words(2)) - CDbl(words(4))
-            TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
+        ey_girder = CDbl(words(2)) - CDbl(words(4))
+        TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
         'End If
 
         '--------- calc girder spacing -------------
@@ -834,5 +835,9 @@ Public Class Form1
         TextBox110.BackColor = CType(IIf(σt2 < _σ_02, Color.LightGreen, Color.Red), Color)
         TextBox109.BackColor = CType(IIf(σt3 < _σ_02, Color.LightGreen, Color.Red), Color)
         TextBox108.BackColor = CType(IIf(σt4 < _σ_02, Color.LightGreen, Color.Red), Color)
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click, NumericUpDown5.ValueChanged, NumericUpDown33.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged
+        Calc()
     End Sub
 End Class
