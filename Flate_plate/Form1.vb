@@ -5,14 +5,24 @@ Imports System.Globalization
 Imports System.Threading
 Imports System.Windows.Forms
 
+Public Structure Grill_struct
+    Public girder As Integer      'Girder no
+    Public beam As Integer        'Beam no
+    Public weight As Double       'Total weight
+End Structure
+
 Public Class Form1
+    Public grill_results(13226) As Grill_struct    'Auto grillage
+
+
     'https://en.wikipedia.org/wiki/List_of_second_moments_of_area
     'https://calcresource.com/cross-section-angle.html
     'https://www.eurocodeapplied.com/design/en1993/ipe-hea-heb-hem-design-properties
     'https://www.eurocodeapplied.com/design/en1993/ipe-hea-heb-hem-design-properties
     '"Name; I (strong axis)[cm4]; Profile height[mm]; [kg/m]; Ey[mm]; Zx [mm3]"
     Public Shared UNP() As String = {
-     "Angle 60x60x6;    22.8;   60;   5.4;  16.9; 5452",
+     "Not required;       0;    0;     0;     0;     0",
+    "Angle 60x60x6;    22.8;   60;   5.4;  16.9;  5452",
      "Angle 70x70x8;    47.5;   70;   8.4;  20.1; 9767",
      "Angle 80x80x8;    72.2;   80;   9.6;  22.6; 12923",
      "Angle 80x80x10;   87.5;   80;  11.9;  23.4; 15796",
@@ -134,6 +144,7 @@ Public Class Form1
     Public Shared _σ_yield As Double
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Dim words() As String
 
         Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
@@ -142,15 +153,14 @@ Public Class Form1
         For hh = 0 To UNP.Length - 1             'Fill combobox1
             words = UNP(hh).Split(CType(";", Char()))
             ComboBox1.Items.Add(words(0))
-            ComboBox2.Items.Add(words(0))
+            ComboBox2.Items.Add(words(0))   'Girders (short)
             ComboBox3.Items.Add(words(0))
             ComboBox4.Items.Add(words(0))
         Next hh
         ComboBox1.SelectedIndex = 46    'HEB 450
-        ComboBox2.SelectedIndex = 94    'UNP 160
+        ComboBox2.SelectedIndex = 94    'UNP 160    Girders (short)
         ComboBox3.SelectedIndex = 89    'UNP 65
         ComboBox4.SelectedIndex = 63    'Strip 100x10
-
 
         For Each tg As TabPage In TabControl1.TabPages
             tg.BackColor = Color.Snow
@@ -160,9 +170,9 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
-        Calc()
+        Calc_input()
     End Sub
-    Private Sub Calc()
+    Private Sub Calc_input()
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
         'Rectangle simply supported
         Dim a, b, t, flex As Double
@@ -349,7 +359,7 @@ Public Class Form1
         σm /= 10 ^ 6                        '[N/mm2]
 
         ym = k1 * p * a ^ 4
-        ym /= Elas * t ^ 3                 
+        ym /= Elas * t ^ 3
         ym *= 1000                          '[mm]
         wght = PI * dia ^ 2 * t * 7850      '[kg]
         cost = wght * NumericUpDown33.Value '[Euro]
@@ -452,7 +462,7 @@ Public Class Form1
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs)
-        Calc()
+        Calc_input()
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown20.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged, RadioButton1.CheckedChanged, NumericUpDown21.ValueChanged
@@ -502,7 +512,7 @@ Public Class Form1
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click, NumericUpDown29.ValueChanged, NumericUpDown28.ValueChanged, NumericUpDown23.ValueChanged, NumericUpDown22.ValueChanged, ComboBox3.SelectedIndexChanged, ComboBox2.SelectedIndexChanged, TabPage8.Enter
         'Calculate the Girders and Stiffeners one time
         If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
-            Calc_grill(ComboBox3.SelectedIndex, ComboBox2.SelectedIndex)
+            Calc_grill(ComboBox2.SelectedIndex, ComboBox3.SelectedIndex)
         End If
     End Sub
 
@@ -510,38 +520,55 @@ Public Class Form1
         'Auto select the Girders and Stiffeners
         '--- NOTE GIRDER is vertical
         Dim weight As Double = 10 ^ 8       'Init value
-        Dim calc_weight As Double
+        Dim calc_weight As Double           'Girder+Beam weight
         Dim best_girder As Integer = 999    'Init value
         Dim best_stif As Integer = 999      'Init value
+        Dim Count As Integer
 
         Button9.BackColor = Color.Red
         Button9.Text = "Auto select WAIT..."
+        ProgressBar1.Visible = True
+        ProgressBar1.Value = 0
         Me.Update()
+        TextBox112.Clear()
 
-        For vert = 1 To (UNP.Length - 1)
-            For hor = 1 To (UNP.Length - 1)
-                Calc_grill(vert, hor)
+        For vert_girder = 1 To (UNP.Length - 1)
+            For hor_beam = 1 To (UNP.Length - 1)
+                Count += 1
+                ProgressBar1.Value += 1
+                If ProgressBar1.Value = 9999 Then ProgressBar1.Value = 1
+                Calc_grill(vert_girder, hor_beam)
                 Double.TryParse(TextBox37.Text, calc_weight)
 
                 If calc_weight < weight And TextBox29.BackColor <> Color.Red Then
+                    grill_results(count).girder = vert_girder
+                    grill_results(count).beam = hor_beam
+                    grill_results(count).weight = calc_weight
+
                     weight = calc_weight
-                    best_girder = vert
-                    best_stif = hor
+                    best_girder = vert_girder
+                    best_stif = hor_beam
                 End If
             Next
         Next
         Calc_grill(best_girder, best_stif)
-        ComboBox2.SelectedIndex = best_stif
-        ComboBox3.SelectedIndex = best_girder
+        ComboBox2.SelectedIndex = best_girder   'Girders (short)
+        ComboBox3.SelectedIndex = best_stif
 
+        '==============
+        'Finf lowest grill_results(count).weight 
+        '===============
         Button9.Text = "Auto select"
         Button9.BackColor = Color.Transparent
+        ProgressBar1.Visible = False
     End Sub
 
     'Design of Ship Hull Structures ISBN: 978-3-642-10009-3
     'Chapter Grillage Structure Page 254 
-    '
-    Private Sub Calc_grill(Girder As Integer, Stiffener As Integer)
+    'Girders (short) most important, vertical, 
+    'Beams horizontal agianst buckling
+
+    Private Sub Calc_grill(Girder_vert As Integer, Beam_hor As Integer)
         Dim press As Double             'Uniform load
         Dim a_hor As Double             'Longer horizontal edge
         Dim b_vert As Double            'Shorter vertical edge
@@ -556,12 +583,14 @@ Public Class Form1
         Dim δ As Double                 'Midpoint (Max) deflection
         Dim Elas As Double              'Young modulus
         Dim weight As Double            'Total weight
-        Dim cost As Double            'Total cost
+        Dim cost As Double              'Total cost
         Dim gir_vert_wht As Double      'Girder_vert 
         Dim beam_hor_wht As Double      'Beam vertical
-        Dim words() As String
+        Dim words_hor() As String
+        Dim words_vert() As String
         Dim l_opti As Double
         Dim δ1, δ2 As Double            'Temp value for readability
+        Dim girder_name, beam_name As String
 
         '---------- get data -------------
         Double.TryParse(TextBox43.Text, press)          '[N/mm2]
@@ -576,26 +605,24 @@ Public Class Form1
 
         Elas = NumericUpDown5.Value * 10 ^ 3        '[N/mm]
 
-        'If ComboBox2.SelectedIndex > -1 And ComboBox3.SelectedIndex > -1 Then
+        '--- Girders (short) VERTICAL
+        words_vert = UNP(Girder_vert).Split(CType(";", Char()))
+        girder_name = words_vert(0)
+        I_vert_girder = CDbl(words_vert(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
+        gir_vert_wht = CDbl(words_vert(3))               '[kg]
+        TextBox38.Text = gir_vert_wht.ToString
+        TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
+        ey_girder = CDbl(words_vert(2)) - CDbl(words_vert(4))
+        TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
+
         '--- Beams Horizontal
-        'words = UNP(ComboBox3.SelectedIndex).Split(CType(";", Char()))
-        words = UNP(Girder).Split(CType(";", Char()))
-        I_hor_beam = CDbl(words(1)) * (10 ^ 4)  'Inertia Iy [cm^4->no_gird^4]
-        beam_hor_wht = CDbl(words(3))           '[kg]
+        words_hor = UNP(Beam_hor).Split(CType(";", Char()))
+        beam_name = words_hor(0)                            'Beam horizontal
+        I_hor_beam = CDbl(words_hor(1)) * (10 ^ 4)          'Inertia Iy [cm^4->no_gird^4]
+        beam_hor_wht = CDbl(words_hor(3))                   '[kg]
         TextBox39.Text = beam_hor_wht.ToString
         TextBox34.Text = (I_hor_beam / 10 ^ 4).ToString     '[cm4]
 
-        '--- Girders VERTICAL
-        'words = UNP(ComboBox2.SelectedIndex).Split(CType(";", Char()))
-        words = UNP(Stiffener).Split(CType(";", Char()))
-        I_vert_girder = CDbl(words(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
-        gir_vert_wht = CDbl(words(3))               '[kg]
-        TextBox38.Text = gir_vert_wht.ToString
-        TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
-
-        ey_girder = CDbl(words(2)) - CDbl(words(4))
-        TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
-        'End If
 
         '--------- calc girder spacing -------------
         space_beams = a_hor / (no_hor_beams + 1)            'Beam space
@@ -637,6 +664,12 @@ Public Class Form1
         '------ check -shorter/longer edge---------
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
         TextBox29.BackColor = CType(IIf(σy < _σ_02, Color.LightGreen, Color.Red), Color)
+
+        '------ logging if possible solution ---------------
+        If TextBox29.BackColor <> Color.Red Then
+            TextBox112.Text &= "girder_name= " & girder_name & ", beam_name= " & beam_name & vbCrLf
+            TextBox112.Text &= "σy = " & σy.ToString("0") & ", Weight= " & weight.ToString("0") & vbCrLf
+        End If
     End Sub
     'Stress and strain table 8.13 page 260
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click, TabPage10.Enter, NumericUpDown25.ValueChanged, NumericUpDown14.ValueChanged, ComboBox4.SelectedIndexChanged
@@ -735,7 +768,6 @@ Public Class Form1
         Dim τ1, τ2, τ3, τ4 As Double    'Shear stress
         Dim σt1, σt2, σt3, σt4 As Double 'Combined stress
 
-        'TextBox102.Clear()
 
         press = NumericUpDown34.Value * 10 ^ 2      '[mbar]->[Pa] 
         press_width = NumericUpDown40.Value         '[mm] 
@@ -769,11 +801,6 @@ Public Class Form1
         i2 = plate_t * s2 ^ 3 / 12
         i3 = plate_t * s3 ^ 3 / 12
         i4 = plate_t * s4 ^ 3 / 12
-
-        ' TextBox102.AppendText("press=" & press.ToString & vbCrLf)
-        'TextBox102.AppendText("press_width=" & press_width.ToString & vbCrLf)
-        ' TextBox102.AppendText("load=" & load.ToString & vbCrLf)
-
 
         '---- 'Resistance Moment about the neutral axis ---
         w1 = i1 / (s1 * 0.5)
@@ -838,6 +865,6 @@ Public Class Form1
     End Sub
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click, NumericUpDown5.ValueChanged, NumericUpDown33.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged
-        Calc()
+        Calc_input()
     End Sub
 End Class
