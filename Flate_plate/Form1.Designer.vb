@@ -503,6 +503,7 @@ Partial Class Form1
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.TextBox112 = New System.Windows.Forms.TextBox()
+        Me.Button13 = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -3680,7 +3681,7 @@ Partial Class Form1
         Me.NumericUpDown22.Increment = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown22.InterceptArrowKeys = False
         Me.NumericUpDown22.Location = New System.Drawing.Point(6, 24)
-        Me.NumericUpDown22.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NumericUpDown22.Maximum = New Decimal(New Integer() {20000, 0, 0, 0})
         Me.NumericUpDown22.Minimum = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown22.Name = "NumericUpDown22"
         Me.NumericUpDown22.Size = New System.Drawing.Size(70, 22)
@@ -3771,7 +3772,7 @@ Partial Class Form1
         Me.NumericUpDown23.Increment = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown23.InterceptArrowKeys = False
         Me.NumericUpDown23.Location = New System.Drawing.Point(6, 23)
-        Me.NumericUpDown23.Maximum = New Decimal(New Integer() {9000, 0, 0, 0})
+        Me.NumericUpDown23.Maximum = New Decimal(New Integer() {19000, 0, 0, 0})
         Me.NumericUpDown23.Minimum = New Decimal(New Integer() {100, 0, 0, 0})
         Me.NumericUpDown23.Name = "NumericUpDown23"
         Me.NumericUpDown23.Size = New System.Drawing.Size(70, 22)
@@ -5839,6 +5840,7 @@ Partial Class Form1
         '
         'TabPage14
         '
+        Me.TabPage14.Controls.Add(Me.Button13)
         Me.TabPage14.Controls.Add(Me.TextBox112)
         Me.TabPage14.Location = New System.Drawing.Point(4, 40)
         Me.TabPage14.Name = "TabPage14"
@@ -5856,6 +5858,15 @@ Partial Class Form1
         Me.TextBox112.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBox112.Size = New System.Drawing.Size(461, 320)
         Me.TextBox112.TabIndex = 0
+        '
+        'Button13
+        '
+        Me.Button13.Location = New System.Drawing.Point(550, 69)
+        Me.Button13.Name = "Button13"
+        Me.Button13.Size = New System.Drawing.Size(109, 23)
+        Me.Button13.TabIndex = 1
+        Me.Button13.Text = "Clear log"
+        Me.Button13.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -6495,4 +6506,5 @@ Partial Class Form1
     Friend WithEvents TabPage14 As TabPage
     Friend WithEvents TextBox112 As TextBox
     Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents Button13 As Button
 End Class

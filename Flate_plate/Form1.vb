@@ -1,14 +1,21 @@
 ﻿Imports System.Math
-Imports System.IO
-Imports System.Text
 Imports System.Globalization
 Imports System.Threading
-Imports System.Windows.Forms
 
 Public Structure Grill_struct
+    Implements IComparer(Of Grill_struct)
     Public girder As Integer      'Girder no
     Public beam As Integer        'Beam no
     Public weight As Double       'Total weight
+
+    Public Function Compare(x As Grill_struct, y As Grill_struct) As Integer Implements IComparer(Of Grill_struct).Compare
+        Throw New NotImplementedException()
+        If x.weight < y.weight Then
+            Return (-1)
+        Else
+            Return (+1)
+        End If
+    End Function
 End Structure
 
 Public Class Form1
@@ -523,7 +530,7 @@ Public Class Form1
         Dim calc_weight As Double           'Girder+Beam weight
         Dim best_girder As Integer = 999    'Init value
         Dim best_stif As Integer = 999      'Init value
-        Dim Count As Integer
+        Dim Count As Integer = 0
 
         Button9.BackColor = Color.Red
         Button9.Text = "Auto select WAIT..."
@@ -534,30 +541,54 @@ Public Class Form1
 
         For vert_girder = 1 To (UNP.Length - 1)
             For hor_beam = 1 To (UNP.Length - 1)
-                Count += 1
+
                 ProgressBar1.Value += 1
                 If ProgressBar1.Value = 9999 Then ProgressBar1.Value = 1
+
+                'ComboBox2.SelectedIndex = grill_results(i).girder   'Girders (short)
+                'ComboBox3.SelectedIndex = grill_results(i).beam
+
                 Calc_grill(vert_girder, hor_beam)
                 Double.TryParse(TextBox37.Text, calc_weight)
+                Me.Update()
 
-                If calc_weight < weight And TextBox29.BackColor <> Color.Red Then
-                    grill_results(count).girder = vert_girder
-                    grill_results(count).beam = hor_beam
-                    grill_results(count).weight = calc_weight
+                If TextBox29.BackColor <> Color.Red And calc_weight > 0 Then
 
-                    weight = calc_weight
-                    best_girder = vert_girder
-                    best_stif = hor_beam
+                    grill_results(Count).girder = vert_girder
+                    grill_results(Count).beam = hor_beam
+                    grill_results(Count).weight = calc_weight
+                    Count += 1
                 End If
             Next
         Next
-        Calc_grill(best_girder, best_stif)
-        ComboBox2.SelectedIndex = best_girder   'Girders (short)
-        ComboBox3.SelectedIndex = best_stif
 
-        '==============
-        'Finf lowest grill_results(count).weight 
-        '===============
+        '====  SORT THE CALC RESULTS ==========
+        Button9.Text = "SORTING results"
+        Button9.BackColor = Color.LightBlue
+        Me.Update()
+        'https://social.msdn.microsoft.com/Forums/en-US/9af03200-58d6-4035-84e8-2554347bc25b/vbnet-2005-structure-arraysort-how?forum=vblanguage
+        'https://stackoverflow.com/questions/1751768/sort-an-array-of-structures-in-net
+        grill_results = grill_results.OrderBy(Function(c) c.weight).ToArray
+
+        '===== LOG results ==========
+        For i = 0 To grill_results.Length - 1
+            If grill_results(i).weight > 0 Then
+                TextBox112.Text &= "grill_results(i).girder= " & grill_results(i).girder & "--"
+                TextBox112.Text &= "grill_results(i).beam= " & grill_results(i).beam & "--"
+                TextBox112.Text &= "grill_results(i).weight= " & grill_results(i).weight & vbCrLf
+            End If
+        Next
+
+        For i = 0 To grill_results.Length - 1
+            If grill_results(i).weight > 0 Then
+                Calc_grill(grill_results(i).girder, grill_results(i).beam)
+                ComboBox2.SelectedIndex = grill_results(i).girder   'Girders (short)
+                ComboBox3.SelectedIndex = grill_results(i).beam
+                Exit For
+            End If
+        Next
+
+
         Button9.Text = "Auto select"
         Button9.BackColor = Color.Transparent
         ProgressBar1.Visible = False
@@ -591,6 +622,9 @@ Public Class Form1
         Dim l_opti As Double
         Dim δ1, δ2 As Double            'Temp value for readability
         Dim girder_name, beam_name As String
+
+        ComboBox2.SelectedIndex = Girder_vert   'Girders (short)
+        ComboBox3.SelectedIndex = Beam_hor      'Beam
 
         '---------- get data -------------
         Double.TryParse(TextBox43.Text, press)          '[N/mm2]
@@ -666,10 +700,10 @@ Public Class Form1
         TextBox29.BackColor = CType(IIf(σy < _σ_02, Color.LightGreen, Color.Red), Color)
 
         '------ logging if possible solution ---------------
-        If TextBox29.BackColor <> Color.Red Then
-            TextBox112.Text &= "girder_name= " & girder_name & ", beam_name= " & beam_name & vbCrLf
-            TextBox112.Text &= "σy = " & σy.ToString("0") & ", Weight= " & weight.ToString("0") & vbCrLf
-        End If
+        'If TextBox29.BackColor <> Color.Red Then
+        '    TextBox112.Text &= "girder_name= " & girder_name & ", beam_name= " & beam_name & vbCrLf
+        '    TextBox112.Text &= "σy = " & σy.ToString("0") & ", Weight= " & weight.ToString("0") & vbCrLf
+        'End If
     End Sub
     'Stress and strain table 8.13 page 260
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click, TabPage10.Enter, NumericUpDown25.ValueChanged, NumericUpDown14.ValueChanged, ComboBox4.SelectedIndexChanged
@@ -866,5 +900,9 @@ Public Class Form1
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click, NumericUpDown5.ValueChanged, NumericUpDown33.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged
         Calc_input()
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        TextBox112.Clear()
     End Sub
 End Class
