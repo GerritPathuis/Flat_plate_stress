@@ -151,7 +151,6 @@ Public Class Form1
     Public Shared _σ_yield As Double
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         Dim words() As String
 
         Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
@@ -539,21 +538,19 @@ Public Class Form1
         Me.Update()
         TextBox112.Clear()
 
+        Array.Clear(grill_results, 0, grill_results.Length)
+
         For vert_girder = 1 To (UNP.Length - 1)
-            For hor_beam = 1 To (UNP.Length - 1)
+            For hor_beam = 0 To (UNP.Length - 1)
 
                 ProgressBar1.Value += 1
                 If ProgressBar1.Value = 9999 Then ProgressBar1.Value = 1
-
-                'ComboBox2.SelectedIndex = grill_results(i).girder   'Girders (short)
-                'ComboBox3.SelectedIndex = grill_results(i).beam
 
                 Calc_grill(vert_girder, hor_beam)
                 Double.TryParse(TextBox37.Text, calc_weight)
                 Me.Update()
 
                 If TextBox29.BackColor <> Color.Red And calc_weight > 0 Then
-
                     grill_results(Count).girder = vert_girder
                     grill_results(Count).beam = hor_beam
                     grill_results(Count).weight = calc_weight
@@ -563,7 +560,7 @@ Public Class Form1
         Next
 
         '====  SORT THE CALC RESULTS ==========
-        Button9.Text = "SORTING results"
+        Button9.Text = "SORTING....."
         Button9.BackColor = Color.LightBlue
         Me.Update()
         'https://social.msdn.microsoft.com/Forums/en-US/9af03200-58d6-4035-84e8-2554347bc25b/vbnet-2005-structure-arraysort-how?forum=vblanguage
@@ -573,9 +570,9 @@ Public Class Form1
         '===== LOG results ==========
         For i = 0 To grill_results.Length - 1
             If grill_results(i).weight > 0 Then
-                TextBox112.Text &= "grill_results(i).girder= " & grill_results(i).girder & "--"
-                TextBox112.Text &= "grill_results(i).beam= " & grill_results(i).beam & "--"
-                TextBox112.Text &= "grill_results(i).weight= " & grill_results(i).weight & vbCrLf
+                TextBox112.Text &= "Girder name= " & Get_profile_name(grill_results(i).girder) & vbTab & "  "
+                TextBox112.Text &= "Beam name= " & Get_profile_name(grill_results(i).beam) & vbTab
+                TextBox112.Text &= "Weight= " & grill_results(i).weight & vbCrLf
             End If
         Next
 
@@ -623,8 +620,8 @@ Public Class Form1
         Dim δ1, δ2 As Double            'Temp value for readability
         Dim girder_name, beam_name As String
 
-        ComboBox2.SelectedIndex = Girder_vert   'Girders (short)
-        ComboBox3.SelectedIndex = Beam_hor      'Beam
+        ComboBox2.SelectedIndex = Girder_vert   'Girders number (short)
+        ComboBox3.SelectedIndex = Beam_hor      'Beam number
 
         '---------- get data -------------
         Double.TryParse(TextBox43.Text, press)          '[N/mm2]
@@ -905,4 +902,9 @@ Public Class Form1
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         TextBox112.Clear()
     End Sub
+    Private Function Get_profile_name(no As Integer) As String
+        Dim wwords() As String
+        wwords = UNP(no).Split(CType(";", Char()))
+        Return (wwords(0))
+    End Function
 End Class
