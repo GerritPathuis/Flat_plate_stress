@@ -502,8 +502,9 @@ Partial Class Form1
         Me.Label219 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
-        Me.TextBox112 = New System.Windows.Forms.TextBox()
         Me.Button13 = New System.Windows.Forms.Button()
+        Me.TextBox112 = New System.Windows.Forms.TextBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -3559,6 +3560,7 @@ Partial Class Form1
         '
         'TabPage8
         '
+        Me.TabPage8.Controls.Add(Me.CheckBox1)
         Me.TabPage8.Controls.Add(Me.ProgressBar1)
         Me.TabPage8.Controls.Add(Me.Button9)
         Me.TabPage8.Controls.Add(Me.Label100)
@@ -3874,9 +3876,9 @@ Partial Class Form1
         Me.Label109.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label109.Location = New System.Drawing.Point(12, 357)
         Me.Label109.Name = "Label109"
-        Me.Label109.Size = New System.Drawing.Size(294, 13)
+        Me.Label109.Size = New System.Drawing.Size(283, 13)
         Me.Label109.TabIndex = 1
-        Me.Label109.Text = "Note difference with FEA is that the Plate does not carry load"
+        Me.Label109.Text = "Note with FEA the Plate carries load, Not is this calculation"
         '
         'GroupBox19
         '
@@ -5850,6 +5852,15 @@ Partial Class Form1
         Me.TabPage14.Text = "Logging"
         Me.TabPage14.UseVisualStyleBackColor = True
         '
+        'Button13
+        '
+        Me.Button13.Location = New System.Drawing.Point(550, 69)
+        Me.Button13.Name = "Button13"
+        Me.Button13.Size = New System.Drawing.Size(109, 23)
+        Me.Button13.TabIndex = 1
+        Me.Button13.Text = "Clear log"
+        Me.Button13.UseVisualStyleBackColor = True
+        '
         'TextBox112
         '
         Me.TextBox112.Location = New System.Drawing.Point(6, 6)
@@ -5859,14 +5870,15 @@ Partial Class Form1
         Me.TextBox112.Size = New System.Drawing.Size(461, 320)
         Me.TextBox112.TabIndex = 0
         '
-        'Button13
+        'CheckBox1
         '
-        Me.Button13.Location = New System.Drawing.Point(550, 69)
-        Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(109, 23)
-        Me.Button13.TabIndex = 1
-        Me.Button13.Text = "Clear log"
-        Me.Button13.UseVisualStyleBackColor = True
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(291, 328)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(143, 17)
+        Me.CheckBox1.TabIndex = 121
+        Me.CheckBox1.Text = "Identical types (not ideal)"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -6507,4 +6519,5 @@ Partial Class Form1
     Friend WithEvents TextBox112 As TextBox
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Button13 As Button
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

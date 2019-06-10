@@ -540,24 +540,43 @@ Public Class Form1
 
         Array.Clear(grill_results, 0, grill_results.Length)
 
-        For vert_girder = 1 To (UNP.Length - 1)
-            For hor_beam = 0 To (UNP.Length - 1)
+        If CheckBox1.Checked Then 'Identical beams (horizontal and vertical)
+            For profile = 1 To (UNP.Length - 1)
 
                 ProgressBar1.Value += 1
                 If ProgressBar1.Value = 9999 Then ProgressBar1.Value = 1
 
-                Calc_grill(vert_girder, hor_beam)
+                Calc_grill(profile, profile)
                 Double.TryParse(TextBox37.Text, calc_weight)
                 Me.Update()
 
                 If TextBox29.BackColor <> Color.Red And calc_weight > 0 Then
-                    grill_results(Count).girder = vert_girder
-                    grill_results(Count).beam = hor_beam
+                    grill_results(Count).girder = profile
+                    grill_results(Count).beam = profile
                     grill_results(Count).weight = calc_weight
                     Count += 1
                 End If
             Next
-        Next
+        Else
+            For vert_girder = 1 To (UNP.Length - 1)
+                For hor_beam = 0 To (UNP.Length - 1)
+
+                    ProgressBar1.Value += 1
+                    If ProgressBar1.Value = 9999 Then ProgressBar1.Value = 1
+
+                    Calc_grill(vert_girder, hor_beam)
+                    Double.TryParse(TextBox37.Text, calc_weight)
+                    Me.Update()
+
+                    If TextBox29.BackColor <> Color.Red And calc_weight > 0 Then
+                        grill_results(Count).girder = vert_girder
+                        grill_results(Count).beam = hor_beam
+                        grill_results(Count).weight = calc_weight
+                        Count += 1
+                    End If
+                Next
+            Next
+        End If
 
         '====  SORT THE CALC RESULTS ==========
         Button9.Text = "SORTING....."
@@ -584,7 +603,6 @@ Public Class Form1
                 Exit For
             End If
         Next
-
 
         Button9.Text = "Auto select"
         Button9.BackColor = Color.Transparent
@@ -690,7 +708,7 @@ Public Class Form1
         TextBox37.Text = weight.ToString("0")           '[kg]
         TextBox84.Text = cost.ToString("0")             '[Euro]
 
-        Label148.Text = "If girders and beam identical Optimum Girder space= " & l_opti.ToString("0") & " [mm]"
+        Label148.Text = "If girders and beam are identical the Optimum Girder space= " & l_opti.ToString("0") & " [mm]"
 
         '------ check -shorter/longer edge---------
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
