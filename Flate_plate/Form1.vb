@@ -19,7 +19,7 @@ Public Structure Grill_struct
 End Structure
 
 Public Class Form1
-    Public grill_results(13226) As Grill_struct    'Auto grillage
+    Public grill_results(13400) As Grill_struct    'Auto grillage
 
 
     'https://en.wikipedia.org/wiki/List_of_second_moments_of_area
@@ -146,7 +146,7 @@ Public Class Form1
      "UNP 400;  20350; 400; 71.8;    200;    1132900"
      }
 
-    Public Shared _ρ_steel As Double = 7850
+    Public Shared _ρ_steel As Double = 7850 'Density steel
     Public Shared _σ_02 As Double
     Public Shared _σ_yield As Double
 
@@ -557,7 +557,7 @@ Public Class Form1
                     Count += 1
                 End If
             Next
-        Else
+        Else        'Different beams (horizontal and vertical)
             For vert_girder = 1 To (UNP.Length - 1)
                 For hor_beam = 0 To (UNP.Length - 1)
 
@@ -612,8 +612,8 @@ Public Class Form1
     'Design of Ship Hull Structures ISBN: 978-3-642-10009-3
     'Chapter Grillage Structure Page 254 
     'Girders (short) most important, vertical, 
-    'Beams horizontal agianst buckling
-
+    'Beams horizontal against buckling
+    'Girder and Beam are selected from the UNP table
     Private Sub Calc_grill(Girder_vert As Integer, Beam_hor As Integer)
         Dim press As Double             'Uniform load
         Dim a_hor As Double             'Longer horizontal edge
@@ -627,6 +627,7 @@ Public Class Form1
         Dim space_girders As Double     'Girder space 
         Dim σy As Double                'Midpoint Stiffener Stress
         Dim δ As Double                 'Midpoint (Max) deflection
+        Dim force As Double             'Pressure x area
         Dim Elas As Double              'Young modulus
         Dim weight As Double            'Total weight
         Dim cost As Double              'Total cost
@@ -680,12 +681,17 @@ Public Class Form1
         '------ deflection and stress @ midpoint--------
         '------ formula 6.1.1---------------------------
 
+        force = a_hor * b_vert * press
+
         δ1 = I_hor_beam * (no_hor_beams + 1) / a_hor ^ 3
         δ2 = I_vert_girder * (no_vert_girders + 1) / b_vert ^ 3
 
-        δ = a_hor * b_vert * press
+        δ = force
         δ /= PI ^ 6 * Elas / 16
         δ /= (δ1 + δ2)
+
+        '----Stress @ midpoint--------
+        '------ formula 6.1.1---------------------------
         σy = PI ^ 2 * δ * Elas * ey_girder / b_vert ^ 2
 
         '------ Girder weight ---------------------
@@ -705,7 +711,7 @@ Public Class Form1
 
         TextBox35.Text = space_girders.ToString("0")    'Girder distance
         TextBox36.Text = space_beams.ToString("0")      'Beam distance
-        TextBox37.Text = weight.ToString("0")           '[kg]
+        TextBox37.Text = weight.ToString("0.0")         '[kg]
         TextBox84.Text = cost.ToString("0")             '[Euro]
 
         Label148.Text = "If girders and beam are identical the Optimum Girder space= " & l_opti.ToString("0") & " [mm]"

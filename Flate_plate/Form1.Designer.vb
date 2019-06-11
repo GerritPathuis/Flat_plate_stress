@@ -291,6 +291,7 @@ Partial Class Form1
         Me.Label98 = New System.Windows.Forms.Label()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.Label100 = New System.Windows.Forms.Label()
@@ -504,7 +505,6 @@ Partial Class Form1
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.TextBox112 = New System.Windows.Forms.TextBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -3584,6 +3584,16 @@ Partial Class Form1
         Me.TabPage8.Text = "Grillage Structure"
         Me.TabPage8.UseVisualStyleBackColor = True
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(291, 328)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(143, 17)
+        Me.CheckBox1.TabIndex = 121
+        Me.CheckBox1.Text = "Identical types (not ideal)"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'ProgressBar1
         '
         Me.ProgressBar1.Location = New System.Drawing.Point(14, 398)
@@ -3622,7 +3632,7 @@ Partial Class Form1
         Me.GroupBox24.Size = New System.Drawing.Size(426, 69)
         Me.GroupBox24.TabIndex = 118
         Me.GroupBox24.TabStop = False
-        Me.GroupBox24.Text = "General"
+        Me.GroupBox24.Text = "General fixed boundary conditions, grillage simply supported"
         '
         'TextBox40
         '
@@ -5869,16 +5879,6 @@ Partial Class Form1
         Me.TextBox112.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBox112.Size = New System.Drawing.Size(461, 320)
         Me.TextBox112.TabIndex = 0
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(291, 328)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(143, 17)
-        Me.CheckBox1.TabIndex = 121
-        Me.CheckBox1.Text = "Identical types (not ideal)"
-        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Form1
         '
