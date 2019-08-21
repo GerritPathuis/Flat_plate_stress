@@ -328,10 +328,12 @@ Public Class Form1
         yt /= Elas * t ^ 3
         yt *= 1000          '[mm]
 
-        TextBox8.Text = σm.ToString("0")
-        TextBox7.Text = yt.ToString("0.0")
-        TextBox78.Text = weight.ToString("0")
-        TextBox79.Text = cost.ToString("0")
+        TextBox113.Text = p.ToString("F0")               '[N/m2]
+        TextBox114.Text = (p / 100).ToString("F0")       '[mbar]
+        TextBox8.Text = σm.ToString("F0")
+        TextBox7.Text = yt.ToString("F1")
+        TextBox78.Text = weight.ToString("F0")
+        TextBox79.Text = cost.ToString("F0")
         '===== check ================
         TextBox8.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
     End Sub

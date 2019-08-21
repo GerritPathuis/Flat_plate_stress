@@ -505,6 +505,12 @@ Partial Class Form1
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.TextBox112 = New System.Windows.Forms.TextBox()
+        Me.Label245 = New System.Windows.Forms.Label()
+        Me.Label246 = New System.Windows.Forms.Label()
+        Me.TextBox113 = New System.Windows.Forms.TextBox()
+        Me.Label247 = New System.Windows.Forms.Label()
+        Me.Label248 = New System.Windows.Forms.Label()
+        Me.TextBox114 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -1796,7 +1802,7 @@ Partial Class Form1
         Me.GroupBox8.Controls.Add(Me.Label28)
         Me.GroupBox8.Controls.Add(Me.TextBox7)
         Me.GroupBox8.Controls.Add(Me.Label27)
-        Me.GroupBox8.Location = New System.Drawing.Point(22, 133)
+        Me.GroupBox8.Location = New System.Drawing.Point(22, 177)
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.Size = New System.Drawing.Size(258, 150)
         Me.GroupBox8.TabIndex = 40
@@ -1921,15 +1927,21 @@ Partial Class Form1
         '
         'GroupBox7
         '
+        Me.GroupBox7.Controls.Add(Me.Label247)
+        Me.GroupBox7.Controls.Add(Me.Label248)
+        Me.GroupBox7.Controls.Add(Me.TextBox114)
+        Me.GroupBox7.Controls.Add(Me.Label245)
         Me.GroupBox7.Controls.Add(Me.NumericUpDown11)
+        Me.GroupBox7.Controls.Add(Me.Label246)
         Me.GroupBox7.Controls.Add(Me.Label36)
+        Me.GroupBox7.Controls.Add(Me.TextBox113)
         Me.GroupBox7.Controls.Add(Me.Label35)
         Me.GroupBox7.Controls.Add(Me.Label32)
         Me.GroupBox7.Controls.Add(Me.NumericUpDown9)
         Me.GroupBox7.Controls.Add(Me.Label31)
         Me.GroupBox7.Location = New System.Drawing.Point(22, 29)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(258, 89)
+        Me.GroupBox7.Size = New System.Drawing.Size(258, 142)
         Me.GroupBox7.TabIndex = 39
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Input"
@@ -2000,7 +2012,7 @@ Partial Class Form1
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(44, 323)
+        Me.Button4.Location = New System.Drawing.Point(37, 342)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(102, 45)
         Me.Button4.TabIndex = 36
@@ -5880,6 +5892,64 @@ Partial Class Form1
         Me.TextBox112.Size = New System.Drawing.Size(461, 320)
         Me.TextBox112.TabIndex = 0
         '
+        'Label245
+        '
+        Me.Label245.AutoSize = True
+        Me.Label245.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label245.Location = New System.Drawing.Point(12, 75)
+        Me.Label245.Name = "Label245"
+        Me.Label245.Size = New System.Drawing.Size(62, 16)
+        Me.Label245.TabIndex = 42
+        Me.Label245.Text = "Pressure"
+        '
+        'Label246
+        '
+        Me.Label246.AutoSize = True
+        Me.Label246.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label246.Location = New System.Drawing.Point(176, 77)
+        Me.Label246.Name = "Label246"
+        Me.Label246.Size = New System.Drawing.Size(48, 16)
+        Me.Label246.TabIndex = 43
+        Me.Label246.Text = "[N/m2]"
+        '
+        'TextBox113
+        '
+        Me.TextBox113.Enabled = False
+        Me.TextBox113.Location = New System.Drawing.Point(84, 75)
+        Me.TextBox113.Name = "TextBox113"
+        Me.TextBox113.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox113.TabIndex = 44
+        Me.TextBox113.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label247
+        '
+        Me.Label247.AutoSize = True
+        Me.Label247.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label247.Location = New System.Drawing.Point(12, 101)
+        Me.Label247.Name = "Label247"
+        Me.Label247.Size = New System.Drawing.Size(62, 16)
+        Me.Label247.TabIndex = 45
+        Me.Label247.Text = "Pressure"
+        '
+        'Label248
+        '
+        Me.Label248.AutoSize = True
+        Me.Label248.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label248.Location = New System.Drawing.Point(176, 103)
+        Me.Label248.Name = "Label248"
+        Me.Label248.Size = New System.Drawing.Size(47, 16)
+        Me.Label248.TabIndex = 46
+        Me.Label248.Text = "[mbar]"
+        '
+        'TextBox114
+        '
+        Me.TextBox114.Enabled = False
+        Me.TextBox114.Location = New System.Drawing.Point(84, 101)
+        Me.TextBox114.Name = "TextBox114"
+        Me.TextBox114.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox114.TabIndex = 47
+        Me.TextBox114.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -6520,4 +6590,10 @@ Partial Class Form1
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Button13 As Button
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents Label245 As Label
+    Friend WithEvents Label246 As Label
+    Friend WithEvents TextBox113 As TextBox
+    Friend WithEvents Label247 As Label
+    Friend WithEvents Label248 As Label
+    Friend WithEvents TextBox114 As TextBox
 End Class
