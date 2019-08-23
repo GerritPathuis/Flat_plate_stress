@@ -41,6 +41,7 @@ Partial Class Form1
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label256 = New System.Windows.Forms.Label()
         Me.Label255 = New System.Windows.Forms.Label()
         Me.TextBox117 = New System.Windows.Forms.TextBox()
         Me.Label253 = New System.Windows.Forms.Label()
@@ -106,6 +107,7 @@ Partial Class Form1
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TextBox119 = New System.Windows.Forms.TextBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TextBox86 = New System.Windows.Forms.TextBox()
         Me.Label213 = New System.Windows.Forms.Label()
@@ -522,8 +524,6 @@ Partial Class Form1
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.TextBox112 = New System.Windows.Forms.TextBox()
-        Me.TextBox119 = New System.Windows.Forms.TextBox()
-        Me.Label256 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox32.SuspendLayout()
@@ -865,6 +865,16 @@ Partial Class Form1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Check values (max allowed values)"
         '
+        'Label256
+        '
+        Me.Label256.AutoSize = True
+        Me.Label256.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label256.Location = New System.Drawing.Point(11, 191)
+        Me.Label256.Name = "Label256"
+        Me.Label256.Size = New System.Drawing.Size(214, 13)
+        Me.Label256.TabIndex = 34
+        Me.Label256.Text = "Weld factor (0.7) is NOT taken into account"
+        '
         'Label255
         '
         Me.Label255.AutoSize = True
@@ -1012,7 +1022,8 @@ Partial Class Form1
         Me.NumericUpDown5.BackColor = System.Drawing.Color.Yellow
         Me.NumericUpDown5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumericUpDown5.Location = New System.Drawing.Point(191, 108)
-        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {600, 0, 0, 0})
+        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {650, 0, 0, 0})
+        Me.NumericUpDown5.Minimum = New Decimal(New Integer() {200, 0, 0, -2147483648})
         Me.NumericUpDown5.Name = "NumericUpDown5"
         Me.NumericUpDown5.Size = New System.Drawing.Size(76, 22)
         Me.NumericUpDown5.TabIndex = 6
@@ -1078,7 +1089,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 40)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage2.Size = New System.Drawing.Size(866, 481)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Rectangle simply supported edges"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -1541,7 +1552,7 @@ Partial Class Form1
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(478, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(385, 565)
+        Me.PictureBox1.Size = New System.Drawing.Size(385, 475)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
@@ -1556,10 +1567,18 @@ Partial Class Form1
         Me.TabPage3.Location = New System.Drawing.Point(4, 40)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage3.Size = New System.Drawing.Size(866, 481)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Rect. plate fixed edges"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'TextBox119
+        '
+        Me.TextBox119.Location = New System.Drawing.Point(32, 472)
+        Me.TextBox119.Name = "TextBox119"
+        Me.TextBox119.Size = New System.Drawing.Size(425, 20)
+        Me.TextBox119.TabIndex = 39
+        Me.TextBox119.Text = "http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html"
         '
         'GroupBox6
         '
@@ -1904,7 +1923,7 @@ Partial Class Form1
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.Location = New System.Drawing.Point(489, 3)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(374, 565)
+        Me.PictureBox2.Size = New System.Drawing.Size(374, 475)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox2.TabIndex = 2
         Me.PictureBox2.TabStop = False
@@ -1919,7 +1938,7 @@ Partial Class Form1
         Me.TabPage4.Location = New System.Drawing.Point(4, 40)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage4.Size = New System.Drawing.Size(866, 481)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Round plate"
         '
@@ -2219,7 +2238,7 @@ Partial Class Form1
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
         Me.PictureBox3.Location = New System.Drawing.Point(403, 3)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(460, 565)
+        Me.PictureBox3.Size = New System.Drawing.Size(460, 475)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox3.TabIndex = 2
         Me.PictureBox3.TabStop = False
@@ -2234,7 +2253,7 @@ Partial Class Form1
         Me.TabPage6.Location = New System.Drawing.Point(4, 40)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage6.Size = New System.Drawing.Size(866, 481)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Round with hole"
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -2653,7 +2672,7 @@ Partial Class Form1
         '
         Me.PictureBox6.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(3, 488)
+        Me.PictureBox6.Location = New System.Drawing.Point(3, 398)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(860, 80)
         Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -2674,7 +2693,7 @@ Partial Class Form1
         Me.TabPage5.Location = New System.Drawing.Point(4, 40)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage5.Size = New System.Drawing.Size(866, 481)
         Me.TabPage5.TabIndex = 6
         Me.TabPage5.Text = "Beam Bend + Tension"
         '
@@ -3359,7 +3378,7 @@ Partial Class Form1
         Me.TabPage7.Location = New System.Drawing.Point(4, 40)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage7.Size = New System.Drawing.Size(866, 481)
         Me.TabPage7.TabIndex = 7
         Me.TabPage7.Text = "Cantilever beam"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -3784,7 +3803,7 @@ Partial Class Form1
         Me.TabPage8.Location = New System.Drawing.Point(4, 40)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage8.Size = New System.Drawing.Size(866, 481)
         Me.TabPage8.TabIndex = 8
         Me.TabPage8.Text = "Grillage Structure"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -4341,7 +4360,7 @@ Partial Class Form1
         Me.TabPage9.Location = New System.Drawing.Point(4, 40)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(866, 511)
+        Me.TabPage9.Size = New System.Drawing.Size(866, 481)
         Me.TabPage9.TabIndex = 9
         Me.TabPage9.Text = "Pictures Bulb flat"
         Me.TabPage9.UseVisualStyleBackColor = True
@@ -4352,7 +4371,7 @@ Partial Class Form1
         Me.PictureBox11.Image = CType(resources.GetObject("PictureBox11.Image"), System.Drawing.Image)
         Me.PictureBox11.Location = New System.Drawing.Point(311, 3)
         Me.PictureBox11.Name = "PictureBox11"
-        Me.PictureBox11.Size = New System.Drawing.Size(552, 505)
+        Me.PictureBox11.Size = New System.Drawing.Size(552, 475)
         Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox11.TabIndex = 71
         Me.PictureBox11.TabStop = False
@@ -4367,7 +4386,7 @@ Partial Class Form1
         Me.TabPage10.Location = New System.Drawing.Point(4, 40)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(866, 511)
+        Me.TabPage10.Size = New System.Drawing.Size(866, 481)
         Me.TabPage10.TabIndex = 10
         Me.TabPage10.Text = "Straight beams Plastic collapse Loads"
         Me.TabPage10.UseVisualStyleBackColor = True
@@ -4838,7 +4857,7 @@ Partial Class Form1
         Me.TabPage11.Location = New System.Drawing.Point(4, 40)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage11.Size = New System.Drawing.Size(866, 481)
         Me.TabPage11.TabIndex = 11
         Me.TabPage11.Text = "Structural steel properties"
         Me.TabPage11.UseVisualStyleBackColor = True
@@ -4995,7 +5014,7 @@ Partial Class Form1
         Me.TabPage12.Location = New System.Drawing.Point(4, 40)
         Me.TabPage12.Name = "TabPage12"
         Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage12.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage12.Size = New System.Drawing.Size(866, 481)
         Me.TabPage12.TabIndex = 12
         Me.TabPage12.Text = "C-clamp"
         Me.TabPage12.UseVisualStyleBackColor = True
@@ -5344,7 +5363,7 @@ Partial Class Form1
         Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
         Me.PictureBox13.Location = New System.Drawing.Point(529, 3)
         Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(334, 565)
+        Me.PictureBox13.Size = New System.Drawing.Size(334, 475)
         Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox13.TabIndex = 2
         Me.PictureBox13.TabStop = False
@@ -5358,7 +5377,7 @@ Partial Class Form1
         Me.TabPage13.Location = New System.Drawing.Point(4, 40)
         Me.TabPage13.Name = "TabPage13"
         Me.TabPage13.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage13.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage13.Size = New System.Drawing.Size(866, 481)
         Me.TabPage13.TabIndex = 13
         Me.TabPage13.Text = "Frame"
         Me.TabPage13.UseVisualStyleBackColor = True
@@ -6050,7 +6069,7 @@ Partial Class Form1
         Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
         Me.PictureBox14.Location = New System.Drawing.Point(543, 3)
         Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(320, 565)
+        Me.PictureBox14.Size = New System.Drawing.Size(320, 475)
         Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox14.TabIndex = 3
         Me.PictureBox14.TabStop = False
@@ -6062,7 +6081,7 @@ Partial Class Form1
         Me.TabPage14.Location = New System.Drawing.Point(4, 40)
         Me.TabPage14.Name = "TabPage14"
         Me.TabPage14.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage14.Size = New System.Drawing.Size(866, 571)
+        Me.TabPage14.Size = New System.Drawing.Size(866, 481)
         Me.TabPage14.TabIndex = 14
         Me.TabPage14.Text = "Logging"
         Me.TabPage14.UseVisualStyleBackColor = True
@@ -6084,24 +6103,6 @@ Partial Class Form1
         Me.TextBox112.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBox112.Size = New System.Drawing.Size(461, 320)
         Me.TextBox112.TabIndex = 0
-        '
-        'TextBox119
-        '
-        Me.TextBox119.Location = New System.Drawing.Point(32, 472)
-        Me.TextBox119.Name = "TextBox119"
-        Me.TextBox119.Size = New System.Drawing.Size(425, 20)
-        Me.TextBox119.TabIndex = 39
-        Me.TextBox119.Text = "http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html"
-        '
-        'Label256
-        '
-        Me.Label256.AutoSize = True
-        Me.Label256.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label256.Location = New System.Drawing.Point(11, 191)
-        Me.Label256.Name = "Label256"
-        Me.Label256.Size = New System.Drawing.Size(214, 13)
-        Me.Label256.TabIndex = 34
-        Me.Label256.Text = "Weld factor (0.7) is NOT taken into account"
         '
         'Form1
         '

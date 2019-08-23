@@ -185,8 +185,11 @@ Public Class Form1
         _σ_design = _σ_02 / _sf                     'Design stress [N/mm2]
         TextBox115.Text = _σ_design.ToString("F0")  '[N/mm2] design stress
     End Sub
-    Public Sub Calc_young(t As Double)
-        _young_gpa = -0.000000324 * t ^ 3 + 0.000049951 * t ^ 2 - 0.04930174 * t + 203.386 '[GPa]
+    Public Sub Calc_young(tt As Double)
+        'https://www.engineeringtoolbox.com/young-modulus-d_773.html
+
+        If tt < -200 Or tt > 650 Then MsgBox("Youngs modulus, temperature out of range")
+        _young_gpa = -0.000000324 * tt ^ 3 + 0.000049951 * tt ^ 2 - 0.04930174 * tt + 203.386 '[GPa]
         _young_Nmm2 = _young_gpa * 10 ^ 3               '[N/mm2] 
         _young_Nm2 = _young_gpa * 10 ^ 9                '[N/m2] 
 
