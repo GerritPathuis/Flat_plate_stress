@@ -146,9 +146,14 @@ Public Class Form1
      "UNP 400;  20350; 400; 71.8;    200;    1132900"
      }
 
-    Public Shared _ρ_steel As Double = 7850 'Density steel
-    Public Shared _σ_02 As Double
-    Public Shared _σ_yield As Double
+    Public Shared _ρ_steel As Double = 7850     'Density steel [kg/m3]
+    Public Shared _σ_02 As Double               'Yield stress [N/mm2]
+    Public Shared _sf As Double                 'Safety factor [-]
+    Public Shared _σ_design As Double           'Design stress [N/mm2]
+    Public Shared _young_gpa As Double          'Youngs modulus [Gpa]
+    Public Shared _young_Nmm2 As Double         'Youngs modulus [N/mm2]
+    Public Shared _young_Nm2 As Double          'Youngs modulus [N/m2]
+
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim words() As String
@@ -163,7 +168,7 @@ Public Class Form1
             ComboBox3.Items.Add(words(0))
             ComboBox4.Items.Add(words(0))
         Next hh
-        ComboBox1.SelectedIndex = 46    'HEB 450
+        ComboBox1.SelectedIndex = 49    'HEB 
         ComboBox2.SelectedIndex = 94    'UNP 160    Girders (short)
         ComboBox3.SelectedIndex = 89    'UNP 65
         ComboBox4.SelectedIndex = 63    'Strip 100x10
@@ -171,8 +176,22 @@ Public Class Form1
         For Each tg As TabPage In TabControl1.TabPages
             tg.BackColor = Color.Snow
         Next
+        Get_steel_properties()
 
-        _σ_02 = NumericUpDown10.Value   '[N/mm2]Yield strength
+    End Sub
+    Private Sub Get_steel_properties()
+        _σ_02 = NumericUpDown10.Value               '[N/mm2]Yield strength
+        _sf = NumericUpDown43.Value                 'Safety value
+        _σ_design = _σ_02 / _sf                     'Design stress [N/mm2]
+        TextBox115.Text = _σ_design.ToString("F0")  '[N/mm2] design stress
+    End Sub
+    Public Sub Calc_young(t As Double)
+        _young_gpa = -0.000000324 * t ^ 3 + 0.000049951 * t ^ 2 - 0.04930174 * t + 203.386 '[GPa]
+        _young_Nmm2 = _young_gpa * 10 ^ 3               '[N/mm2] 
+        _young_Nm2 = _young_gpa * 10 ^ 9                '[N/m2] 
+
+        TextBox116.Text = _young_gpa.ToString("F1")     '[GPa] 
+        TextBox117.Text = _young_Nmm2.ToString("F0")    '[N/mm2] 
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, TabPage1.Enter, NumericUpDown4.ValueChanged, NumericUpDown3.ValueChanged, NumericUpDown2.ValueChanged
@@ -182,21 +201,22 @@ Public Class Form1
         'http://www.roymech.co.uk/Useful_Tables/Mechanics/Plates.html
         'Rectangle simply supported
         Dim a, b, t, flex As Double
-        Dim Elas, p, σm, yt As Double
+        Dim p, σm, yt As Double
         Dim weight, cost As Double
+
+        Calc_young(NumericUpDown5.Value)               'Get young modulus
+        Get_steel_properties()                          'Allowed stress
 
         p = NumericUpDown1.Value * 100                  '[mbar]->[N/m2]]
         TextBox4.Text = p.ToString                      '[N/m2]
         TextBox43.Text = (p / 10 ^ 6).ToString          '[N/mm2]
         TextBox49.Text = NumericUpDown1.Value.ToString  '[mbar]
-        _σ_02 = NumericUpDown10.Value                   '[N/mm2]Yield strength
 
-        a = NumericUpDown2.Value / 1000 '[m]    'Length
-        b = NumericUpDown3.Value / 1000 '[m]    'Width
-        t = NumericUpDown4.Value / 1000 '[m]    'Thickness
-        Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
-        weight = a * b * t * _ρ_steel           '[kg]
-        cost = weight * NumericUpDown33.Value   '[euro]
+        a = NumericUpDown2.Value / 1000 '[m]        'Length
+        b = NumericUpDown3.Value / 1000 '[m]        'Width
+        t = NumericUpDown4.Value / 1000 '[m]        'Thickness
+        weight = a * b * t * _ρ_steel               '[kg]
+        cost = weight * NumericUpDown33.Value       '[euro]
 
         If a >= b Then
             Label40.Visible = False
@@ -205,8 +225,8 @@ Public Class Form1
             σm /= 10 ^ 6        '[N/mm2]
 
             yt = 0.142 * p * b ^ 4
-            yt /= Elas * t ^ 3 * (2.21 * (b / a) ^ 3 + 1)
-            yt *= 1000          '[mm]
+            yt /= _young_Nm2 * t ^ 3 * (2.21 * (b / a) ^ 3 + 1)
+            yt *= 1000          '[m]-->[mm]
             flex = a * 10 ^ 3 / yt
         Else
             σm = 0
@@ -246,7 +266,6 @@ Public Class Form1
         Wu /= (a * 1000) * (b * 1000)       '[N/mm2] Ultimate pressure
         Wu *= 10 ^ 4                        '[N/mm2] --> [mbar]
 
-        'MessageBox.Show(β.ToString & ", " & )
         '----- Present -----------------
         TextBox2.Text = σm.ToString("0")
         TextBox3.Text = yt.ToString("0.0")
@@ -257,7 +276,7 @@ Public Class Form1
         TextBox69.Text = β.ToString("0.0")
         TextBox70.Text = Wu.ToString("0")
         TextBox71.Text = ratio.ToString("0.00")
-        TextBox72.Text = _σ_02.ToString("0")
+        TextBox72.Text = _σ_02.ToString("0")            'Yield stress
         '===== checks ================
         TextBox2.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
         TextBox70.BackColor = CType(IIf(Wu < NumericUpDown1.Value, Color.Red, Color.LightGreen), Color)
@@ -266,15 +285,14 @@ Public Class Form1
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click, TabPage3.Enter, NumericUpDown8.ValueChanged, NumericUpDown7.ValueChanged, NumericUpDown6.ValueChanged
         'Rectangle clamped edges
         Dim a, b, t As Double
-        Dim Elas, p, σm, yt, flex As Double
+        Dim p, σm, yt, flex As Double
         Dim weight, cost As Double
 
         p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
-        a = NumericUpDown8.Value / 1000 '[m]
-        b = NumericUpDown7.Value / 1000 '[m]
-        t = NumericUpDown6.Value / 1000 '[m]
-        Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        a = NumericUpDown8.Value / 1000         '[m]
+        b = NumericUpDown7.Value / 1000         '[m]
+        t = NumericUpDown6.Value / 1000         '[m]
         weight = a * b * t * _ρ_steel           '[kg]
         cost = weight * NumericUpDown33.Value   '[Euro]
 
@@ -282,11 +300,11 @@ Public Class Form1
             Label39.Visible = False
             σm = p * b ^ 2
             σm /= t ^ 2 * (2.63 * (b / a) ^ 6 + 1)
-            σm /= 10 ^ 6        '[N/mm2]
+            σm /= 10 ^ 6                        '[N/mm2]
 
             yt = 0.0284 * p * b ^ 4
-            yt /= Elas * t ^ 3 * (1.056 * (b / a) ^ 5 + 1)
-            yt *= 1000          '[mm]
+            yt /= _young_Nm2 * t ^ 3 * (1.056 * (b / a) ^ 5 + 1)
+            yt *= 1000                           '[m]-->[mm]
             flex = a * 10 ^ 3 / yt
         Else
             σm = 0
@@ -302,54 +320,52 @@ Public Class Form1
         TextBox52.Text = weight.ToString("0")           '[kg]
         TextBox86.Text = cost.ToString("0")             '[euro]
         '===== check ================
-        TextBox6.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox6.BackColor = CType(IIf(σm > _σ_design, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown9.ValueChanged, NumericUpDown11.ValueChanged
         'Round plate simply supported
         Dim dia, r, t As Double
-        Dim Elas, p, σm, yt, v As Double
+        Dim p, σm, yt, v As Double
         Dim weight, cost As Double
 
-        p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
+        p = NumericUpDown1.Value * 100              '[mbar->[N/m2]]
         TextBox4.Text = p.ToString
-        dia = NumericUpDown11.Value / 1000 '[m]
+        dia = NumericUpDown11.Value / 1000          '[m]
         r = dia / 2 '[m]
-        t = NumericUpDown9.Value / 1000 '[m]
-        Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        t = NumericUpDown9.Value / 1000             '[m]
         weight = Math.PI / 4 * dia ^ 2 * t * 7850
         cost = weight * NumericUpDown33.Value
 
         v = 0.3 'For steel
         σm = 1.238 * p * r ^ 2 / t ^ 2
-        σm /= 10 ^ 6        '[N/mm2]
+        σm /= 10 ^ 6                                '[N/mm2]
 
         yt = 0.696 * p * r ^ 4
-        yt /= Elas * t ^ 3
-        yt *= 1000          '[mm]
+        yt /= _young_Nm2 * t ^ 3
+        yt *= 1000                                  '[mm]
 
-        TextBox113.Text = p.ToString("F0")               '[N/m2]
-        TextBox114.Text = (p / 100).ToString("F0")       '[mbar]
-        TextBox8.Text = σm.ToString("F0")
+        TextBox113.Text = p.ToString("F0")          '[N/m2]
+        TextBox114.Text = (p / 100).ToString("F0")  '[mbar]
+        TextBox8.Text = σm.ToString("F0")           'σm [N/m2] bens stress
         TextBox7.Text = yt.ToString("F1")
         TextBox78.Text = weight.ToString("F0")
         TextBox79.Text = cost.ToString("F0")
         '===== check ================
-        TextBox8.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox8.BackColor = CType(IIf(σm > _σ_design, Color.Red, Color.LightGreen), Color)
     End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click, TabPage6.Enter, NumericUpDown17.ValueChanged, NumericUpDown16.ValueChanged, NumericUpDown15.ValueChanged
         'Round with hole
         Dim dia, dia_hole As Double
         Dim a, b, t As Double
-        Dim Elas, p, σm, ym As Double
+        Dim p, σm, ym As Double
         Dim x, k1, k2 As Double
         Dim wght, cost As Double
 
-        p = NumericUpDown1.Value * 100 '[mbar->[N/m2]]
-        dia = NumericUpDown17.Value / 1000 '[m]
-        dia_hole = NumericUpDown16.Value / 1000 '[m]
-        t = NumericUpDown15.Value / 1000 '[m]
-        Elas = NumericUpDown5.Value * 10 ^ 9    '[GPa]
+        p = NumericUpDown1.Value * 100          '[mbar->[N/m2]]
+        dia = NumericUpDown17.Value / 1000      '[meter]
+        dia_hole = NumericUpDown16.Value / 1000 '[meter]
+        t = NumericUpDown15.Value / 1000        '[meter]
         a = dia / 2
         b = dia_hole / 2
 
@@ -367,7 +383,7 @@ Public Class Form1
         σm /= 10 ^ 6                        '[N/mm2]
 
         ym = k1 * p * a ^ 4
-        ym /= Elas * t ^ 3
+        ym /= _young_Nm2 * t ^ 3
         ym *= 1000                          '[mm]
         wght = PI * dia ^ 2 * t * 7850      '[kg]
         cost = wght * NumericUpDown33.Value '[Euro]
@@ -382,7 +398,7 @@ Public Class Form1
         TextBox80.Text = wght.ToString("0")
         TextBox85.Text = cost.ToString("0")
         '===== check ================
-        TextBox12.BackColor = CType(IIf(σm > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox12.BackColor = CType(IIf(σm > _σ_design, Color.Red, Color.LightGreen), Color)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, TabPage5.Enter, NumericUpDown18.ValueChanged, NumericUpDown19.ValueChanged, NumericUpDown24.ValueChanged
@@ -391,8 +407,8 @@ Public Class Form1
     Private Sub Calc_beam()
         'http://beamguru.com/online/beam-calculator/
         'https://www.amesweb.info/StructuralBeamDeflection/SimplySupportedBeamStressDeflectionAnalysis.aspx
-        Dim l As Double             'Beam length
-        Dim Iy, w, Elas As Double
+        Dim l As Double                     'Beam length
+        Dim Iy, w As Double                 '[mm]
         Dim flex, mom_max, σ_bend As Double
         Dim p, load_width, area As Double
         Dim beam_height, beam_section_area As Double
@@ -400,10 +416,9 @@ Public Class Form1
         Dim σ_combi As Double
         Dim weight, cost As Double
 
-        l = NumericUpDown18.Value * 10 ^ 3      '[m->mm]
+        l = NumericUpDown18.Value * 10 ^ 3              '[m->mm]
         Double.TryParse(TextBox41.Text, Iy)
         Iy *= 10 ^ 4     '[mm4]
-        Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
         '===== Distributed load ============
         p = NumericUpDown1.Value * 10 ^ 2 * 10 ^ 6      '[mbar->N/mm2]
@@ -413,7 +428,7 @@ Public Class Form1
 
         '===== Flex, moment and stress ============
         mom_max = (w * l ^ 2) / 8
-        flex = 5 * w * l ^ 4 / (384 * Elas * Iy)
+        flex = 5 * w * l ^ 4 / (384 * _young_Nmm2 * Iy)
         Double.TryParse(TextBox18.Text, beam_height)
         σ_bend = mom_max * beam_height * 0.5 / Iy
         σ_bend /= 10 ^ 12                             '[N/mm2]
@@ -441,8 +456,8 @@ Public Class Form1
         TextBox46.Text = σ_combi.ToString("0.0")            '[N/mm2]
         TextBox82.Text = cost.ToString("0")                 '[Euro]
         '===== check ================
-        TextBox14.BackColor = CType(IIf(σ_bend > _σ_02, Color.Red, Color.LightGreen), Color)
-        TextBox46.BackColor = CType(IIf(σ_combi > _σ_02, Color.Red, Color.LightGreen), Color)
+        TextBox14.BackColor = CType(IIf(σ_bend > _σ_design, Color.Red, Color.LightGreen), Color)
+        TextBox46.BackColor = CType(IIf(σ_combi > _σ_design, Color.Red, Color.LightGreen), Color)
 
     End Sub
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -474,15 +489,13 @@ Public Class Form1
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click, NumericUpDown20.ValueChanged, NumericUpDown13.ValueChanged, NumericUpDown12.ValueChanged, RadioButton1.CheckedChanged, NumericUpDown21.ValueChanged
-        Dim moi As Double       'Moment of Inertia
-        Dim wi, le, th As Double
-        Dim max_d As Double     'Max deflection
-        Dim ω As Double         'Uniformly distrib load
-        Dim Elas As Double
-        Dim p_load As Double     'Point load [N]
+        Dim moi As Double           'Moment of Inertia
+        Dim wi, le, th As Double    '[N/mm2]
+        Dim max_d As Double         'Max deflection
+        Dim ω As Double             'Uniformly distrib load
+        Dim p_load As Double        'Point load [N]
         Dim wght, cost As Double
 
-        Elas = NumericUpDown5.Value * 10 ^ 3    '[N/mm2]
 
         le = NumericUpDown12.Value      '[mm] length
         wi = NumericUpDown13.Value      '[mm] width
@@ -496,7 +509,7 @@ Public Class Form1
             PictureBox9.Visible = True  'Point load
             GroupBox14.Visible = False
             GroupBox17.Visible = True
-            max_d = p_load * le ^ 3 / (3 * Elas * moi)
+            max_d = p_load * le ^ 3 / (3 * _young_Nmm2 * moi)
 
         Else                            'Distributed load
             PictureBox8.Visible = True  'Distr. load
@@ -504,8 +517,8 @@ Public Class Form1
             GroupBox14.Visible = True
             GroupBox17.Visible = False
 
-            ω = wi * th / 10 ^ 9 * 7800 * 10 '[N/mm]
-            max_d = ω * le ^ 4 / (8 * Elas * moi)
+            ω = wi * th / 10 ^ 9 * 7800 * 10            '[N/mm]
+            max_d = ω * le ^ 4 / (8 * _young_Nmm2 * moi)
         End If
         wght = le * wi * th * 7850 / 10 ^ 9     '[kg]
         cost = wght * NumericUpDown33.Value     '[Euro]
@@ -630,7 +643,6 @@ Public Class Form1
         Dim σy As Double                'Midpoint Stiffener Stress
         Dim δ As Double                 'Midpoint (Max) deflection
         Dim force As Double             'Pressure x area
-        Dim Elas As Double              'Young modulus
         Dim weight As Double            'Total weight
         Dim cost As Double              'Total cost
         Dim gir_vert_wht As Double      'Girder_vert 
@@ -650,22 +662,20 @@ Public Class Form1
         TextBox40.Text = NumericUpDown1.Value.ToString  '[mbar]
 
         '--- NOTE GIRDER is vertical , Stiff-BEAM is horizontal------
-        no_vert_girders = NumericUpDown29.Value    'no Girder
-        no_hor_beams = NumericUpDown28.Value       'no Beams
-        a_hor = NumericUpDown22.Value              'Longer edge
-        b_vert = NumericUpDown23.Value             'Shortes edge
-
-        Elas = NumericUpDown5.Value * 10 ^ 3        '[N/mm]
+        no_vert_girders = NumericUpDown29.Value     'no Girder
+        no_hor_beams = NumericUpDown28.Value        'no Beams
+        a_hor = NumericUpDown22.Value               'Longer edge
+        b_vert = NumericUpDown23.Value              'Shortes edge
 
         '--- Girders (short) VERTICAL
         words_vert = UNP(Girder_vert).Split(CType(";", Char()))
         girder_name = words_vert(0)
-        I_vert_girder = CDbl(words_vert(1)) * (10 ^ 4)   'Inertia Iy [cm^4->mm^4]
-        gir_vert_wht = CDbl(words_vert(3))               '[kg]
+        I_vert_girder = CDbl(words_vert(1)) * (10 ^ 4)      'Inertia Iy [cm^4->mm^4]
+        gir_vert_wht = CDbl(words_vert(3))                  '[kg]
         TextBox38.Text = gir_vert_wht.ToString
         TextBox32.Text = (I_vert_girder / 10 ^ 4).ToString     '[cm4]
         ey_girder = CDbl(words_vert(2)) - CDbl(words_vert(4))
-        TextBox42.Text = ey_girder.ToString("0.0")      'Distance to plate face [mm]
+        TextBox42.Text = ey_girder.ToString("0.0")          'Distance to plate face [mm]
 
         '--- Beams Horizontal
         words_hor = UNP(Beam_hor).Split(CType(";", Char()))
@@ -674,7 +684,6 @@ Public Class Form1
         beam_hor_wht = CDbl(words_hor(3))                   '[kg]
         TextBox39.Text = beam_hor_wht.ToString
         TextBox34.Text = (I_hor_beam / 10 ^ 4).ToString     '[cm4]
-
 
         '--------- calc girder spacing -------------
         space_beams = a_hor / (no_hor_beams + 1)            'Beam space
@@ -689,12 +698,12 @@ Public Class Form1
         δ2 = I_vert_girder * (no_vert_girders + 1) / b_vert ^ 3
 
         δ = force
-        δ /= PI ^ 6 * Elas / 16
+        δ /= PI ^ 6 * _young_Nmm2 / 16
         δ /= (δ1 + δ2)
 
         '----Stress @ midpoint--------
         '------ formula 6.1.1---------------------------
-        σy = PI ^ 2 * δ * Elas * ey_girder / b_vert ^ 2
+        σy = PI ^ 2 * δ * _young_Nmm2 * ey_girder / b_vert ^ 2
 
         '------ Girder weight ---------------------
         weight = no_vert_girders * b_vert / 1000 * gir_vert_wht     'Girder vertical [kg]
@@ -720,7 +729,7 @@ Public Class Form1
 
         '------ check -shorter/longer edge---------
         NumericUpDown22.BackColor = CType(IIf(a_hor > b_vert, Color.Yellow, Color.Red), Color)
-        TextBox29.BackColor = CType(IIf(σy < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox29.BackColor = CType(IIf(σy < _σ_design, Color.LightGreen, Color.Red), Color)
 
         '------ logging if possible solution ---------------
         'If TextBox29.BackColor <> Color.Red Then
@@ -764,11 +773,11 @@ Public Class Form1
         Wac = 16 * Mp * l_beam ^ 2 / l_beam ^ 4 '[Nm]
 
         '-------------- Present ----------
-        TextBox53.Text = press.ToString("0.000")        '[N/mm2]
-        TextBox73.Text = (press * 10 ^ 4).ToString("0") '[mbar]
-        TextBox54.Text = (Mp / 1000).ToString("0.0")    '[kNmm]
-        TextBox62.Text = Wa.ToString("0.0")             '[N/mm] 
-        TextBox63.Text = Wac.ToString("0.0")            '[N/mm]
+        TextBox53.Text = press.ToString("F3")               '[N/mm2] pressure
+        TextBox73.Text = (press * 10 ^ 4).ToString("F0")    '[mbar]
+        TextBox54.Text = (Mp / 1000).ToString("F1")         '[kN/mm2]
+        TextBox62.Text = Wa.ToString("F1")                  '[N/mm] 
+        TextBox63.Text = Wac.ToString("F1")                 '[N/mm]
         '-------------- Checks --------
         TextBox62.BackColor = CType(IIf(Wa < Wac, Color.LightGreen, Color.Red), Color)
     End Sub
@@ -807,7 +816,7 @@ Public Class Form1
         TextBox74.Text = (force / 10).ToString("0")         '[kg] 
 
         '-------------- Checks --------
-        TextBox76.BackColor = CType(IIf(σb < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox76.BackColor = CType(IIf(σb < _σ_design, Color.LightGreen, Color.Red), Color)
     End Sub
 
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click, TabPage13.Enter, NumericUpDown39.ValueChanged, NumericUpDown38.ValueChanged, NumericUpDown37.ValueChanged, NumericUpDown36.ValueChanged, NumericUpDown35.ValueChanged, NumericUpDown34.ValueChanged, NumericUpDown40.ValueChanged, NumericUpDown42.ValueChanged, NumericUpDown41.ValueChanged
@@ -915,13 +924,13 @@ Public Class Form1
         TextBox108.Text = σt4.ToString("0")         '[N/mm2] 
 
         '-------------- Checks --------
-        TextBox111.BackColor = CType(IIf(σt1 < _σ_02, Color.LightGreen, Color.Red), Color)
-        TextBox110.BackColor = CType(IIf(σt2 < _σ_02, Color.LightGreen, Color.Red), Color)
-        TextBox109.BackColor = CType(IIf(σt3 < _σ_02, Color.LightGreen, Color.Red), Color)
-        TextBox108.BackColor = CType(IIf(σt4 < _σ_02, Color.LightGreen, Color.Red), Color)
+        TextBox111.BackColor = CType(IIf(σt1 < _σ_design, Color.LightGreen, Color.Red), Color)
+        TextBox110.BackColor = CType(IIf(σt2 < _σ_design, Color.LightGreen, Color.Red), Color)
+        TextBox109.BackColor = CType(IIf(σt3 < _σ_design, Color.LightGreen, Color.Red), Color)
+        TextBox108.BackColor = CType(IIf(σt4 < _σ_design, Color.LightGreen, Color.Red), Color)
     End Sub
 
-    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click, NumericUpDown5.ValueChanged, NumericUpDown33.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click, NumericUpDown5.ValueChanged, NumericUpDown33.ValueChanged, NumericUpDown10.ValueChanged, NumericUpDown1.ValueChanged, NumericUpDown43.ValueChanged
         Calc_input()
     End Sub
 
