@@ -341,19 +341,20 @@ Public Class Form1
         cost = weight * NumericUpDown33.Value
 
         v = 0.3 'For steel
-        σm = 1.238 * p * r ^ 2 / t ^ 2
+        σm = (1.238 * p * r ^ 2) / t ^ 2
         σm /= 10 ^ 6                                '[N/mm2]
 
-        yt = 0.696 * p * r ^ 4
-        yt /= _young_Nm2 * t ^ 3
-        yt *= 1000                                  '[mm]
+        yt = (0.696 * p * r ^ 4) / (_young_Nm2 * t ^ 3)
+        yt *= 1000                                  '[m]--->[mm]
 
         TextBox113.Text = p.ToString("F0")          '[N/m2]
         TextBox114.Text = (p / 100).ToString("F0")  '[mbar]
         TextBox8.Text = σm.ToString("F0")           'σm [N/m2] bens stress
-        TextBox7.Text = yt.ToString("F1")
-        TextBox78.Text = weight.ToString("F0")
+        TextBox7.Text = yt.ToString("F1")           '[mm2]
+        TextBox78.Text = weight.ToString("F0")      '[kg]
         TextBox79.Text = cost.ToString("F0")
+        TextBox118.Text = _young_gpa.ToString("F0")    '[Gpa] 
+        TextBox120.Text = NumericUpDown5.Value.ToString '[c]
         '===== check ================
         TextBox8.BackColor = CType(IIf(σm > _σ_design, Color.Red, Color.LightGreen), Color)
     End Sub
