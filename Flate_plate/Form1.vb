@@ -3,19 +3,19 @@ Imports System.Globalization
 Imports System.Threading
 
 Public Structure Grillstruct
-    Implements IComparer(Of Grillstruct)
+    'Implements IComparer(Of Grillstruct)
     Public girder As Integer      'Girder no
     Public beam As Integer        'Beam no
     Public weight As Double       'Total weight
 
-    Public Function Compare(x As Grillstruct, y As Grillstruct) As Integer Implements IComparer(Of Grillstruct).Compare
-        Throw New NotImplementedException()
-        If x.weight < y.weight Then
-            Return (-1)
-        Else
-            Return (+1)
-        End If
-    End Function
+    'Public Function Compare(x As Grillstruct, y As Grillstruct) As Integer Implements IComparer(Of Grillstruct).Compare
+    '    Throw New NotImplementedException()
+    '    If x.weight < y.weight Then
+    '        Return (-1)
+    '    Else
+    '        Return (+1)
+    '    End If
+    'End Function
 End Structure
 
 Public Class Form1
