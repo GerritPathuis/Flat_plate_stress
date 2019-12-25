@@ -329,7 +329,7 @@ Public Class Form1
     Private Sub Button4Click(sender As Object, e As EventArgs) Handles Button4.Click, TabPage4.Enter, NumericUpDown9.ValueChanged, NumericUpDown11.ValueChanged
         'Round plate simply supported
         Dim dia, r, t As Double
-        Dim p, σm, yt, v As Double
+        Dim p, σm, yt As Double
         Dim weight, cost As Double
 
         p = NumericUpDown1.Value * 100              '[mbar->[N/m2]]
@@ -340,7 +340,6 @@ Public Class Form1
         weight = Math.PI / 4 * dia ^ 2 * t * 7850
         cost = weight * NumericUpDown33.Value
 
-        v = 0.3 'For steel
         σm = (1.238 * p * r ^ 2) / t ^ 2
         σm /= 10 ^ 6                                '[N/mm2]
 
