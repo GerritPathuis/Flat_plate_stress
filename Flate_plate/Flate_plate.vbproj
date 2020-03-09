@@ -26,7 +26,9 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\DCF1\data2%24\Engineering\VBasic\Flat_plate\</InstallUrl>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ProductName>Plate Stress</ProductName>
+    <PublisherName>Pathuis Heavy Industries</PublisherName>
+    <ApplicationRevision>32</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
