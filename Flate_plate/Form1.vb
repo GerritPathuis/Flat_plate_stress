@@ -2,23 +2,8 @@
 Imports System.Globalization
 Imports System.Threading
 
-Public Structure Grillstruct
-    'Implements IComparer(Of Grillstruct)
-    Public girder As Integer      'Girder no
-    Public beam As Integer        'Beam no
-    Public weight As Double       'Total weight
-
-    'Public Function Compare(x As Grillstruct, y As Grillstruct) As Integer Implements IComparer(Of Grillstruct).Compare
-    '    Throw New NotImplementedException()
-    '    If x.weight < y.weight Then
-    '        Return (-1)
-    '    Else
-    '        Return (+1)
-    '    End If
-    'End Function
-End Structure
-
 Public Class Form1
+
     Public grillresults(13400) As Grillstruct    'Auto grillage
 
 
@@ -469,21 +454,22 @@ Public Class Form1
         Dim weighttotal As Double
         Dim Beamlength As Double
 
-        Try
-            Beamlength = NumericUpDown19.Value
-            Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
-            TextBox41.Text = words(1)               'Inertia Iy [cm4]
-            TextBox18.Text = words(2)               'Beam Height [mm]
-            TextBox47.Text = words(3)               'Beam weight [mm]
+        ' Try
+        Beamlength = NumericUpDown19.Value
+        Dim words() As String = UNP(ComboBox1.SelectedIndex).Split(CType(";", Char()))
+        TextBox41.Text = words(1)               'Inertia Iy [cm4]
+        TextBox18.Text = words(2)               'Beam Height [mm]
+        TextBox47.Text = words(3)               'Beam weight [mm]
 
-            weightm = CDbl(words(3))
-            area = Math.Round(weightm * 10 ^ 6 / ρsteel, 0)
-            weighttotal = weightm * Beamlength
-            TextBox81.Text = area.ToString              'Beam area
-            TextBox48.Text = weighttotal.ToString("0") 'Beam weight
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)  ' Show the exception's message.
-        End Try
+
+        weightm = CDbl(words(3))
+        area = Math.Round(weightm * 10 ^ 6 / ρsteel, 0)
+        weighttotal = weightm * Beamlength
+        TextBox81.Text = area.ToString              'Beam area
+        TextBox48.Text = weighttotal.ToString("0") 'Beam weight
+        '  Catch ex As Exception
+        '  MessageBox.Show(ex.Message)  ' Show the exception's message.
+        '  End Try
         Calcbeam()
     End Sub
 
